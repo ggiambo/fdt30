@@ -1,0 +1,15 @@
+package net.rcfmedia.fdt30.peristence
+
+import java.time.LocalDateTime
+import javax.persistence.*
+
+@Entity
+class Message(
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY) var id: Int? = null,
+    var parentId: Int? = null,
+    @Column(updatable = false, insertable = false) var created: LocalDateTime? = null,
+    @OneToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id") var user: User? = null,
+    var subject: String,
+    var content: String
+)
