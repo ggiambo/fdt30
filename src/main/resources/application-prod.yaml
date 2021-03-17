@@ -1,0 +1,11 @@
+spring:
+  datasource:
+    platform: mariadb
+    driverClassName: org.mariadb.jdbc.Driver
+    url: jdbc:mariadb://localhost:3306/fdt30
+    username: fdt30
+    password: fdt30
+  jpa:
+    generate-ddl: true
+
+jwt.secret: ${JWT_SECRET}
