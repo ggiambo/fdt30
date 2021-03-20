@@ -1,7 +1,6 @@
 package net.rcfmedia.fdt30.peristence
 
 import com.fasterxml.jackson.annotation.JsonIgnore
-import com.fasterxml.jackson.annotation.JsonSetter
 import java.time.LocalDateTime
 import javax.persistence.*
 
@@ -9,6 +8,18 @@ import javax.persistence.*
 class User(
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY) var id: Int? = null,
     @Column(updatable = false) val name: String,
-    @Column(updatable = false, insertable = false) val created: LocalDateTime? = null,
+    @Column(updatable = false) var created: LocalDateTime? = null,
+    @Column var updated: LocalDateTime? = null,
     @get:JsonIgnore var password: String
-)
+) {
+
+    @PrePersist
+    fun onCreate() {
+        created = LocalDateTime.now()
+    }
+
+    @PreUpdate
+    fun onUpdate() {
+        updated = LocalDateTime.now()
+    }
+}

@@ -1,5 +1,6 @@
 package net.rcfmedia.fdt30.auth
 
+import io.jsonwebtoken.JwtException
 import io.jsonwebtoken.Jwts
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
@@ -10,12 +11,11 @@ import javax.servlet.FilterChain
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
-
 @Service
 class JwtAuthenticationFilter : OncePerRequestFilter() {
 
     @Value("\${jwt.secret:}")
-    lateinit var jwtSecret: String
+    lateinit var jwtSecret: ByteArray
 
     override fun doFilterInternal(request: HttpServletRequest, response: HttpServletResponse, chain: FilterChain) {
         val token = getToken(request)
@@ -26,7 +26,7 @@ class JwtAuthenticationFilter : OncePerRequestFilter() {
             }
         }
 
-        chain.doFilter(request, response);
+        chain.doFilter(request, response)
     }
 
     private fun getToken(request: HttpServletRequest): String? {
@@ -42,13 +42,18 @@ class JwtAuthenticationFilter : OncePerRequestFilter() {
     }
 
     private fun getAuthentication(token: String): UsernamePasswordAuthenticationToken? {
-        val user = Jwts.parser().setSigningKey(jwtSecret.toByteArray())
-            .parseClaimsJws(token)
-            .body
-            .subject
+        try {
+            val user = Jwts.parser()
+                .setSigningKey(jwtSecret)
+                .parseClaimsJws(token)
+                .body
+                .subject
 
-        if (user != null) {
-            return UsernamePasswordAuthenticationToken(user, null, emptyList())
+            if (user != null) {
+                return UsernamePasswordAuthenticationToken(user, null, emptyList())
+            }
+        } catch (e: JwtException) {
+            return null
         }
 
         return null

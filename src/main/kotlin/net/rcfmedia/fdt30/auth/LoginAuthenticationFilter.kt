@@ -10,7 +10,9 @@ import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
 import org.springframework.stereotype.Service
 import java.io.IOException
+import java.time.ZonedDateTime
 import java.util.*
+import javax.annotation.PostConstruct
 import javax.servlet.FilterChain
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
@@ -21,12 +23,16 @@ class LoginAuthenticationFilter(
 ) :
     UsernamePasswordAuthenticationFilter(authenticationManager) {
 
-    private val oneWeekInMs = 7 * 24 * 60 * 60 * 1000
+    // token expires 100 from "now"
+    private val tokenExpirationDate = Date.from(
+        ZonedDateTime.now().plusYears(100).toInstant()
+    )
 
     @Value("\${jwt.secret:}")
     lateinit var jwtSecret: String
 
-    init {
+    @PostConstruct
+    fun postConstruct() {
         setFilterProcessesUrl("/login")
     }
 
@@ -49,12 +55,12 @@ class LoginAuthenticationFilter(
     ) {
         val token = Jwts.builder()
             .setSubject((authentication.principal as String))
-            .setExpiration(Date(System.currentTimeMillis() + oneWeekInMs))
+            .setExpiration(tokenExpirationDate)
             .signWith(SignatureAlgorithm.HS512, jwtSecret.toByteArray())
             .compact()
         response.addHeader("Authorization", "Bearer $token")
 
-        SecurityContextHolder.getContext().authentication = authentication;
+        SecurityContextHolder.getContext().authentication = authentication
     }
 
     class LoginUser(
