@@ -1,0 +1,10 @@
+.messageSize {
+    min-height: 20em;
+    max-height: 20em;
+}
+
+.preview {
+    overflow: auto;
+    border: 1px solid lightgray;
+    border-radius: .3em
+}

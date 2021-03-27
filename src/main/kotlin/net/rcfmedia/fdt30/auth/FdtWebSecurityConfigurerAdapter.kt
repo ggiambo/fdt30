@@ -8,7 +8,8 @@ import org.springframework.stereotype.Service
 @Service
 class FdtWebSecurityConfigurerAdapter(
     private val loginAuthenticationFilter: LoginAuthenticationFilter,
-    private val jwtAuthenticationFilter: JwtAuthenticationFilter
+    private val jwtAuthenticationFilter: JwtAuthenticationFilter,
+    private val corsFilter: CorsFilter
 ) :
     WebSecurityConfigurerAdapter() {
     override fun configure(http: HttpSecurity) {
@@ -24,6 +25,7 @@ class FdtWebSecurityConfigurerAdapter(
             .and()
             .addFilter(loginAuthenticationFilter)
             .addFilterBefore(jwtAuthenticationFilter, loginAuthenticationFilter::class.java)
+            .addFilterBefore(corsFilter, loginAuthenticationFilter::class.java)
             .csrf().disable()
             .formLogin().disable()
     }
