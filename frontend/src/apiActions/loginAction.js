@@ -1,6 +1,6 @@
 import {DEFAULT_HEADERS, LOGIN_URL} from "./const";
 
-const login = (username, password, callback) => {
+export const login = (username, password, callback) => {
     fetch(LOGIN_URL, {
         method: "POST",
         headers: DEFAULT_HEADERS,
@@ -21,10 +21,13 @@ const login = (username, password, callback) => {
         })
 }
 
+export const logout = () => {
+    localStorage.removeItem("token")
+    window.location.href = window.location.origin
+}
+
 const setToken = (response) => {
     const authorization = response.headers.get("Authorization");
     const token = authorization.replace("Bearer", "").trim();
     localStorage.setItem("token", token);
 }
-
-export default login;

@@ -1,5 +1,5 @@
 export const isLoggedIn = () => {
-    return localStorage.getItem("token") !== undefined
+    return  localStorage.getItem("token") !== null
 }
 
 export const getUsername = () => {

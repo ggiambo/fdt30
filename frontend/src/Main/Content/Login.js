@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import {Alert, Button, Col, Container, Form, Row} from "react-bootstrap";
-import login from "../../apiActions/loginAction";
+import {login} from "../../apiActions/loginAction";
 
 const Login = () => {
 
