@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import {Alert, Button, Col, Container, Form, Row} from "react-bootstrap";
-import {login} from "../../apiActions/loginAction";
+import login from "../../apiActions/loginAction";
 
 const Login = () => {
 
@@ -22,6 +22,11 @@ const Login = () => {
     }
 
     const closeAlerts = () => setVisibleAlert("");
+
+    const doLogin = () => {
+        closeAlerts();
+        login(username, password, callback);
+    }
 
     return (
         <Container fluid>
@@ -71,7 +76,7 @@ const Login = () => {
                                     />
                                 </Form.Group>
                                 <Button variant="primary"
-                                        onClick={() => login(username, password, callback)}>Login</Button>
+                                        onClick={() => doLogin()}>Login</Button>
                             </Form>
                         </Col>
                     </Row>

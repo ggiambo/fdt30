@@ -1,5 +1,6 @@
 package net.rcfmedia.fdt30.controller
 
+import net.rcfmedia.fdt30.auth.LoggedUserInfo
 import net.rcfmedia.fdt30.controller.model.NewMessage
 import net.rcfmedia.fdt30.peristence.Message
 import net.rcfmedia.fdt30.peristence.MessageRepository
@@ -10,7 +11,7 @@ import org.springframework.data.domain.Sort
 import org.springframework.web.bind.annotation.*
 
 @RestController
-class MessageController(private val messageRepository: MessageRepository) {
+class MessageController(private val messageRepository: MessageRepository, private val loggedUserInfo: LoggedUserInfo) {
 
     @GetMapping("/messages")
     fun getMessages(): List<Message> {
@@ -24,8 +25,12 @@ class MessageController(private val messageRepository: MessageRepository) {
     }
 
     @PostMapping("/message")
-    fun newMessage(@RequestBody newMessage: NewMessage) {
-        val message = Message(subject = newMessage.subject, content = newMessage.content)
-        messageRepository.save(message)
+    fun newMessage(@RequestBody newMessage: NewMessage) : Message {
+        val message = Message(
+            subject = newMessage.subject,
+            content = newMessage.content,
+            user = loggedUserInfo.getUserInfo()
+        )
+        return messageRepository.save(message)
     }
 }

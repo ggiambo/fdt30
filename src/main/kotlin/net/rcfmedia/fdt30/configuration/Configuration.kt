@@ -16,7 +16,9 @@ class Configuration {
     fun webMvcConfigurer(): WebMvcConfigurer {
         return object : WebMvcConfigurer {
             override fun addCorsMappings(registry: CorsRegistry) {
-                registry.addMapping("/**")
+                registry
+                    .addMapping("/**")
+                    .exposedHeaders("authorization")
             }
         }
     }

@@ -1,9 +1,9 @@
-import {CONTENT_TYPE_JSON, LOGIN_URL} from "../const";
+import {DEFAULT_HEADERS, LOGIN_URL} from "./const";
 
-export const login = (username, password, callback) => {
+const login = (username, password, callback) => {
     fetch(LOGIN_URL, {
         method: "POST",
-        headers: CONTENT_TYPE_JSON,
+        headers: DEFAULT_HEADERS,
         mode: "cors",
         body: JSON.stringify({
             name: username,
@@ -26,3 +26,5 @@ const setToken = (response) => {
     const token = authorization.replace("Bearer", "").trim();
     localStorage.setItem("token", token);
 }
+
+export default login;
