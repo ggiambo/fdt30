@@ -1,3 +1,8 @@
 .sidebar {
-    background-color: var(--light);
+    background-color: var(--gray-dark);
+}
+
+.navLink {
+    color: var(--red);
+    text-decoration: none;
 }

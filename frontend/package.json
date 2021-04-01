@@ -15,7 +15,6 @@
     "react-icons": "^4.2.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
-    "taverne": "^1.16.8",
     "web-vitals": "^1.1.1"
   },
   "scripts": {

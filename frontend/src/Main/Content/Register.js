@@ -21,26 +21,20 @@ const Register = () => {
         }
     }
 
-    const checkValues = () => {
-        if (!checkUsername()) {
-            return false
+    const disabled = () => {
+        if (!checkUsername() || !checkPassword()) {
+            return "disabled"
         }
-        if (password?.length < 8) {
-            return false
-        }
-        if (password !== passwordConfirm) {
-            return false
-        }
-
-        return true
     }
 
     const checkUsername = () => {
-        if (name?.length < 3) {
-            console.log(false)
-            return false
-        }
-        console.log(true)
+        return name.length >= 3;
+
+    }
+
+    const checkPassword = () => {
+        return password.length >= 3 && (password === passwordConfirm);
+
     }
 
     return (
@@ -58,11 +52,7 @@ const Register = () => {
                                       placeholder={"Username"}
                                       onChange={(e) => setName(e.target.value)}
                                       value={name}
-                                      isInvalid={checkUsername}
                         />
-                        <Form.Control.Feedback type="invalid">
-                            Please provide a valid city.
-                        </Form.Control.Feedback>
                     </Form.Group>
                     <Form.Group>
                         <Form.Control type={"password"}
@@ -79,7 +69,7 @@ const Register = () => {
                 </Col>
             </Row>
             <Row>
-                <Button disabled={checkValues()} onClick={() => createUser(name, password, callback)}>Save</Button>
+                <Button disabled={disabled()} onClick={() => createUser(name, password, callback)}>Save</Button>
             </Row>
         </Fragment>
     );

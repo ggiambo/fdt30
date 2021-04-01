@@ -4,21 +4,10 @@ import './index.css';
 import './palette.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import {Taverne} from "taverne/hooks";
-import createLaTaverne from "taverne";
-import items from "./reducers/reducer";
-import {devtools} from 'taverne/middlewares';
-
-const {dispatch, store} = createLaTaverne(
-    {
-        items
-    }, [devtools]);
 
 ReactDOM.render(
     <React.StrictMode>
-        <Taverne dispatch={dispatch} store={store}>
-            <App/>
-        </Taverne>
+        <App/>
     </React.StrictMode>,
     document.getElementById('root')
 );
