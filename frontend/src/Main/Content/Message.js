@@ -1,7 +1,7 @@
 import React, {Fragment, useState} from 'react';
 import {Alert, Button, Col, Form, Row, Tab, Tabs} from "react-bootstrap";
 import styles from './Message.module.css';
-import saveNewMessage from "../../apiActions/saveMessageAction"
+import saveNewMessage from "../../apiActions/saveNewMessageAction"
 import MessageView from "./MessageView";
 
 const Message = ({messageMarkdown = ""}) => {
@@ -39,6 +39,8 @@ const Message = ({messageMarkdown = ""}) => {
                                               onChange={(e) => setSubject(e.target.value)}
                                               value={subject}
                                 />
+                            </Form.Group>
+                            <Form.Group>
                                 <Form.Control as={"textarea"}
                                               className={styles.messageSize}
                                               onChange={(e) => setMarkdown(e.target.value)}

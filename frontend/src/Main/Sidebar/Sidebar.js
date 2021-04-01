@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Fragment} from 'react';
 import styles from './Sidebar.module.css';
 import {Col, Container, Nav, Row} from "react-bootstrap";
 import {Link} from "react-router-dom";
@@ -16,7 +16,10 @@ const Sidebar = () => {
                         <Nav.Link href="/message"><Link to={"/message"}>Message</Link></Nav.Link>
                         }
                         {!isLoggedIn() &&
-                        <Nav.Link href="/login"><Link to={"/login"}>Login</Link></Nav.Link>
+                        <Fragment>
+                            <Nav.Link href="/login"><Link to={"/login"}>Login</Link></Nav.Link>
+                            <Nav.Link href="/register"><Link to={"/register"}>Register</Link></Nav.Link>
+                        </Fragment>
                         }
                         {isLoggedIn() &&
                         <Nav.Link href="/" onSelect={logout}>Logout</Nav.Link>

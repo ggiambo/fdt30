@@ -7,8 +7,8 @@ import styles from './Header.module.css';
 
 const Header = () => {
     return (
-        <Row className={styles.header + " p-3"}>
-            <Col xs={11}>
+        <Row className={styles.header + " p-2 sticky-top"}>
+            <Col>
                 <h4>Header</h4>
             </Col>
             <Col>

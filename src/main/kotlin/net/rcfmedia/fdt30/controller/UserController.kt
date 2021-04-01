@@ -42,6 +42,14 @@ class UserController(
             return ResponseEntity("user ${newUser.name} already exists", HttpStatus.FORBIDDEN)
         }
 
+        if (newUser.name.length < 3) {
+            return ResponseEntity("username too short", HttpStatus.FORBIDDEN)
+        }
+
+        if (newUser.password.length < 3) {
+            return ResponseEntity("password too short", HttpStatus.FORBIDDEN)
+        }
+
         val user = User(name = newUser.name, password = passwordEncoder.encode(newUser.password))
         userRepository.save(user)
 
