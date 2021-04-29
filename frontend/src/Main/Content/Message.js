@@ -1,5 +1,5 @@
 import React, {Fragment, useState} from 'react';
-import {Alert, Button, Col, Form, Row, Tab, Tabs} from "react-bootstrap";
+import {Alert, Button, Col, Container, Form, Row, Tab, Tabs} from "react-bootstrap";
 import styles from './Message.module.css';
 import saveNewMessage from "../../apiActions/saveNewMessageAction"
 import MessageView from "./MessageView";
@@ -22,7 +22,7 @@ const Message = ({messageMarkdown = ""}) => {
     }
 
     return (
-        <Fragment>
+        <Container>
             <Row className={"p-3"}>
                 <Col>
                     {visibleAlert &&
@@ -56,7 +56,7 @@ const Message = ({messageMarkdown = ""}) => {
             <Row>
                 <Button onClick={() => saveNewMessage(subject, markDown, callback)}>Save</Button>
             </Row>
-        </Fragment>
+        </Container>
     )
 }
 

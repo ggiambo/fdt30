@@ -1,28 +1,28 @@
 import React, {Fragment} from 'react';
-import styles from './Sidebar.module.css';
 import {Col, Container, Nav, Row} from "react-bootstrap";
-import {Link} from "react-router-dom";
+import {NavLink} from "react-router-dom";
 import {isLoggedIn} from "../../apiActions/utils";
 import {logout} from "../../apiActions/loginAction";
+import styles from './Sidebar.module.css';
 
 const Sidebar = () => {
     return (
-        <Container className={styles.sidebar}>
+        <Container className={"withBorder"}>
             <Row>
                 <Col>
                     <Nav defaultActiveKey="/" className="flex-column">
-                        <Nav.Link className={styles.navLink} href="/messages/"><Link to={"/messages/"}>Messages</Link></Nav.Link>
+                        <NavLink to={"/messages/"} activeClassName={styles.selected}>Messages</NavLink>
                         {isLoggedIn() &&
-                        <Nav.Link href="/message"><Link to={"/message"}>Message</Link></Nav.Link>
+                        <NavLink to={"/message"} activeClassName={styles.selected}>Message</NavLink>
                         }
                         {!isLoggedIn() &&
                         <Fragment>
-                            <Nav.Link className={styles.navLink} href="/login"><Link to={"/login"}>Login</Link></Nav.Link>
-                            <Nav.Link className={styles.navLink} href="/register"><Link to={"/register"}>Register</Link></Nav.Link>
+                            <NavLink to={"/login"} activeClassName={styles.selected}>Login</NavLink>
+                            <NavLink to={"/register"} activeClassName={styles.selected}>Register</NavLink>
                         </Fragment>
                         }
                         {isLoggedIn() &&
-                        <Nav.Link href="/" onSelect={logout}>Logout</Nav.Link>
+                        <NavLink to="/" onClick={logout}>Logout</NavLink>
                         }
                     </Nav>
                 </Col>

@@ -6,11 +6,10 @@ import Login from "./Login";
 import Messages from "./Messages";
 import Register from "./Register";
 import {Container} from "react-bootstrap";
-import styles from './Content.module.css';
 
 const Content = () => {
     return (
-        <Container className={styles.content}>
+        <Container className={"withBorder"}>
             <Switch>
                 <Route exact path={"/message"}>
                     <Message/>

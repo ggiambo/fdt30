@@ -1,6 +1,6 @@
-import {Form} from "react-bootstrap";
+import {Container, Form, Row} from "react-bootstrap";
 import styles from "./Message.module.css";
-import React from "react";
+import React, {Fragment} from "react";
 import marked from "marked";
 import DOMPurify from "dompurify";
 
@@ -15,14 +15,19 @@ const MessageView = ({subject, markdown}) => {
     }
 
     return (
-        <Form.Group>
-            <Form.Control type={"text"} value={subject} plaintext readOnly/>
-            <Form.Control as={"p"}
-                          className={styles.messageSize + " " + styles.preview + " pl-2"}
-                          plaintext={true}
-                          readOnly={true}
-                          dangerouslySetInnerHTML={getHTMLFromMarkDown(markdown)}/>
-        </Form.Group>
+        <Container>
+            <Row className={"withBorder"}>
+                <Form.Group>
+                    <Form.Control type={"text"} value={subject} plaintext readOnly/>
+                    <Form.Control as={"p"}
+                                  className={styles.messageSize + " pl-2"}
+                                  plaintext={true}
+                                  readOnly={true}
+                                  dangerouslySetInnerHTML={getHTMLFromMarkDown(markdown)}/>
+                </Form.Group>
+            </Row>
+            <Row>&nbsp;</Row>
+        </Container>
     )
 }
 

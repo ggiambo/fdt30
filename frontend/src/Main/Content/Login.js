@@ -29,7 +29,7 @@ const Login = () => {
     }
 
     return (
-        <Container fluid>
+        <Container fluid className={"mb-3"}>
             <Row className={"mt-3"}>
                 <Col>
                     <Row>

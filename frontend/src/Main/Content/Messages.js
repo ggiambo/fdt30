@@ -1,5 +1,5 @@
-import React, {Fragment, useEffect, useState} from 'react';
-import {Col, Row} from "react-bootstrap";
+import React, {useEffect, useState} from 'react';
+import {Col, Container, Row} from "react-bootstrap";
 import fetchMessages from "../../apiActions/messagesAction";
 import {useParams} from "react-router-dom";
 import MessageView from "./MessageView";
@@ -13,7 +13,7 @@ const Messages = () => {
     }, [pageNr])
 
     return (
-        <Fragment>
+        <Container>
             <Row className={"p-3"}>
                 <Col>
                     <h3>Messages</h3>
@@ -22,7 +22,7 @@ const Messages = () => {
                     )}
                 </Col>
             </Row>
-        </Fragment>
+        </Container>
     )
 }
 
