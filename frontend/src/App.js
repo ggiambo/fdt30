@@ -4,7 +4,6 @@ import Header from "./Header/Header";
 import Main from "./Main/Main";
 import Footer from "./Footer/Footer";
 import {Col, Container, Row} from "react-bootstrap";
-import {BrowserRouter} from "react-router-dom";
 
 const App = () => {
     return (

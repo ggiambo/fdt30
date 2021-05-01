@@ -1,7 +1,9 @@
 import React, {Fragment, useState} from 'react';
 import {Alert, Button, Col, Form, Row} from "react-bootstrap";
-import createUser from "../../apiActions/createUserAction";
-import {login} from "../../apiActions/loginAction";
+import {doLogin} from "./Login";
+import {DEFAULT_HEADERS, USER_URL} from "../../apiActions/const";
+import {useDispatch} from "react-redux";
+import {setDanger} from "../../app/messagesSlice";
 
 const Register = () => {
 
@@ -10,16 +12,7 @@ const Register = () => {
     const [password, setPassword] = useState("")
     const [passwordConfirm, setPasswordConfirm] = useState("")
 
-    const callback = (status) => {
-        switch (status) {
-            case 200:
-                setVisibleAlert(false)
-                login(name, password, () =>  window.location.href = window.location.origin)
-                break;
-            default:
-                setVisibleAlert(true)
-        }
-    }
+    const dispatch = useDispatch();
 
     const disabled = () => {
         if (!checkUsername() || !checkPassword()) {
@@ -69,10 +62,34 @@ const Register = () => {
                 </Col>
             </Row>
             <Row>
-                <Button disabled={disabled()} onClick={() => createUser(name, password, callback)}>Save</Button>
+                <Button disabled={disabled()} onClick={() => doRegister(name, password, dispatch)}>Save</Button>
             </Row>
         </Fragment>
     );
+}
+
+const doRegister = (username, password, dispatch) => {
+    fetch(USER_URL, {
+        method: "POST",
+        headers: DEFAULT_HEADERS,
+        mode: "cors",
+        body: JSON.stringify({
+            name: username,
+            password: password
+        })
+    })
+        .then(response => {
+            switch (response.status) {
+                case 200:
+                    doLogin(username, password, dispatch);
+                    break;
+                default:
+                    dispatch(setDanger("Unknown error"));
+            }
+        })
+        .catch(error => {
+            console.error(error)
+        })
 }
 
 export default Register

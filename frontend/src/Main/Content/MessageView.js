@@ -1,6 +1,6 @@
 import {Container, Form, Row} from "react-bootstrap";
 import styles from "./Message.module.css";
-import React, {Fragment} from "react";
+import React from "react";
 import marked from "marked";
 import DOMPurify from "dompurify";
 

@@ -1,4 +1,4 @@
-import React, {Fragment, useState} from 'react';
+import React, {useState} from 'react';
 import {Alert, Button, Col, Container, Form, Row, Tab, Tabs} from "react-bootstrap";
 import styles from './Message.module.css';
 import saveNewMessage from "../../apiActions/saveNewMessageAction"
