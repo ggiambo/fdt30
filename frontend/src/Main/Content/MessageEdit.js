@@ -1,36 +1,22 @@
 import React, {useState} from 'react';
-import {Alert, Button, Col, Container, Form, Row, Tab, Tabs} from "react-bootstrap";
+import {Button, Col, Container, Form, Row, Tab, Tabs} from "react-bootstrap";
 import styles from './Message.module.css';
-import saveNewMessage from "../../apiActions/saveNewMessageAction"
 import MessageView from "./MessageView";
+import {AUTH_HEADERS, MESSAGE_URL} from "../../app/const";
+import {delWarning, setWarning} from "../../app/messagesSlice";
+import {useDispatch} from "react-redux";
 
-const Message = ({messageMarkdown = ""}) => {
+const MessageEdit = ({messageMarkdown = ""}) => {
 
     const [markDown, setMarkdown] = useState(messageMarkdown);
     const [subject, setSubject] = useState("");
-    const [visibleAlert, setVisibleAlert] = useState(false);
 
-    const callback = (status) => {
-        switch (status) {
-            case 200:
-                setVisibleAlert(false)
-                window.location.href = window.location.origin + "/messages/0"
-                break;
-            default:
-                setVisibleAlert(true)
-        }
-    }
+    const dispatch = useDispatch();
 
     return (
         <Container>
             <Row className={"p-3"}>
                 <Col>
-                    {visibleAlert &&
-                    <Alert variant={"warning"} onClose={() => setVisibleAlert(false)} dismissible>
-                        Cannot insert message
-                    </Alert>
-                    }
-                    <h3>Message</h3>
                     <Tabs defaultActiveKey="edit" id="uncontrolled-tab-example">
                         <Tab eventKey="edit" title="Edit">
                             <Form.Group>
@@ -42,6 +28,7 @@ const Message = ({messageMarkdown = ""}) => {
                             </Form.Group>
                             <Form.Group>
                                 <Form.Control as={"textarea"}
+                                              rows={20}
                                               className={styles.messageSize}
                                               onChange={(e) => setMarkdown(e.target.value)}
                                               value={markDown}/>
@@ -54,10 +41,35 @@ const Message = ({messageMarkdown = ""}) => {
                 </Col>
             </Row>
             <Row>
-                <Button onClick={() => saveNewMessage(subject, markDown, callback)}>Save</Button>
+                <Button onClick={() => saveNewMessage(subject, markDown, dispatch)}>Save</Button>
             </Row>
         </Container>
     )
 }
 
-export default Message
+const saveNewMessage = (subject, content, dispatch) => {
+    fetch(MESSAGE_URL, {
+        method: "POST",
+        headers: AUTH_HEADERS,
+        mode: "cors",
+        body: JSON.stringify({
+            subject: subject,
+            content: content
+        })
+    })
+        .then(response => {
+            switch (response.status) {
+                case 200:
+                    dispatch(delWarning());
+                    window.location.href = window.location.origin + "/messages/0"
+                    break;
+                default:
+                    dispatch(setWarning("Cannot insert message"));
+            }
+        })
+        .catch(error => {
+            console.error(error);
+        })
+}
+
+export default MessageEdit

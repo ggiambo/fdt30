@@ -1,6 +1,5 @@
-import {Container, Form, Row} from "react-bootstrap";
-import styles from "./Message.module.css";
-import React from "react";
+import {Card, Container, Row} from "react-bootstrap";
+import React, {Fragment} from "react";
 import marked from "marked";
 import DOMPurify from "dompurify";
 
@@ -16,17 +15,16 @@ const MessageView = ({subject, markdown}) => {
 
     return (
         <Container>
-            <Row className={"withBorder"}>
-                <Form.Group>
-                    <Form.Control type={"text"} value={subject} plaintext readOnly/>
-                    <Form.Control as={"p"}
-                                  className={styles.messageSize + " pl-2"}
-                                  plaintext={true}
-                                  readOnly={true}
-                                  dangerouslySetInnerHTML={getHTMLFromMarkDown(markdown)}/>
-                </Form.Group>
+            <Row>
+                <Card style={{ width: '100%' }}>
+                    <Card.Header>{subject}</Card.Header>
+                    <Card.Body>
+                        <Card.Text>
+                            <div dangerouslySetInnerHTML={getHTMLFromMarkDown(markdown)}/>
+                        </Card.Text>
+                    </Card.Body>
+                </Card>
             </Row>
-            <Row>&nbsp;</Row>
         </Container>
     )
 }

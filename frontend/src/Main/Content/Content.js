@@ -1,5 +1,5 @@
 import React from 'react';
-import Message from "./Message";
+import MessageEdit from "./MessageEdit";
 import Switch from "react-bootstrap/Switch";
 import {Route} from 'react-router-dom';
 import Login from "./Login";
@@ -9,10 +9,10 @@ import {Container} from "react-bootstrap";
 
 const Content = () => {
     return (
-        <Container className={"withBorder"}>
+        <Container>
             <Switch>
                 <Route exact path={"/message"}>
-                    <Message/>
+                    <MessageEdit/>
                 </Route>
                 <Route path={"/messages/:pageNr?"}>
                     <Messages/>

@@ -12,7 +12,7 @@ const Sidebar = () => {
     const dispatch = useDispatch();
 
     return (
-        <Container className={"withBorder"}>
+        <Container>
             <Row>
                 <Col>
                     <Nav defaultActiveKey="/" className="flex-column">

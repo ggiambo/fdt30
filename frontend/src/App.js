@@ -7,7 +7,8 @@ import {Col, Container, Row} from "react-bootstrap";
 
 const App = () => {
     return (
-        <Container fluid>
+        <Container>
+            <Row>&nbsp;{/*Spacer*/}</Row>
             <Row>
                 <Col><Header/></Col>
             </Row>

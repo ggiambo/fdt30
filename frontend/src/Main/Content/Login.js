@@ -3,7 +3,7 @@ import {Button, Col, Container, Form, Row} from "react-bootstrap";
 import {login} from "../../app/userSlice";
 import {useDispatch} from "react-redux";
 import {setDanger, setSuccess, setWarning} from "../../app/messagesSlice";
-import {DEFAULT_HEADERS, LOGIN_URL} from "../../apiActions/const";
+import {DEFAULT_HEADERS, LOGIN_URL} from "../../app/const";
 import {useHistory} from "react-router-dom";
 
 const Login = () => {

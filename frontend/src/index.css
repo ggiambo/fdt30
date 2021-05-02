@@ -16,7 +16,7 @@ a:hover {
 body {
     margin: 0;
     font-family: 'Roboto', sans-serif !important;
-    background-color: lightgray !important;
+    /*background-color: lightgray !important;*/
 }
 
 code {
@@ -24,9 +24,3 @@ code {
     monospace;
 }
 
-.withBorder {
-    background-color: white;
-    color: black;
-    border: 1px solid lightgray;
-    border-radius: .3em
-}

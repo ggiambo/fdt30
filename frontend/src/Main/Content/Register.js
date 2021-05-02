@@ -1,7 +1,7 @@
 import React, {Fragment, useState} from 'react';
 import {Alert, Button, Col, Form, Row} from "react-bootstrap";
 import {doLogin} from "./Login";
-import {DEFAULT_HEADERS, USER_URL} from "../../apiActions/const";
+import {DEFAULT_HEADERS, USER_URL} from "../../app/const";
 import {useDispatch} from "react-redux";
 import {setDanger} from "../../app/messagesSlice";
 
