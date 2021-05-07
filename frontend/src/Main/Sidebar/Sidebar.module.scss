@@ -1,8 +1,19 @@
-.selected {
-    font-weight: bolder;
-    padding-left: 0.3em;
+.selectedLink {
+  font-weight: bolder;
+  padding-left: 0.3em;
+
+  &:before {
+    content: "> ";
+  }
 }
 
-.selected::before {
-    content: "> ";
+.link {
+  color: black;
+  text-decoration: none;
+
+  &:hover {
+    color: black;
+    font-weight: bolder;
+    text-decoration: none;
+  }
 }

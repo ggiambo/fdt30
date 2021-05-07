@@ -18,7 +18,9 @@ const Messages = () => {
                 <Col>
                     <h3>Messages</h3>
                     {messages.map((item, index) =>
-                        <MessageView key={index} subject={item.subject} markdown={item.content}/>
+                        <div  className={"mb-2"}>
+                            <MessageView key={index} subject={item.subject} markdown={item.content}/>
+                        </div>
                     )}
                 </Col>
             </Row>

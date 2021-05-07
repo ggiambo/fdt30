@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {Button, Col, Container, Form, Row, Tab, Tabs} from "react-bootstrap";
 import styles from './MessageEdit.module.scss';
 import MessageView from "./MessageView";
-import {AUTH_HEADERS, MESSAGE_URL} from "../../app/const";
+import {getAuthHeaders, MESSAGE_URL} from "../../app/const";
 import {delWarning, setWarning} from "../../app/alertsSlice";
 import {useDispatch} from "react-redux";
 
@@ -53,7 +53,7 @@ const MessageEdit = ({messageMarkdown = ""}) => {
 const saveNewMessage = (subject, content, dispatch) => {
     fetch(MESSAGE_URL, {
         method: "POST",
-        headers: AUTH_HEADERS,
+        headers: getAuthHeaders(),
         mode: "cors",
         body: JSON.stringify({
             subject: subject,

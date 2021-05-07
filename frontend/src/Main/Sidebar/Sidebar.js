@@ -16,14 +16,18 @@ const Sidebar = () => {
             <Row>
                 <Col>
                     <Nav defaultActiveKey="/" className="flex-column">
-                        <NavLink to={"/messages/"} activeClassName={styles.selected}>Messages</NavLink>
+                        <NavLink to={"/messages/"} className={styles.link}
+                                 activeClassName={styles.selectedLink}>Messages</NavLink>
                         {isLogged &&
-                        <NavLink to={"/message"} activeClassName={styles.selected}>Message</NavLink>
+                        <NavLink to={"/message"} className={styles.link}
+                                 activeClassName={styles.selectedLink}>Message</NavLink>
                         }
                         {!isLogged &&
                         <Fragment>
-                            <NavLink to={"/login"} activeClassName={styles.selected}>Login</NavLink>
-                            <NavLink to={"/register"} activeClassName={styles.selected}>Register</NavLink>
+                            <NavLink to={"/login"} className={styles.link}
+                                     activeClassName={styles.selectedLink}>Login</NavLink>
+                            <NavLink to={"/register"} className={styles.link}
+                                     activeClassName={styles.selectedLink}>Register</NavLink>
                         </Fragment>
                         }
                         {isLogged &&
