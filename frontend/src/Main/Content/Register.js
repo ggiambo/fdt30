@@ -3,7 +3,7 @@ import {Alert, Button, Col, Form, Row} from "react-bootstrap";
 import {doLogin} from "./Login";
 import {DEFAULT_HEADERS, USER_URL} from "../../app/const";
 import {useDispatch} from "react-redux";
-import {setDanger} from "../../app/messagesSlice";
+import {setDanger} from "../../app/alertsSlice";
 
 const Register = () => {
 

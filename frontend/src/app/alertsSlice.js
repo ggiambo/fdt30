@@ -1,7 +1,7 @@
 import {createSlice} from '@reduxjs/toolkit'
 
-export const messagesSlice = createSlice({
-    name: 'messages',
+export const alertsSlice = createSlice({
+    name: 'alerts',
     initialState: {
         success: null,
         warning: null,
@@ -18,10 +18,10 @@ export const messagesSlice = createSlice({
             state.warning = action.payload;
         },
         delWarning: (state) => {
-            state.success = null;
+            state.warning = null;
         },
         setDanger: (state, action) => {
-            state.success = action.payload;
+            state.danger = action.payload;
         },
         delDanger: (state) => {
             state.success = null;
@@ -29,5 +29,5 @@ export const messagesSlice = createSlice({
     }
 });
 
-export const {setSuccess, delSuccess, setWarning, delWarning, setDanger, delDanger} = messagesSlice.actions
-export default messagesSlice.reducer
+export const {setSuccess, delSuccess, setWarning, delWarning, setDanger, delDanger} = alertsSlice.actions
+export default alertsSlice.reducer

@@ -1,18 +1,18 @@
 import React from 'react';
 import {Alert, Col, Container, Row} from "react-bootstrap";
 import {useDispatch, useSelector} from "react-redux";
-import {delDanger, delSuccess, delWarning} from "../app/messagesSlice";
+import {delDanger, delSuccess, delWarning} from "../app/alertsSlice";
 
-const Messages = () => {
+const Alerts = () => {
 
     const dispatch = useDispatch()
 
-    const success = useSelector(state => state.messages.success);
-    const warning = useSelector(state => state.messages.warning);
-    const danger = useSelector(state => state.messages.danger);
+    const success = useSelector(state => state.alerts.success);
+    const warning = useSelector(state => state.alerts.warning);
+    const danger = useSelector(state => state.alerts.danger);
 
     return (
-        <Container>
+        <Container className={"mt-1"}>
             {success &&
             <Row>
                 <Col>
@@ -38,4 +38,4 @@ const Messages = () => {
     )
 };
 
-export default Messages;
+export default Alerts;

@@ -3,7 +3,7 @@ import {Button, Col, Container, Form, Row, Tab, Tabs} from "react-bootstrap";
 import styles from './Message.module.css';
 import MessageView from "./MessageView";
 import {AUTH_HEADERS, MESSAGE_URL} from "../../app/const";
-import {delWarning, setWarning} from "../../app/messagesSlice";
+import {delWarning, setWarning} from "../../app/alertsSlice";
 import {useDispatch} from "react-redux";
 
 const MessageEdit = ({messageMarkdown = ""}) => {
@@ -20,18 +20,21 @@ const MessageEdit = ({messageMarkdown = ""}) => {
                     <Tabs defaultActiveKey="edit" id="uncontrolled-tab-example">
                         <Tab eventKey="edit" title="Edit">
                             <Form.Group>
-                                <Form.Control type={"text"}
-                                              placeholder={"Subject"}
-                                              onChange={(e) => setSubject(e.target.value)}
-                                              value={subject}
+                                <Form.Control
+                                    className={"shadow-none"}
+                                    type={"text"}
+                                    placeholder={"Subject"}
+                                    onChange={(e) => setSubject(e.target.value)}
+                                    value={subject}
                                 />
                             </Form.Group>
                             <Form.Group>
-                                <Form.Control as={"textarea"}
-                                              rows={20}
-                                              className={styles.messageSize}
-                                              onChange={(e) => setMarkdown(e.target.value)}
-                                              value={markDown}/>
+                                <Form.Control
+                                    as={"textarea"}
+                                    rows={20}
+                                    className={styles.messageSize + " shadow-none"}
+                                    onChange={(e) => setMarkdown(e.target.value)}
+                                    value={markDown}/>
                             </Form.Group>
                         </Tab>
                         <Tab eventKey="view" title="Preview">

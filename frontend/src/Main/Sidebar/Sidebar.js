@@ -4,7 +4,7 @@ import {NavLink} from "react-router-dom";
 import styles from './Sidebar.module.css';
 import {useDispatch, useSelector} from "react-redux";
 import {logout} from "../../app/userSlice";
-import {setSuccess} from "../../app/messagesSlice";
+import {setSuccess} from "../../app/alertsSlice";
 
 const Sidebar = () => {
 

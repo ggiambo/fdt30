@@ -1,10 +1,10 @@
 import {configureStore} from '@reduxjs/toolkit';
 import userReducer from './userSlice';
-import messagesReducer from './messagesSlice';
+import alertsReducer from './alertsSlice';
 
 export default configureStore({
     reducer: {
         user: userReducer,
-        messages: messagesReducer,
+        alerts: alertsReducer,
     },
 })

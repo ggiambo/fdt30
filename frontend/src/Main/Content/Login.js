@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import {Button, Col, Container, Form, Row} from "react-bootstrap";
 import {login} from "../../app/userSlice";
 import {useDispatch} from "react-redux";
-import {setDanger, setSuccess, setWarning} from "../../app/messagesSlice";
+import {setDanger, setSuccess, setWarning} from "../../app/alertsSlice";
 import {DEFAULT_HEADERS, LOGIN_URL} from "../../app/const";
 import {useHistory} from "react-router-dom";
 
@@ -12,7 +12,6 @@ const Login = () => {
     const [password, setPassword] = useState("");
 
     const history = useHistory();
-
     const dispatch = useDispatch();
 
     return (
@@ -29,6 +28,7 @@ const Login = () => {
                             <Form>
                                 <Form.Group>
                                     <Form.Control
+                                        className={"shadow-none"}
                                         type="text"
                                         placeholder="username"
                                         value={username}
@@ -37,6 +37,7 @@ const Login = () => {
                                 </Form.Group>
                                 <Form.Group>
                                     <Form.Control
+                                        className={"shadow-none"}
                                         type="password"
                                         placeholder="Password"
                                         value={password}
@@ -45,8 +46,7 @@ const Login = () => {
                                 </Form.Group>
                                 <Button variant="primary"
                                         onClick={() => {
-                                            doLogin(username, password, dispatch);
-                                            history.push("/message");
+                                            doLogin(username, password, dispatch, history);
                                         }}>Login</Button>
                             </Form>
                         </Col>
@@ -57,7 +57,7 @@ const Login = () => {
     )
 }
 
-export const doLogin = (username, password, dispatch) => {
+export const doLogin = (username, password, dispatch, history) => {
     fetch(LOGIN_URL, {
         method: "POST",
         headers: DEFAULT_HEADERS,
@@ -79,6 +79,7 @@ export const doLogin = (username, password, dispatch) => {
                 case 200:
                     dispatch(setSuccess("Login successfull"));
                     dispatch(login(username));
+                    history.push("/message");
                     break;
                 case 401:
                     dispatch(setWarning("Wrong username or password"));

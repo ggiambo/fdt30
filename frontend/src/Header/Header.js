@@ -3,7 +3,7 @@ import {Col, Container, Row} from "react-bootstrap";
 import {FaUser} from "react-icons/fa";
 import styles from './Header.module.css';
 import {useSelector} from "react-redux";
-import Messages from "./Messages";
+import Alerts from "./Alerts";
 
 const Header = () => {
 
@@ -29,7 +29,7 @@ const Header = () => {
                 </Col>
             </Row>
             <Row>
-                <Messages/>
+                <Alerts/>
             </Row>
         </Container>
     )
