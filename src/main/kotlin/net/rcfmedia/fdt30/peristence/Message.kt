@@ -5,11 +5,19 @@ import javax.persistence.*
 
 @Entity
 class Message(
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY) var id: Int? = null,
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    var id: Int? = null,
+
     var parentId: Int? = null,
-    @Column(updatable = false, insertable = false) var created: LocalDateTime? = null,
-    @OneToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id") var user: User? = null,
+
+    @Column(updatable = false, insertable = true) @GeneratedValue(strategy = GenerationType.AUTO)
+    var created: LocalDateTime? = null,
+
+    @OneToOne @JoinColumn(name = "user_id", referencedColumnName = "id")
+    var user: User? = null,
+
     var subject: String,
+
+    @Lob
     var content: String
 )
