@@ -1,0 +1,6 @@
+@import "../../App";
+
+.messageSize {
+    @extend .shadow-none;
+    max-height: 20em;
+}

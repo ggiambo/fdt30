@@ -1,9 +1,9 @@
 import React from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import Header from "./Header/Header";
 import Main from "./Main/Main";
 import Footer from "./Footer/Footer";
 import {Col, Container, Row} from "react-bootstrap";
+import './App.scss';
 
 const App = () => {
     return (

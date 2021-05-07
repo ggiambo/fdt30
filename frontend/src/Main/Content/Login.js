@@ -15,43 +15,37 @@ const Login = () => {
     const dispatch = useDispatch();
 
     return (
-        <Container fluid className={"mb-3"}>
-            <Row className={"mt-3"}>
+        <Container fluid>
+            <Row>
                 <Col>
-                    <Row>
-                        <Col>
-                            <h3>Login</h3>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col xs={3}>
-                            <Form>
-                                <Form.Group>
-                                    <Form.Control
-                                        className={"shadow-none"}
-                                        type="text"
-                                        placeholder="username"
-                                        value={username}
-                                        onChange={(e) => setUsername(e.target.value)}
-                                    />
-                                </Form.Group>
-                                <Form.Group>
-                                    <Form.Control
-                                        className={"shadow-none"}
-                                        type="password"
-                                        placeholder="Password"
-                                        value={password}
-                                        onChange={(e) => setPassword(e.target.value)}
-                                    />
-                                </Form.Group>
-                                <Button variant="primary"
-                                        onClick={() => {
-                                            doLogin(username, password, dispatch, history);
-                                        }}>Login</Button>
-                            </Form>
-                        </Col>
-                    </Row>
+                    <h3>Login</h3>
+                    <Form.Group>
+                        <Form.Control
+                            className={"shadow-none"}
+                            type={"text"}
+                            placeholder={"Username"}
+                            value={username}
+                            onChange={(e) => setUsername(e.target.value)}
+                        />
+                    </Form.Group>
+                    <Form.Group>
+                        <Form.Control
+                            className={"shadow-none"}
+                            type="password"
+                            placeholder="Password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                        />
+                    </Form.Group>
                 </Col>
+            </Row>
+            <Row>
+                <Button
+                    variant="primary"
+                    onClick={() => doLogin(username, password, dispatch, history)}
+                >
+                    Login
+                </Button>
             </Row>
         </Container>
     )

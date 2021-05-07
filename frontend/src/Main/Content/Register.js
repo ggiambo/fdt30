@@ -1,5 +1,5 @@
 import React, {Fragment, useState} from 'react';
-import {Alert, Button, Col, Form, Row} from "react-bootstrap";
+import {Alert, Button, Col, Container, Form, Row} from "react-bootstrap";
 import {doLogin} from "./Login";
 import {DEFAULT_HEADERS, USER_URL} from "../../app/const";
 import {useDispatch} from "react-redux";
@@ -7,7 +7,6 @@ import {setDanger} from "../../app/alertsSlice";
 
 const Register = () => {
 
-    const [visibleAlert, setVisibleAlert] = useState(false)
     const [name, setName] = useState("")
     const [password, setPassword] = useState("")
     const [passwordConfirm, setPasswordConfirm] = useState("")
@@ -31,40 +30,41 @@ const Register = () => {
     }
 
     return (
-        <Fragment>
-            <Row className={"p-3"}>
+        <Container fluid>
+            <Row>
                 <Col>
-                    {visibleAlert &&
-                    <Alert variant={"warning"} onClose={() => setVisibleAlert(false)} dismissible>
-                        Cannot create user
-                    </Alert>
-                    }
                     <h3>Create account</h3>
                     <Form.Group>
-                        <Form.Control type={"text"}
-                                      placeholder={"Username"}
-                                      onChange={(e) => setName(e.target.value)}
-                                      value={name}
+                        <Form.Control
+                            className={"shadow-none"}
+                            type={"text"}
+                            placeholder={"Username"}
+                            onChange={(e) => setName(e.target.value)}
+                            value={name}
                         />
                     </Form.Group>
                     <Form.Group>
-                        <Form.Control type={"password"}
-                                      placeholder={"Password"}
-                                      onChange={(e) => setPassword(e.target.value)}
-                                      value={password}/>
+                        <Form.Control
+                            className={"shadow-none"}
+                            ype={"password"}
+                            placeholder={"Password"}
+                            onChange={(e) => setPassword(e.target.value)}
+                            value={password}/>
                     </Form.Group>
                     <Form.Group>
-                        <Form.Control type={"password"}
-                                      placeholder={"Confirm Password"}
-                                      onChange={(e) => setPasswordConfirm(e.target.value)}
-                                      value={passwordConfirm}/>
+                        <Form.Control
+                            className={"shadow-none"}
+                            type={"password"}
+                            placeholder={"Confirm Password"}
+                            onChange={(e) => setPasswordConfirm(e.target.value)}
+                            value={passwordConfirm}/>
                     </Form.Group>
                 </Col>
             </Row>
             <Row>
                 <Button disabled={disabled()} onClick={() => doRegister(name, password, dispatch)}>Save</Button>
             </Row>
-        </Fragment>
+        </Container>
     );
 }
 

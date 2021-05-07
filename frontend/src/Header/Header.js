@@ -1,7 +1,7 @@
 import React from 'react';
 import {Col, Container, Row} from "react-bootstrap";
 import {FaUser} from "react-icons/fa";
-import styles from './Header.module.css';
+import styles from './Header.module.scss';
 import {useSelector} from "react-redux";
 import Alerts from "./Alerts";
 

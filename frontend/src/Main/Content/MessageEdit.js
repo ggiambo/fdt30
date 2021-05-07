@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {Button, Col, Container, Form, Row, Tab, Tabs} from "react-bootstrap";
-import styles from './Message.module.css';
+import styles from './MessageEdit.module.scss';
 import MessageView from "./MessageView";
 import {AUTH_HEADERS, MESSAGE_URL} from "../../app/const";
 import {delWarning, setWarning} from "../../app/alertsSlice";
@@ -32,7 +32,7 @@ const MessageEdit = ({messageMarkdown = ""}) => {
                                 <Form.Control
                                     as={"textarea"}
                                     rows={20}
-                                    className={styles.messageSize + " shadow-none"}
+                                    className={styles.messageSize}
                                     onChange={(e) => setMarkdown(e.target.value)}
                                     value={markDown}/>
                             </Form.Group>

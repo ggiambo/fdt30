@@ -13,9 +13,10 @@ const Messages = () => {
     }, [pageNr])
 
     return (
-        <Container>
-            <Row className={"p-3"}>
+        <Container fluid>
+            <Row>
                 <Col>
+                    <h3>Messages</h3>
                     {messages.map((item, index) =>
                         <MessageView key={index} subject={item.subject} markdown={item.content}/>
                     )}

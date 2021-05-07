@@ -1,7 +1,7 @@
 import React, {Fragment} from 'react';
 import {Col, Container, Nav, Row} from "react-bootstrap";
 import {NavLink} from "react-router-dom";
-import styles from './Sidebar.module.css';
+import styles from './Sidebar.module.scss';
 import {useDispatch, useSelector} from "react-redux";
 import {logout} from "../../app/userSlice";
 import {setSuccess} from "../../app/alertsSlice";
