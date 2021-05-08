@@ -18,8 +18,8 @@ const Messages = () => {
                 <Col>
                     <h3>Messages</h3>
                     {messages.map((item, index) =>
-                        <div  className={"mb-2"}>
-                            <MessageView key={index} subject={item.subject} markdown={item.content}/>
+                        <div className={"mb-2"}>
+                            <MessageView key={index} subject={item.subject} markdown={item.content} isPreview={false}/>
                         </div>
                     )}
                 </Col>

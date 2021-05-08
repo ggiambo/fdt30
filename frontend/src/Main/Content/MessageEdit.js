@@ -14,9 +14,10 @@ const MessageEdit = ({messageMarkdown = ""}) => {
     const dispatch = useDispatch();
 
     return (
-        <Container>
-            <Row className={"p-3"}>
+        <Container fluid>
+            <Row>
                 <Col>
+                    <h3>New message</h3>
                     <Tabs defaultActiveKey="edit" id="uncontrolled-tab-example">
                         <Tab eventKey="edit" title="Edit">
                             <Form.Group>
@@ -27,8 +28,7 @@ const MessageEdit = ({messageMarkdown = ""}) => {
                                     onChange={(e) => setSubject(e.target.value)}
                                     value={subject}
                                 />
-                            </Form.Group>
-                            <Form.Group>
+
                                 <Form.Control
                                     as={"textarea"}
                                     rows={20}
@@ -38,13 +38,25 @@ const MessageEdit = ({messageMarkdown = ""}) => {
                             </Form.Group>
                         </Tab>
                         <Tab eventKey="view" title="Preview">
-                            <MessageView subject={subject} markdown={markDown}/>
+                            <Form.Group>
+                                <MessageView subject={subject} markdown={markDown} isPreview={true}/>
+                            </Form.Group>
                         </Tab>
                     </Tabs>
                 </Col>
             </Row>
             <Row>
-                <Button onClick={() => saveNewMessage(subject, markDown, dispatch)}>Save</Button>
+                <Col>
+                    <img alt={"Markdown logo"} className={styles.markdownLogo} src={"./markdown.svg"}/>
+                    &nbsp;
+                    <small><a href={"https://www.markdownguide.org/basic-syntax/"} target={"_blank"}>Markdown Syntax</a></small>
+                </Col>
+            </Row>
+            <Row>&nbsp;</Row>
+            <Row>
+                <Col>
+                    <Button onClick={() => saveNewMessage(subject, markDown, dispatch)}>Save</Button>
+                </Col>
             </Row>
         </Container>
     )
