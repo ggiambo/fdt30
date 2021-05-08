@@ -10,7 +10,7 @@ class Message(
 
     var parentId: Int? = null,
 
-    @Column(updatable = false, insertable = true) @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(updatable = false, insertable = true)
     var created: LocalDateTime? = null,
 
     @OneToOne @JoinColumn(name = "user_id", referencedColumnName = "id")
@@ -19,5 +19,10 @@ class Message(
     var subject: String,
 
     @Lob
-    var content: String
-)
+    var content: String,
+) {
+    @PrePersist
+    fun prePersist() {
+        created = LocalDateTime.now()
+    }
+}
