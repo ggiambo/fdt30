@@ -49,7 +49,11 @@ const MessageEdit = ({messageMarkdown = ""}) => {
                 <Col>
                     <img alt={"Markdown logo"} className={styles.markdownLogo} src={"./markdown.svg"}/>
                     &nbsp;
-                    <small><a href={"https://www.markdownguide.org/basic-syntax/"} target={"_blank"}>Markdown Syntax</a></small>
+                    <small>
+                        <a href={"https://www.markdownguide.org/basic-syntax/"} target={"_blank"} rel={"noreferrer"}>
+                            Markdown Syntax
+                        </a>
+                    </small>
                 </Col>
             </Row>
             <Row>&nbsp;</Row>

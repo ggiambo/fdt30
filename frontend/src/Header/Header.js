@@ -1,7 +1,7 @@
 import React from 'react';
 import {Col, Container, Row} from "react-bootstrap";
 import {FaUser} from "react-icons/fa";
-import styles from './Header.module.scss';
+import '../App.scss';
 import {useSelector} from "react-redux";
 import Alerts from "./Alerts";
 
@@ -12,21 +12,17 @@ const Header = () => {
 
     return (
         <Container>
-            <Row className={styles.header + " p-2 sticky-top border-bottom"}>
+            <Row className={"headerFooter p-2 sticky-top border-bottom align-items-center"}>
                 <Col>
-                    <h4>Header</h4>
+                    <h4 style={{marginBottom: 0}}>Header</h4>
                 </Col>
+                {isLogged &&
                 <Col>
-                    {isLogged &&
-                    <Row>
-                        <Col>
-                            <FaUser/>
-                            &nbsp;
-                            {username}
-                        </Col>
-                    </Row>
-                    }
+                    <FaUser/>
+                    &nbsp;
+                    {username}
                 </Col>
+                }
             </Row>
             <Row>
                 <Alerts/>

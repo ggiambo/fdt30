@@ -1,5 +1,5 @@
-import React, {Fragment, useState} from 'react';
-import {Alert, Button, Col, Container, Form, Row} from "react-bootstrap";
+import React, {useState} from 'react';
+import {Button, Col, Container, Form, Row} from "react-bootstrap";
 import {doLogin} from "./Login";
 import {DEFAULT_HEADERS, USER_URL} from "../../app/const";
 import {useDispatch} from "react-redux";
