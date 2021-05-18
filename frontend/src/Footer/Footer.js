@@ -7,7 +7,7 @@ const Footer = () => {
         <Container className={"mt-1"}>
             <Row className={"headerFooter p-1 fixed-bottom align-items-center"}>
                 <Col>
-                    <h6 className={"mb-0"}>Footer</h6>
+                    <h6 className={"mb-0"}>Version 0.1</h6>
                 </Col>
                 <Col>
                     <h6 className={"mb-0 float-lg-right"}>(c) El Jambo</h6>

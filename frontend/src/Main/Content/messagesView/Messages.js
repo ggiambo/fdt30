@@ -30,8 +30,10 @@ const Messages = () => {
                     )}
                 </Col>
             </Row>
-            <Row>
-                <MessagesNavigator actualPage={pageNr}/>
+            <Row className={"mb-3"}>
+                <Col>
+                    <MessagesNavigator actualPage={pageNr}/>
+                </Col>
             </Row>
         </Fragment>
     )

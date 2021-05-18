@@ -12,37 +12,25 @@ const MessagesNavigator = ({actualPage}) => {
         history.push(`/messages/${pageNr}`);
     }
 
-    const isFirstPage = actualPage === 1;
-    const isLastPage = actualPage === totalPages;
+    const goToFirst = <Pagination.First onClick={() => getMessages(0, history)}/>
+    const goTolast = <Pagination.Last onClick={() => getMessages(totalPages - 1, history)}/>
 
-    const pagesBefore = [];
-    if (actualPage > 1) {
-        pagesBefore.push(<Pagination.Prev onClick={() => getMessages(actualPage - 1, history)}/>); // previous
-        pagesBefore.push(<Pagination.Item onClick={() => getMessages(1, history)}>1</Pagination.Item>); // first page
-    }
+    const goToPrevious = actualPage > 0 ?
+        <Pagination.Prev onClick={() => getMessages(actualPage - 1, history)}/> : null;
+    const goToNext = actualPage < totalPages - 1 ?
+        <Pagination.Next onClick={() => getMessages(totalPages - 1, history)}/> : null;
 
-    if (actualPage > 4) {
-        pagesBefore.push(
-            <Pagination.Ellipsis/>
-        );
-    }
-    if (actualPage > 2) {
-        pagesBefore.push(
-            <Pagination.Item onClick={() => getMessages(actualPage - 2, history)}>{actualPage - 2}</Pagination.Item>
-        ); // before-previous
-    }
-    if (actualPage > 3) {
-        pagesBefore.push(
-            <Pagination.Item onClick={() => getMessages(actualPage - 1, history)}>{actualPage - 1}</Pagination.Item>
-        ); // previous
-    }
+    const thisPage = <Pagination.Item>{parseInt(actualPage) + 1}</Pagination.Item>
+
+    const paginations = [goToFirst, goToPrevious, thisPage, goToNext, goTolast];
 
     return (<Pagination>
-            {pagesBefore.map((item, key) =>
-                <Fragment key={key}>
-                    {item}
-                </Fragment>
-            )}
+            {paginations.map((item, key) => {
+                if (item) {
+                    return (<Fragment key={key}>{item}</Fragment>);
+                }
+            })
+            }
         </Pagination>
     );
 }

@@ -14,7 +14,7 @@ const Header = () => {
         <Container className={"mb-2 mt-2"}>
             <Row className={"headerFooter p-2 mb-2 sticky-top align-items-center rounded"}>
                 <Col>
-                    <h4 style={{marginBottom: 0}}>Header</h4>
+                    <h4 style={{marginBottom: 0}}>Forum dei Troll 3.0</h4>
                 </Col>
                 {isLogged &&
                 <Col>
