@@ -83,7 +83,7 @@ const saveNewMessage = (subject, content, dispatch) => {
             switch (response.status) {
                 case 200:
                     dispatch(delWarning());
-                    window.location.href = MESSAGES_URL(0)
+                    window.location.href = window.location.origin + "/messages/0";
                     break;
                 default:
                     dispatch(setWarning("Errore nell'inserimento del messaggio"));
