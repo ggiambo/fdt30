@@ -11,8 +11,8 @@ const Header = () => {
     const username = useSelector(state => state.user.name)
 
     return (
-        <Container>
-            <Row className={"headerFooter p-2 sticky-top border-bottom align-items-center"}>
+        <Container className={"mb-2 mt-2"}>
+            <Row className={"headerFooter p-2 mb-2 sticky-top align-items-center rounded"}>
                 <Col>
                     <h4 style={{marginBottom: 0}}>Header</h4>
                 </Col>

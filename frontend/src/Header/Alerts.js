@@ -1,5 +1,5 @@
 import React from 'react';
-import {Alert, Col, Container, Row} from "react-bootstrap";
+import {Alert, Col} from "react-bootstrap";
 import {useDispatch, useSelector} from "react-redux";
 import {delDanger, delSuccess, delWarning} from "../app/alertsSlice";
 
@@ -12,29 +12,17 @@ const Alerts = () => {
     const danger = useSelector(state => state.alerts.danger);
 
     return (
-        <Container className={"mt-1"}>
+        <Col>
             {success &&
-            <Row>
-                <Col>
-                    <Alert variant={"success"} onClose={() => dispatch(delSuccess())} dismissible>{success}</Alert>
-                </Col>
-            </Row>
+            <Alert variant={"success"} onClose={() => dispatch(delSuccess())} dismissible>{success}</Alert>
             }
             {warning &&
-            <Row>
-                <Col>
-                    <Alert variant={"warning"} onClose={() => dispatch(delWarning())} dismissible>{warning}</Alert>
-                </Col>
-            </Row>
+            <Alert variant={"warning"} onClose={() => dispatch(delWarning())} dismissible>{warning}</Alert>
             }
             {danger &&
-            <Row>
-                <Col>
-                    <Alert variant={"danger"} onClose={() => dispatch(delDanger())} dismissible>{danger}</Alert>
-                </Col>
-            </Row>
+            <Alert variant={"danger"} onClose={() => dispatch(delDanger())} dismissible>{danger}</Alert>
             }
-        </Container>
+        </Col>
     )
 };
 

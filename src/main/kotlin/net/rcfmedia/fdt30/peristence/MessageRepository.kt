@@ -4,6 +4,6 @@ import org.springframework.data.repository.PagingAndSortingRepository
 
 interface MessageRepository : PagingAndSortingRepository<Message?, Int?> {
     companion object {
-        const val PAGE_SIZE = 3
+        const val PAGE_SIZE = 10
     }
 }

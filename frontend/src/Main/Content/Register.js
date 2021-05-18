@@ -1,9 +1,9 @@
-import React, {useState} from 'react';
-import {Button, Col, Container, Form, Row} from "react-bootstrap";
+import React, {Fragment, useState} from 'react';
+import {Button, Col, Form, Row} from "react-bootstrap";
 import {doLogin} from "./Login";
 import {DEFAULT_HEADERS, USER_URL} from "../../app/const";
 import {useDispatch} from "react-redux";
-import {setDanger} from "../../app/alertsSlice";
+import {setDanger, setWarning} from "../../app/alertsSlice";
 
 const Register = () => {
 
@@ -13,32 +13,16 @@ const Register = () => {
 
     const dispatch = useDispatch();
 
-    const disabled = () => {
-        if (!checkUsername() || !checkPassword()) {
-            return "disabled"
-        }
-    }
-
-    const checkUsername = () => {
-        return name.length >= 3;
-
-    }
-
-    const checkPassword = () => {
-        return password.length >= 3 && (password === passwordConfirm);
-
-    }
-
     return (
-        <Container fluid>
+        <Fragment>
             <Row>
                 <Col>
-                    <h3>Create account</h3>
+                    <h3>Registrati</h3>
                     <Form.Group>
                         <Form.Control
                             className={"shadow-none"}
                             type={"text"}
-                            placeholder={"Username"}
+                            placeholder={"Nome utente"}
                             onChange={(e) => setName(e.target.value)}
                             value={name}
                         />
@@ -46,7 +30,7 @@ const Register = () => {
                     <Form.Group>
                         <Form.Control
                             className={"shadow-none"}
-                            ype={"password"}
+                            type={"password"}
                             placeholder={"Password"}
                             onChange={(e) => setPassword(e.target.value)}
                             value={password}/>
@@ -55,20 +39,24 @@ const Register = () => {
                         <Form.Control
                             className={"shadow-none"}
                             type={"password"}
-                            placeholder={"Confirm Password"}
+                            placeholder={"Conferma password"}
                             onChange={(e) => setPasswordConfirm(e.target.value)}
                             value={passwordConfirm}/>
                     </Form.Group>
                 </Col>
             </Row>
             <Row>
-                <Button disabled={disabled()} onClick={() => doRegister(name, password, dispatch)}>Save</Button>
+                <Button onClick={() => doRegister(name, password, passwordConfirm, dispatch)}>Crea</Button>
             </Row>
-        </Container>
+        </Fragment>
     );
 }
 
-const doRegister = (username, password, dispatch) => {
+const doRegister = (username, password, passwordConfirm, dispatch) => {
+    if (!validate(username, password, passwordConfirm, dispatch)) {
+        return
+    }
+
     fetch(USER_URL, {
         method: "POST",
         headers: DEFAULT_HEADERS,
@@ -83,13 +71,33 @@ const doRegister = (username, password, dispatch) => {
                 case 200:
                     doLogin(username, password, dispatch);
                     break;
+                case 409:
+                    dispatch(setDanger(`L'utente "${username}" esiste già`));
+                    break;
                 default:
-                    dispatch(setDanger("Unknown error"));
+                    dispatch(setDanger("Errore nella registrazione"));
             }
         })
         .catch(error => {
             console.error(error)
         })
+}
+
+const validate = (username, password, passwordConfirm, dispatch) => {
+    if (username.length < 2 || username.length > 20) {
+        dispatch(setWarning("Nome utente minimo 2 caratteri, massimo 20"));
+        return false;
+    }
+    if (password.length < 6 || password.length > 20) {
+        dispatch(setWarning("Password minimo 6 caratteri, massimo 20"));
+        return false;
+    }
+    if (password !== passwordConfirm) {
+        dispatch(setWarning("Le due password non corrispondono"));
+        return false;
+    }
+
+    return true;
 }
 
 export default Register

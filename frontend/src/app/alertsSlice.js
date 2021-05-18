@@ -24,7 +24,7 @@ export const alertsSlice = createSlice({
             state.danger = action.payload;
         },
         delDanger: (state) => {
-            state.success = null;
+            state.danger = null;
         },
     }
 });

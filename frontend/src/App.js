@@ -8,15 +8,12 @@ import './App.scss';
 const App = () => {
     return (
         <Container>
-            <Row>&nbsp;{/*Spacer*/}</Row>
             <Row>
                 <Col><Header/></Col>
             </Row>
-            <Row>&nbsp;{/*Spacer*/}</Row>
             <Row>
                 <Col><Main/></Col>
             </Row>
-            <Row>&nbsp;{/*Spacer*/}</Row>
             <Row>
                 <Col><Footer/></Col>
             </Row>

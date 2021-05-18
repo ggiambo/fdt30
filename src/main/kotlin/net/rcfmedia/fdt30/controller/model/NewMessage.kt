@@ -4,11 +4,11 @@ import javax.validation.constraints.NotNull
 import javax.validation.constraints.Size
 
 class NewMessage(
-    @NotNull
-    @Size(min=1, max=255)
+    @field:NotNull
+    @field:Size(min = 1, max = 255)
     val subject: String,
 
-    @NotNull
-    @Size(min=1, max=4096)
+    @field:NotNull
+    @field:Size(min = 1, max = 4096)
     val content: String
 )

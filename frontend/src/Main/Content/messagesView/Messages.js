@@ -1,5 +1,5 @@
-import React, {useEffect} from 'react';
-import {Col, Container, Row} from "react-bootstrap";
+import React, {Fragment, useEffect} from 'react';
+import {Col, Row} from "react-bootstrap";
 import MessageView from "./MessageView";
 import {DEFAULT_HEADERS, MESSAGES_URL} from "../../../app/const";
 import {useDispatch, useSelector} from "react-redux";
@@ -19,10 +19,10 @@ const Messages = () => {
     const dispatch = useDispatch();
 
     return (
-        <Container fluid>
+        <Fragment>
             <Row>
                 <Col>
-                    <h3>Messages</h3>
+                    <h3>Messaggi</h3>
                     {messages.map((message, index) =>
                         <div className={"mb-4"}>
                             <MessageView key={index} message={message}/>
@@ -33,7 +33,7 @@ const Messages = () => {
             <Row>
                 <MessagesNavigator actualPage={pageNr}/>
             </Row>
-        </Container>
+        </Fragment>
     )
 }
 

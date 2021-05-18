@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import {Button, Col, Container, Form, Row, Tab, Tabs} from "react-bootstrap";
+import React, {Fragment, useState} from 'react';
+import {Button, Col, Form, Row, Tab, Tabs} from "react-bootstrap";
 import styles from './MessageEdit.module.scss';
 import {getAuthHeaders, MESSAGE_URL} from "../../../app/const";
 import {delWarning, setWarning} from "../../../app/alertsSlice";
@@ -14,17 +14,17 @@ const MessageEdit = ({messageMarkdown = ""}) => {
     const dispatch = useDispatch();
 
     return (
-        <Container fluid>
+        <Fragment>
             <Row>
                 <Col>
-                    <h3>New message</h3>
+                    <h3>Nuovo messaggio</h3>
                     <Tabs defaultActiveKey="edit" id="uncontrolled-tab-example">
-                        <Tab eventKey="edit" title="Edit">
+                        <Tab eventKey="edit" title="Messaggio">
                             <Form.Group>
                                 <Form.Control
                                     className={"shadow-none"}
                                     type={"text"}
-                                    placeholder={"Subject"}
+                                    placeholder={"Soggetto"}
                                     onChange={(e) => setSubject(e.target.value)}
                                     value={subject}
                                 />
@@ -62,11 +62,14 @@ const MessageEdit = ({messageMarkdown = ""}) => {
                     <Button onClick={() => saveNewMessage(subject, markDown, dispatch)}>Save</Button>
                 </Col>
             </Row>
-        </Container>
+        </Fragment>
     )
 }
 
 const saveNewMessage = (subject, content, dispatch) => {
+    if (!validate(subject, content, dispatch)) {
+        return
+    }
     fetch(MESSAGE_URL, {
         method: "POST",
         headers: getAuthHeaders(),
@@ -83,12 +86,25 @@ const saveNewMessage = (subject, content, dispatch) => {
                     window.location.href = window.location.origin + "/messages/0"
                     break;
                 default:
-                    dispatch(setWarning("Cannot insert message"));
+                    dispatch(setWarning("Errore nell'inserimento del messaggio"));
             }
         })
         .catch(error => {
             console.error(error);
         })
+}
+
+const validate = (subject, content, dispatch) => {
+    if (!subject || subject.length < 2 || subject.length > 20) {
+        dispatch(setWarning("Soggetto: Minimo 1 carattere, massimo 255"));
+        return false;
+    }
+    if (!content || content.length < 2 || content.length > 20) {
+        dispatch(setWarning("Testo: Minimo 1 carattere, massimo 4096"));
+        return false;
+    }
+
+    return true;
 }
 
 export default MessageEdit

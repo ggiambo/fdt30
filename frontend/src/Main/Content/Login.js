@@ -1,5 +1,5 @@
-import React, {useState} from "react";
-import {Button, Col, Container, Form, Row} from "react-bootstrap";
+import React, {Fragment, useState} from "react";
+import {Button, Col, Form, Row} from "react-bootstrap";
 import {login} from "../../app/userSlice";
 import {useDispatch} from "react-redux";
 import {setDanger, setSuccess, setWarning} from "../../app/alertsSlice";
@@ -15,7 +15,7 @@ const Login = () => {
     const dispatch = useDispatch();
 
     return (
-        <Container fluid>
+        <Fragment>
             <Row>
                 <Col>
                     <h3>Login</h3>
@@ -23,7 +23,7 @@ const Login = () => {
                         <Form.Control
                             className={"shadow-none"}
                             type={"text"}
-                            placeholder={"Username"}
+                            placeholder={"Nome utente"}
                             value={username}
                             onChange={(e) => setUsername(e.target.value)}
                         />
@@ -47,7 +47,7 @@ const Login = () => {
                     Login
                 </Button>
             </Row>
-        </Container>
+        </Fragment>
     )
 }
 
@@ -71,15 +71,15 @@ export const doLogin = (username, password, dispatch, history) => {
 
             switch (response.status) {
                 case 200:
-                    dispatch(setSuccess("Login successfull"));
+                    dispatch(setSuccess("Login OK"));
                     dispatch(login(username));
                     history.push("/message");
                     break;
                 case 401:
-                    dispatch(setWarning("Wrong username or password"));
+                    dispatch(setWarning("Nome utente o password errati"));
                     break;
                 default:
-                    dispatch(setDanger("Unknown error"));
+                    dispatch(setDanger("Errore sconosciuto"));
             }
         })
         .catch(error => {

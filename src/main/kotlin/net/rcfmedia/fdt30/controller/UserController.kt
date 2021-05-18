@@ -39,17 +39,8 @@ class UserController(
     @PostMapping("/user")
     fun registerNewUser(@RequestBody newUser: NewUser): ResponseEntity<String> {
         if (userRepository.findByName(newUser.name) != null) {
-            return ResponseEntity("user ${newUser.name} already exists", HttpStatus.FORBIDDEN)
+            return ResponseEntity("user ${newUser.name} already exists", HttpStatus.CONFLICT)
         }
-
-        if (newUser.name.length < 3) {
-            return ResponseEntity("username too short", HttpStatus.FORBIDDEN)
-        }
-
-        if (newUser.password.length < 3) {
-            return ResponseEntity("password too short", HttpStatus.FORBIDDEN)
-        }
-
         val user = User(name = newUser.name, password = passwordEncoder.encode(newUser.password))
         userRepository.save(user)
 

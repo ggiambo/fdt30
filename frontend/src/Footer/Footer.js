@@ -4,13 +4,13 @@ import "../App.scss";
 
 const Footer = () => {
     return (
-        <Container>
+        <Container className={"mt-1"}>
             <Row className={"headerFooter p-1 fixed-bottom align-items-center"}>
                 <Col>
-                    <h6  style={{marginBottom: 0}}>Footer</h6>
+                    <h6 className={"mb-0"}>Footer</h6>
                 </Col>
                 <Col>
-                    <h6  style={{marginBottom: 0}} className={"float-lg-right"}>(c) El Jambo</h6>
+                    <h6 className={"mb-0 float-lg-right"}>(c) El Jambo</h6>
                 </Col>
             </Row>
         </Container>
