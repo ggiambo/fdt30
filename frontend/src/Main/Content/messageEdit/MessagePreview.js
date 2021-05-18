@@ -2,9 +2,9 @@ import {Card} from "react-bootstrap";
 import React from "react";
 import marked from "marked";
 import DOMPurify from "dompurify";
-import styles from './MessageView.module.scss'
+import styles from './MessagePreview.module.scss';
 
-const MessageView = ({subject, markdown, isPreview}) => {
+const MessagePreview = ({subject, markdown}) => {
 
     const getHTMLFromMarkDown = (markDown) => {
         const resultHTML = marked(markDown, {
@@ -16,13 +16,13 @@ const MessageView = ({subject, markdown, isPreview}) => {
 
     return (
         <Card>
-            <Card.Header style={{padding: "0.375rem 0.75rem", minHeight: "2em"}}>{subject}</Card.Header>
-            <Card.Body style={{overflow: "auto", padding: "0.375rem 0.75rem"}}>
-                <div className={isPreview ? styles.messageViewContentPreview : styles.messageViewContent}
+            <Card.Header className={styles.messageHeader}>{subject}</Card.Header>
+            <Card.Body className={styles.messageBody}>
+                <div className={styles.messageViewContentPreview}
                      dangerouslySetInnerHTML={getHTMLFromMarkDown(markdown)}/>
             </Card.Body>
         </Card>
     )
 }
 
-export default MessageView
+export default MessagePreview

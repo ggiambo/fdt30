@@ -31,7 +31,7 @@ const Sidebar = () => {
                         </Fragment>
                         }
                         {isLogged &&
-                        <NavLink to="/" onClick={() => doLogout(dispatch)}>Logout</NavLink>
+                        <NavLink className={styles.link} to="/" onClick={() => doLogout(dispatch)}>Logout</NavLink>
                         }
                     </Nav>
                 </Col>

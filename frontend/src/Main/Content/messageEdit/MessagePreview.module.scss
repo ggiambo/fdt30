@@ -1,0 +1,18 @@
+@import 'src/App';
+@import "node_modules/bootstrap/scss/card";
+
+.messageViewContentPreview {
+  width: 100%;
+  max-height: 20em;
+  min-height: 20em;
+}
+
+.messageHeader {
+  padding: 0.375rem 0.75rem;
+  min-height: 2em;
+}
+
+.messageBody {
+  overflow: auto;
+  padding: 0.375rem 0.75rem;
+}

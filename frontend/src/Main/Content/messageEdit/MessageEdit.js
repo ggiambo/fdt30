@@ -1,10 +1,10 @@
 import React, {useState} from 'react';
 import {Button, Col, Container, Form, Row, Tab, Tabs} from "react-bootstrap";
 import styles from './MessageEdit.module.scss';
-import MessageView from "./MessageView";
-import {getAuthHeaders, MESSAGE_URL} from "../../app/const";
-import {delWarning, setWarning} from "../../app/alertsSlice";
+import {getAuthHeaders, MESSAGE_URL} from "../../../app/const";
+import {delWarning, setWarning} from "../../../app/alertsSlice";
 import {useDispatch} from "react-redux";
+import MessagePreview from "./MessagePreview";
 
 const MessageEdit = ({messageMarkdown = ""}) => {
 
@@ -39,7 +39,7 @@ const MessageEdit = ({messageMarkdown = ""}) => {
                         </Tab>
                         <Tab eventKey="view" title="Preview">
                             <Form.Group>
-                                <MessageView subject={subject} markdown={markDown} isPreview={true}/>
+                                <MessagePreview subject={subject} markdown={markDown} isPreview={true}/>
                             </Form.Group>
                         </Tab>
                     </Tabs>

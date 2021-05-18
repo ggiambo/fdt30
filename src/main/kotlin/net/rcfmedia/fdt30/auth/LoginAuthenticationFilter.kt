@@ -24,7 +24,7 @@ class LoginAuthenticationFilter(
 ) :
     UsernamePasswordAuthenticationFilter(authenticationManager) {
 
-    // token expires 100 from "now"
+    // token expires 100 years from "now"
     private val tokenExpirationDate = Date.from(
         ZonedDateTime.now().plusYears(100).toInstant()
     )
