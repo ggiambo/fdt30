@@ -1,5 +1,5 @@
 import React, {Fragment} from 'react';
-import {Col, Nav} from "react-bootstrap";
+import {Nav} from "react-bootstrap";
 import {NavLink} from "react-router-dom";
 import styles from './Sidebar.module.scss';
 import {useDispatch, useSelector} from "react-redux";

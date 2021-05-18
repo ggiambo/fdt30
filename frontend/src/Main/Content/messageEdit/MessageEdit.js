@@ -1,7 +1,7 @@
 import React, {Fragment, useState} from 'react';
 import {Button, Col, Form, Row, Tab, Tabs} from "react-bootstrap";
 import styles from './MessageEdit.module.scss';
-import {getAuthHeaders, MESSAGE_URL} from "../../../app/const";
+import {getAuthHeaders, MESSAGE_URL, MESSAGES_URL} from "../../../app/const";
 import {delWarning, setWarning} from "../../../app/alertsSlice";
 import {useDispatch} from "react-redux";
 import MessagePreview from "./MessagePreview";
@@ -83,7 +83,7 @@ const saveNewMessage = (subject, content, dispatch) => {
             switch (response.status) {
                 case 200:
                     dispatch(delWarning());
-                    window.location.href = window.location.origin + "/messages/0"
+                    window.location.href = MESSAGES_URL(0)
                     break;
                 default:
                     dispatch(setWarning("Errore nell'inserimento del messaggio"));

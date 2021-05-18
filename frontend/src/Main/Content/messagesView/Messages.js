@@ -9,14 +9,13 @@ import MessagesNavigator from "./MessagesNavigator";
 
 const Messages = () => {
 
+    const messages = useSelector(state => state.messages.messages);
+    const dispatch = useDispatch();
+
     let {pageNr} = useParams();
     useEffect(() => {
         fetchMessages(pageNr, dispatch)
-    }, [pageNr])
-
-    const messages = useSelector(state => state.messages.messages);
-
-    const dispatch = useDispatch();
+    }, [pageNr, dispatch])
 
     return (
         <Fragment>
@@ -24,15 +23,15 @@ const Messages = () => {
                 <Col>
                     <h3>Messaggi</h3>
                     {messages.map((message, index) =>
-                        <div className={"mb-4"}>
-                            <MessageView key={index} message={message}/>
+                        <div key={index} className={"mb-4"}>
+                            <MessageView message={message}/>
                         </div>
                     )}
                 </Col>
             </Row>
             <Row className={"mb-3"}>
                 <Col>
-                    <MessagesNavigator actualPage={pageNr}/>
+                    <MessagesNavigator actualPageNr={pageNr}/>
                 </Col>
             </Row>
         </Fragment>
