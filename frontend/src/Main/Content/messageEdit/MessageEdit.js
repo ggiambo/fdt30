@@ -99,7 +99,7 @@ const validate = (subject, content, dispatch) => {
         dispatch(setWarning("Soggetto: Minimo 1 carattere, massimo 255"));
         return false;
     }
-    if (!content || content.length < 2 || content.length > 20) {
+    if (!content || content.length < 2 || content.length > 4096) {
         dispatch(setWarning("Testo: Minimo 1 carattere, massimo 4096"));
         return false;
     }
