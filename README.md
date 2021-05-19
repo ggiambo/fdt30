@@ -1,4 +1,4 @@
-# fdt30 - La Terza Reincarnazione Del Forum Dei Troll
+# FdT30 - La Terza Reincarnazione Del Forum Dei Troll
 
 ## Prerequisiti
 **JDK** Se non hai Java Development Kit installato vergognati e vai subito su https://jdk.java.net/ e scaricati una Reference Implemetation (Per esempio https://jdk.java.net/java-se-ri/11)
