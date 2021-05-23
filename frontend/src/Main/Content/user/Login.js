@@ -1,9 +1,9 @@
 import React, {Fragment, useState} from "react";
 import {Button, Col, Form, Row} from "react-bootstrap";
-import {login} from "../../app/userSlice";
+import {login} from "../../../app/userSlice";
 import {useDispatch} from "react-redux";
-import {setDanger, setSuccess, setWarning} from "../../app/alertsSlice";
-import {DEFAULT_HEADERS, LOGIN_URL} from "../../app/const";
+import {setDanger, setSuccess, setWarning} from "../../../app/alertsSlice";
+import {DEFAULT_HEADERS, LOGIN_URL} from "../../../app/const";
 import {useHistory} from "react-router-dom";
 
 const Login = () => {
@@ -20,6 +20,7 @@ const Login = () => {
                 <Col>
                     <h3>Login</h3>
                     <Form.Group>
+                        <Form.Label>Nome utente</Form.Label>
                         <Form.Control
                             className={"shadow-none"}
                             type={"text"}
@@ -29,6 +30,7 @@ const Login = () => {
                         />
                     </Form.Group>
                     <Form.Group>
+                        <Form.Label>Password</Form.Label>
                         <Form.Control
                             className={"shadow-none"}
                             type="password"

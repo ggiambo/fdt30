@@ -1,15 +1,17 @@
 import React, {Fragment, useState} from 'react';
 import {Button, Col, Form, Row, Tab, Tabs} from "react-bootstrap";
 import styles from './MessageEdit.module.scss';
-import {getAuthHeaders, MESSAGE_URL, MESSAGES_URL} from "../../../app/const";
+import {getAuthHeaders, MESSAGE_URL} from "../../../app/const";
 import {delWarning, setWarning} from "../../../app/alertsSlice";
 import {useDispatch} from "react-redux";
 import MessagePreview from "./MessagePreview";
+import {useHistory} from "react-router-dom";
 
 const MessageEdit = ({messageMarkdown = ""}) => {
 
     const [markDown, setMarkdown] = useState(messageMarkdown);
     const [subject, setSubject] = useState("");
+    const history = useHistory();
 
     const dispatch = useDispatch();
 
@@ -59,14 +61,14 @@ const MessageEdit = ({messageMarkdown = ""}) => {
             <Row>&nbsp;</Row>
             <Row>
                 <Col>
-                    <Button onClick={() => saveNewMessage(subject, markDown, dispatch)}>Save</Button>
+                    <Button onClick={() => saveNewMessage(subject, markDown, dispatch, history)}>Save</Button>
                 </Col>
             </Row>
         </Fragment>
     )
 }
 
-const saveNewMessage = (subject, content, dispatch) => {
+const saveNewMessage = (subject, content, dispatch, history) => {
     if (!validate(subject, content, dispatch)) {
         return
     }
@@ -83,7 +85,7 @@ const saveNewMessage = (subject, content, dispatch) => {
             switch (response.status) {
                 case 200:
                     dispatch(delWarning());
-                    window.location.href = window.location.origin + "/messages/0";
+                    history.push("/messages/0");
                     break;
                 default:
                     dispatch(setWarning("Errore nell'inserimento del messaggio"));

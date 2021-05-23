@@ -1,14 +1,13 @@
 import React from 'react';
 import {Col, Container, Row} from "react-bootstrap";
-import {FaUser} from "react-icons/fa";
 import '../App.scss';
 import {useSelector} from "react-redux";
 import Alerts from "./Alerts";
+import UserInfo from "./UserInfo";
 
 const Header = () => {
 
     const isLogged = useSelector(state => state.user.logged)
-    const username = useSelector(state => state.user.name)
 
     return (
         <Container className={"mb-2 mt-2"}>
@@ -16,13 +15,7 @@ const Header = () => {
                 <Col>
                     <h4 style={{marginBottom: 0}}>Forum dei Troll 3.0</h4>
                 </Col>
-                {isLogged &&
-                <Col>
-                    <FaUser/>
-                    &nbsp;
-                    {username}
-                </Col>
-                }
+                {isLogged && <UserInfo/>}
             </Row>
             <Row>
                 <Alerts/>

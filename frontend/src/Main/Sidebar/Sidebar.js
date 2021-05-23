@@ -17,8 +17,12 @@ const Sidebar = () => {
                 <NavLink to={"/messages/0"} className={styles.link}
                          activeClassName={styles.selectedLink}>Messaggi</NavLink>
                 {isLogged &&
-                <NavLink to={"/message"} className={styles.link}
-                         activeClassName={styles.selectedLink}>Nuovo messaggio</NavLink>
+                <Fragment>
+                    <NavLink to={"/message"} className={styles.link}
+                             activeClassName={styles.selectedLink}>Nuovo messaggio</NavLink>
+                    <NavLink to={"/preferences"} className={styles.link}
+                             activeClassName={styles.selectedLink}>Preferenze</NavLink>
+                </Fragment>
                 }
                 {!isLogged &&
                 <Fragment>

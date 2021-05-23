@@ -1,40 +1,40 @@
 import React, {Fragment, useState} from 'react';
 import {Button, Col, Form, Row} from "react-bootstrap";
-import {doLogin} from "./Login";
-import {DEFAULT_HEADERS, USER_URL} from "../../app/const";
 import {useDispatch} from "react-redux";
-import {setDanger, setWarning} from "../../app/alertsSlice";
+import {setDanger, setSuccess, setWarning} from "../../../app/alertsSlice";
+import {getAuthHeaders, USER_URL} from "../../../app/const";
 
-const Register = () => {
+const Preferences = () => {
 
-    const [name, setName] = useState("")
-    const [password, setPassword] = useState("")
-    const [passwordConfirm, setPasswordConfirm] = useState("")
-
+    const [oldPassword, setOldPassword] = useState("");
+    const [password, setPassword] = useState("");
+    const [passwordConfirm, setPasswordConfirm] = useState("");
     const dispatch = useDispatch();
 
     return (
         <Fragment>
             <Row>
                 <Col>
-                    <h3>Registrati</h3>
+                    <h3>Preferenze</h3>
                     <Form.Group>
-                        <Form.Control
-                            className={"shadow-none"}
-                            type={"text"}
-                            placeholder={"Nome utente"}
-                            onChange={(e) => setName(e.target.value)}
-                            value={name}
-                        />
-                    </Form.Group>
-                    <Form.Group>
+                        <Form.Label>Vecchia password</Form.Label>
                         <Form.Control
                             className={"shadow-none"}
                             type={"password"}
-                            placeholder={"Password"}
+                            placeholder={"Vecchia password"}
+                            onChange={(e) => setOldPassword(e.target.value)}
+                            value={oldPassword}/>
+                    </Form.Group>
+                    <Form.Group>
+                        <Form.Label>Nuova password</Form.Label>
+                        <Form.Control
+                            className={"shadow-none"}
+                            type={"password"}
+                            placeholder={"Nuova password"}
                             onChange={(e) => setPassword(e.target.value)}
                             value={password}/>
                     </Form.Group>
+                    <Form.Label>Conferma password</Form.Label>
                     <Form.Group>
                         <Form.Control
                             className={"shadow-none"}
@@ -46,36 +46,39 @@ const Register = () => {
                 </Col>
             </Row>
             <Row>
-                <Button onClick={() => doRegister(name, password, passwordConfirm, dispatch)}>Crea</Button>
+                <Button onClick={() => doChangePassword(oldPassword, password, passwordConfirm, dispatch)}>Cambia
+                    password</Button>
             </Row>
         </Fragment>
-    );
+    )
 }
 
-const doRegister = (username, password, passwordConfirm, dispatch) => {
-    if (!validate(username, password, passwordConfirm, dispatch)) {
-        return
+const doChangePassword = (oldPassword, password, passwordConfirm, dispatch) => {
+    if (!validate(password, passwordConfirm, dispatch)) {
+        return;
     }
-
     fetch(USER_URL, {
-        method: "POST",
-        headers: DEFAULT_HEADERS,
+        method: "PATCH",
+        headers: getAuthHeaders(),
         mode: "cors",
         body: JSON.stringify({
-            name: username,
-            password: password
+            oldPassword: oldPassword,
+            newPassword: password
         })
     })
         .then(response => {
             switch (response.status) {
                 case 200:
-                    doLogin(username, password, dispatch);
+                    dispatch(setSuccess("Password modificata con successo"));
                     break;
-                case 409:
-                    dispatch(setDanger(`L'utente "${username}" esiste già`));
+                case 403:
+                    dispatch(setDanger(`Utente sconosciuto`));
+                    break;
+                case 404:
+                    dispatch(setDanger(`Errore nel cambio della password`));
                     break;
                 default:
-                    dispatch(setDanger("Errore nella registrazione"));
+                    dispatch(setDanger("Errore generico"));
             }
         })
         .catch(error => {
@@ -83,11 +86,7 @@ const doRegister = (username, password, passwordConfirm, dispatch) => {
         })
 }
 
-const validate = (username, password, passwordConfirm, dispatch) => {
-    if (username.length < 2 || username.length > 20) {
-        dispatch(setWarning("Nome utente minimo 2 caratteri, massimo 20"));
-        return false;
-    }
+const validate = (password, passwordConfirm, dispatch) => {
     if (password.length < 6 || password.length > 20) {
         dispatch(setWarning("Password minimo 6 caratteri, massimo 20"));
         return false;
@@ -100,4 +99,4 @@ const validate = (username, password, passwordConfirm, dispatch) => {
     return true;
 }
 
-export default Register
+export default Preferences
