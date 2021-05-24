@@ -1,8 +1,7 @@
 spring:
   datasource:
-    platform: org.hibernate.dialect.H2Dialect
     driverClassName: org.h2.Driver
-    url: jdbc:h2:file:./db
+    url: jdbc:h2:./db;AUTO_SERVER=TRUE
     username: fdt30
     password: fdt30
   jpa:
@@ -11,6 +10,9 @@ spring:
     properties:
       hibernate:
         format_sql: true
+  sql:
+    init:
+      platform: org.hibernate.dialect.H2Dialect
 #        show-sql: true
 
 #    properties:
