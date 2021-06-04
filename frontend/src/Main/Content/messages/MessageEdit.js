@@ -1,25 +1,24 @@
 import React, {Fragment, useState} from 'react';
 import {Button, Col, Form, Row, Tab, Tabs} from "react-bootstrap";
 import styles from './MessageEdit.module.scss';
-import {getAuthHeaders, MESSAGE_URL} from "../../../app/const";
-import {delWarning, setWarning} from "../../../app/alertsSlice";
-import {useDispatch} from "react-redux";
+import {setWarning} from "../../../app/alertsSlice";
+import {useDispatch, useSelector} from "react-redux";
 import MessagePreview from "./MessagePreview";
-import {useHistory} from "react-router-dom";
+import {setSubject, setMarkdown} from "../../../app/messageSlice";
 
-const MessageEdit = ({messageMarkdown = ""}) => {
+const MessageEdit = ({title, saveHandleFunction}) => {
 
-    const [markDown, setMarkdown] = useState(messageMarkdown);
-    const [subject, setSubject] = useState("");
-    const history = useHistory();
-
+    const subject = useSelector(state => state.message.subject);
+    const markDown = useSelector(state => state.message.markDown);
     const dispatch = useDispatch();
+
+    const validateFunction = () => validate(subject, markDown, dispatch);
 
     return (
         <Fragment>
             <Row>
                 <Col>
-                    <h3>Nuovo messaggio</h3>
+                    <h3>{title}</h3>
                     <Tabs defaultActiveKey="edit" id="uncontrolled-tab-example">
                         <Tab eventKey="edit" title="Messaggio">
                             <Form.Group>
@@ -27,7 +26,7 @@ const MessageEdit = ({messageMarkdown = ""}) => {
                                     className={"shadow-none"}
                                     type={"text"}
                                     placeholder={"Soggetto"}
-                                    onChange={(e) => setSubject(e.target.value)}
+                                    onChange={(e) => dispatch(setSubject(e.target.value))}
                                     value={subject}
                                 />
 
@@ -35,13 +34,13 @@ const MessageEdit = ({messageMarkdown = ""}) => {
                                     as={"textarea"}
                                     rows={20}
                                     className={styles.messageSize}
-                                    onChange={(e) => setMarkdown(e.target.value)}
+                                    onChange={(e) => dispatch(setMarkdown(e.target.value))}
                                     value={markDown}/>
                             </Form.Group>
                         </Tab>
                         <Tab eventKey="view" title="Preview">
                             <Form.Group>
-                                <MessagePreview subject={subject} markdown={markDown} isPreview={true}/>
+                                <MessagePreview/>
                             </Form.Group>
                         </Tab>
                     </Tabs>
@@ -61,47 +60,27 @@ const MessageEdit = ({messageMarkdown = ""}) => {
             <Row>&nbsp;</Row>
             <Row>
                 <Col>
-                    <Button onClick={() => saveNewMessage(subject, markDown, dispatch, history)}>Save</Button>
+                    <Button
+                        onClick={() => onClickSave(validateFunction, saveHandleFunction)}>Save</Button>
                 </Col>
             </Row>
         </Fragment>
     )
 }
 
-const saveNewMessage = (subject, content, dispatch, history) => {
-    if (!validate(subject, content, dispatch)) {
-        return
+const onClickSave = (validateFunction, saveHandleFunction) => {
+    if (validateFunction() === false) {
+        return;
     }
-    fetch(MESSAGE_URL, {
-        method: "POST",
-        headers: getAuthHeaders(),
-        mode: "cors",
-        body: JSON.stringify({
-            subject: subject,
-            content: content
-        })
-    })
-        .then(response => {
-            switch (response.status) {
-                case 200:
-                    dispatch(delWarning());
-                    history.push("/messages/0");
-                    break;
-                default:
-                    dispatch(setWarning("Errore nell'inserimento del messaggio"));
-            }
-        })
-        .catch(error => {
-            console.error(error);
-        })
+    saveHandleFunction();
 }
 
-const validate = (subject, content, dispatch) => {
+const validate = (subject, markDown, dispatch) => {
     if (!subject || subject.length < 2 || subject.length > 20) {
         dispatch(setWarning("Soggetto: Minimo 1 carattere, massimo 255"));
         return false;
     }
-    if (!content || content.length < 2 || content.length > 4096) {
+    if (!markDown || markDown.length < 2 || markDown.length > 4096) {
         dispatch(setWarning("Testo: Minimo 1 carattere, massimo 4096"));
         return false;
     }

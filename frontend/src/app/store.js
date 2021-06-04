@@ -3,6 +3,7 @@ import userReducer from './userSlice';
 import alertsReducer from './alertsSlice';
 import messagesReducer from './messagesSlice';
 import threadSlice from './threadSlice';
+import messageSlice from './messageSlice';
 
 export default configureStore({
     reducer: {
@@ -10,5 +11,6 @@ export default configureStore({
         alerts: alertsReducer,
         messages: messagesReducer,
         thread: threadSlice,
+        message: messageSlice
     },
 })

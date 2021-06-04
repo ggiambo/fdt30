@@ -10,7 +10,16 @@ const MessageView = ({message}) => {
 
     return (
         <Card>
-            <Card.Header className={styles.messageHeader}>{message.subject}</Card.Header>
+            <Card.Header className={styles.messageHeader}>
+                <Row>
+                    <Col>
+                        {message.subject}
+                    </Col>
+                    <Col className={"text-right"}>
+                        <NavLink to={`/thread/${message.threadId}`}>Thread #{message.threadId}</NavLink>
+                    </Col>
+                </Row>
+            </Card.Header>
             <Card.Body className={styles.messageBody}>
                 <div className={styles.messageViewContent}
                      dangerouslySetInnerHTML={getHTMLFromMarkDown(message.content)}/>
@@ -21,7 +30,7 @@ const MessageView = ({message}) => {
                         Scritto da {message.user.name} il {getCreationDate(message.created)}
                     </Col>
                     <Col className={"text-right"}>
-                        <NavLink to={`/thread/${message.threadId}`}>Thread #{message.threadId}</NavLink>
+                        <NavLink to={`/reply/${message.id}`}>Rispondi</NavLink>
                     </Col>
                 </Row>
             </Card.Footer>

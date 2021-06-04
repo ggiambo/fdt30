@@ -51,6 +51,11 @@ class MessageController(private val messageRepository: MessageRepository, privat
         return ResponseEntity.ok(messageRepository.save(message))
     }
 
+    @GetMapping("/message/{messageId}")
+    fun getMessage(@PathVariable messageId: Int): ResponseEntity<Message> {
+        return ResponseEntity.ok(messageRepository.findByIdOrNull(messageId))
+    }
+
     private fun getThreadId(parentId: Int?): Int? {
         if (parentId == null) {
             return null

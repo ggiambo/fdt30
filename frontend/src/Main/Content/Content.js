@@ -1,5 +1,5 @@
 import React, {Fragment} from 'react';
-import MessageEdit from "./messages/MessageEdit";
+import MessageNew from "./messages/MessageNew";
 import {Route} from 'react-router-dom';
 import Login from "./user/Login";
 import Messages from "./messages/Messages";
@@ -7,12 +7,16 @@ import Register from "./user/Register";
 import Preferences from "./user/Preferences";
 import Threads from "./messages/Threads";
 import Thread from "./messages/Thread";
+import MessageReply from "./messages/MessageReply";
 
 const Content = () => {
     return (
         <Fragment>
             <Route exact path={"/message"}>
-                <MessageEdit/>
+                <MessageNew/>
+            </Route>
+            <Route exact path={"/reply/:parentId"}>
+                <MessageReply/>
             </Route>
             <Route path={"/messages/:pageNr?"}>
                 <Messages/>
@@ -20,7 +24,7 @@ const Content = () => {
             <Route path={"/threads/:pageNr?"}>
                 <Threads/>
             </Route>
-            <Route path={"/thread/:threadId?"}>
+            <Route path={"/thread/:threadId"}>
                 <Thread/>
             </Route>
             <Route exact path={"/login"}>
