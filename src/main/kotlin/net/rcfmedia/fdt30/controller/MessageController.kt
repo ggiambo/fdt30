@@ -9,6 +9,7 @@ import net.rcfmedia.fdt30.peristence.MessageRepository.Companion.PAGE_SIZE
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
 import org.springframework.data.domain.Sort
+import org.springframework.data.repository.findByIdOrNull
 import org.springframework.http.ResponseEntity
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
@@ -25,7 +26,8 @@ class MessageController(private val messageRepository: MessageRepository, privat
 
     @GetMapping("/messages/{pageNr}")
     fun getMessages(@PathVariable pageNr: Int): ResponseEntity<Messages> {
-        val sortedByCreationDate: Pageable = PageRequest.of(pageNr, PAGE_SIZE, Sort.by(Message::created.name).descending())
+        val sortedByCreationDate: Pageable =
+            PageRequest.of(pageNr, PAGE_SIZE, Sort.by(Message::created.name).descending())
         val messages = messageRepository.findAll(sortedByCreationDate)
 
         return ResponseEntity.ok(
@@ -42,8 +44,17 @@ class MessageController(private val messageRepository: MessageRepository, privat
         val message = Message(
             subject = newMessage.subject,
             content = newMessage.content,
+            parentId = newMessage.parentId,
+            threadId = getThreadId(newMessage.parentId),
             user = loggedUserInfo.getUserInfo()
         )
         return ResponseEntity.ok(messageRepository.save(message))
+    }
+
+    private fun getThreadId(parentId: Int?): Int? {
+        if (parentId == null) {
+            return null
+        }
+        return messageRepository.findByIdOrNull(parentId)?.threadId
     }
 }

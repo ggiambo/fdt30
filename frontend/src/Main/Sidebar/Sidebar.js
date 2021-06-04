@@ -16,6 +16,8 @@ const Sidebar = () => {
             <Nav defaultActiveKey="/" className="flex-column">
                 <NavLink to={"/messages/0"} className={styles.link}
                          activeClassName={styles.selectedLink}>Messaggi</NavLink>
+                <NavLink to={"/threads/0"} className={styles.link}
+                         activeClassName={styles.selectedLink}>Threads</NavLink>
                 {isLogged &&
                 <Fragment>
                     <NavLink to={"/message"} className={styles.link}

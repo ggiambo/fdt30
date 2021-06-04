@@ -1,9 +1,10 @@
-import {Card} from "react-bootstrap";
+import {Card, Col, Row} from "react-bootstrap";
 import React from "react";
 import marked from "marked";
 import DOMPurify from "dompurify";
 import styles from './MessageView.module.scss';
 import {DateTime} from 'luxon';
+import {NavLink} from "react-router-dom";
 
 const MessageView = ({message}) => {
 
@@ -15,7 +16,14 @@ const MessageView = ({message}) => {
                      dangerouslySetInnerHTML={getHTMLFromMarkDown(message.content)}/>
             </Card.Body>
             <Card.Footer className={styles.messageFooter}>
-                Scritto da {message.user.name} il {getCreationDate(message.created)}
+                <Row>
+                    <Col>
+                        Scritto da {message.user.name} il {getCreationDate(message.created)}
+                    </Col>
+                    <Col className={"text-right"}>
+                        <NavLink to={`/thread/${message.threadId}`}>Thread #{message.threadId}</NavLink>
+                    </Col>
+                </Row>
             </Card.Footer>
         </Card>
     )

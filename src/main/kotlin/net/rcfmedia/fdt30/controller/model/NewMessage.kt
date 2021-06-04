@@ -10,5 +10,7 @@ class NewMessage(
 
     @field:NotNull
     @field:Size(min = 1, max = 4096)
-    val content: String
+    val content: String,
+
+    var parentId: Int? = null
 )
