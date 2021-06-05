@@ -1,10 +1,11 @@
-import React, {Fragment, useState} from 'react';
+import React, {Fragment, useRef} from 'react';
 import {Button, Col, Form, Row, Tab, Tabs} from "react-bootstrap";
 import styles from './MessageEdit.module.scss';
 import {setWarning} from "../../../app/alertsSlice";
 import {useDispatch, useSelector} from "react-redux";
 import MessagePreview from "./MessagePreview";
-import {setSubject, setMarkdown} from "../../../app/messageSlice";
+import {setMarkdown, setSubject} from "../../../app/messageSlice";
+import EmojiPicker from "./EmojiPicker";
 
 const MessageEdit = ({title, saveHandleFunction}) => {
 
@@ -13,6 +14,14 @@ const MessageEdit = ({title, saveHandleFunction}) => {
     const dispatch = useDispatch();
 
     const validateFunction = () => validate(subject, markDown, dispatch);
+
+    const textAreaRef = useRef();
+    const handleEmojiClick = (emoji) => {
+        const selectionStart = 0 || textAreaRef.current.selectionStart;
+        const selectionEnd = textAreaRef.current.selectionEnd;
+        const newMarkdown = markDown.substr(0, selectionStart) + emoji + markDown.substr(selectionEnd);
+        dispatch(setMarkdown(newMarkdown))
+    }
 
     return (
         <Fragment>
@@ -31,12 +40,15 @@ const MessageEdit = ({title, saveHandleFunction}) => {
                                 />
 
                                 <Form.Control
+                                    ref={textAreaRef}
                                     as={"textarea"}
                                     rows={20}
                                     className={styles.messageSize}
                                     onChange={(e) => dispatch(setMarkdown(e.target.value))}
-                                    value={markDown}/>
+                                    value={markDown}
+                                />
                             </Form.Group>
+                            <EmojiPicker handleEmojiClick={handleEmojiClick}/>
                         </Tab>
                         <Tab eventKey="view" title="Preview">
                             <Form.Group>
