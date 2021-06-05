@@ -76,7 +76,7 @@ const onClickSave = (validateFunction, saveHandleFunction) => {
 }
 
 const validate = (subject, markDown, dispatch) => {
-    if (!subject || subject.length < 2 || subject.length > 20) {
+    if (!subject || subject.length < 2 || subject.length > 255) {
         dispatch(setWarning("Soggetto: Minimo 1 carattere, massimo 255"));
         return false;
     }
