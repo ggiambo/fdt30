@@ -7,7 +7,10 @@ class NewUser(
     @field:NotNull
     @field:Size(min = 2, max = 20)
     val name: String,
+
     @field:NotNull
     @field:Size(min = 6, max = 20)
-    val password: String
+    val password: String,
+
+    val avatarBase64: String,
 )

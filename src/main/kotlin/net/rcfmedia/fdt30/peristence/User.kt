@@ -20,7 +20,10 @@ class User(
     var updated: LocalDateTime? = null,
 
     @get:JsonIgnore
-    var password: String
+    var password: String,
+
+    @Lob
+    var avatarBase64: String? = null,
 ) {
     @PrePersist
     fun prePersist() {

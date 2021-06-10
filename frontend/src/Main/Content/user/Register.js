@@ -4,12 +4,14 @@ import {doLogin} from "./Login";
 import {DEFAULT_HEADERS, USER_URL} from "../../../app/const";
 import {useDispatch} from "react-redux";
 import {setDanger, setWarning} from "../../../app/alertsSlice";
+import UploadAvatar from "./UploadAvatar";
 
 const Register = () => {
 
     const [name, setName] = useState("")
     const [password, setPassword] = useState("")
     const [passwordConfirm, setPasswordConfirm] = useState("")
+    const [avatarBase64, setAvatarBase64] = useState(null);
 
     const dispatch = useDispatch();
 
@@ -46,16 +48,20 @@ const Register = () => {
                             onChange={(e) => setPasswordConfirm(e.target.value)}
                             value={passwordConfirm}/>
                     </Form.Group>
+                    <Form.Group>
+                        <Form.Label>Avatar</Form.Label>
+                        <UploadAvatar avatar={avatarBase64} setAvatar={setAvatarBase64}/>
+                    </Form.Group>
                 </Col>
             </Row>
             <Row>
-                <Button onClick={() => doRegister(name, password, passwordConfirm, dispatch)}>Crea</Button>
+                <Button onClick={() => doRegister(name, password, passwordConfirm, avatarBase64, dispatch)}>Crea</Button>
             </Row>
         </Fragment>
     );
 }
 
-const doRegister = (username, password, passwordConfirm, dispatch) => {
+const doRegister = (username, password, passwordConfirm, avatarBase64, dispatch) => {
     if (!validate(username, password, passwordConfirm, dispatch)) {
         return
     }
@@ -66,7 +72,8 @@ const doRegister = (username, password, passwordConfirm, dispatch) => {
         mode: "cors",
         body: JSON.stringify({
             name: username,
-            password: password
+            password: password,
+            avatarBase64: avatarBase64
         })
     })
         .then(response => {
