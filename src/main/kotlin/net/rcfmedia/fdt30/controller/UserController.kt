@@ -36,6 +36,11 @@ class UserController(
         return userRepository.findAll(sortedByName).content.filterNotNull()
     }
 
+    @GetMapping("/user")
+    fun getLoggedUserInfo(): User? {
+        return loggedUserInfo.getUserInfo()
+    }
+
     @PostMapping("/user")
     fun registerNewUser(@RequestBody newUser: NewUser): ResponseEntity<String> {
         if (userRepository.findByName(newUser.name) != null) {
@@ -55,15 +60,33 @@ class UserController(
         if (user == null) {
             return ResponseEntity("user not found", HttpStatus.NOT_FOUND)
         }
-        if (!passwordEncoder.matches(updateUser.oldPassword, user.password)) {
-            return ResponseEntity("old password doesn't matches", HttpStatus.FORBIDDEN)
+
+        if (isUpdatePassword(updateUser)) {
+            if (!passwordEncoder.matches(updateUser.oldPassword, user.password)) {
+                return ResponseEntity("old password doesn't matches", HttpStatus.FORBIDDEN)
+            }
+            user.password = passwordEncoder.encode(updateUser.newPassword)
         }
 
-        user.password = passwordEncoder.encode(updateUser.newPassword)
+        if (isUpdateAvata(updateUser)) {
+            user.avatarBase64 = updateUser.avatarBase64
+        }
+
         userRepository.save(user)
 
         log.info("User password updated name:${user.name} id:${user.id}")
 
         return ResponseEntity(HttpStatus.OK)
+    }
+
+    private fun isUpdatePassword(updateUser: UpdateUser): Boolean {
+        if (updateUser.newPassword.isNullOrEmpty() && updateUser.oldPassword.isNullOrEmpty()) {
+            return false
+        }
+        return true
+    }
+
+    private fun isUpdateAvata(updateUser: UpdateUser): Boolean {
+        return !updateUser.avatarBase64.isNullOrEmpty()
     }
 }

@@ -1,4 +1,4 @@
-import {Card, Col, Row} from "react-bootstrap";
+import {Card, Col, Image, Row} from "react-bootstrap";
 import React from "react";
 import marked from "marked";
 import DOMPurify from "dompurify";
@@ -27,6 +27,7 @@ const MessageView = ({message}) => {
             <Card.Footer className={styles.messageFooter}>
                 <Row>
                     <Col>
+                        {getAvatar(message)}
                         Scritto da {message.user.name} il {getCreationDate(message.created)}
                     </Col>
                     <Col className={"text-right"}>
@@ -44,6 +45,19 @@ const getHTMLFromMarkDown = (markDown) => {
         gfm: true
     });
     return {__html: DOMPurify.sanitize(resultHTML)}
+}
+
+const getAvatar = (message) => {
+    if (message.user.avatarBase64) {
+        return (
+            <Image rounded
+                   style={{maxWidth: "2em", maxHeight: "2em"}}
+                   src={"data:image/png;base64, " + message.user.avatarBase64}
+                   alt={"Avatar"}
+            />
+        );
+    }
+    return null;
 }
 
 const getCreationDate = (creation) => {

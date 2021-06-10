@@ -1,5 +1,5 @@
 import React from 'react';
-import {getAuthHeaders, MESSAGE_URL} from "../../../app/const";
+import {AUTH_HEADERS, MESSAGE_URL} from "../../../app/const";
 import {delWarning, setWarning} from "../../../app/alertsSlice";
 import {useDispatch, useSelector} from "react-redux";
 import {useHistory} from "react-router-dom";
@@ -23,7 +23,7 @@ const MessageNew = () => {
 const saveNewMessage = (subject, markDown, dispatch, history) => {
     fetch(MESSAGE_URL, {
         method: "POST",
-        headers: getAuthHeaders(),
+        headers: AUTH_HEADERS(),
         mode: "cors",
         body: JSON.stringify({
             subject: subject,

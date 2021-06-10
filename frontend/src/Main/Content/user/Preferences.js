@@ -1,15 +1,22 @@
-import React, {Fragment, useState} from 'react';
+import React, {Fragment, useEffect, useState} from 'react';
 import {Button, Col, Form, Row} from "react-bootstrap";
 import {useDispatch} from "react-redux";
-import {setDanger, setSuccess, setWarning} from "../../../app/alertsSlice";
-import {getAuthHeaders, USER_URL} from "../../../app/const";
+import {delWarning, setDanger, setSuccess, setWarning} from "../../../app/alertsSlice";
+import {AUTH_HEADERS, USER_URL} from "../../../app/const";
+import UploadAvatar from "./UploadAvatar";
 
 const Preferences = () => {
+
+    const dispatch = useDispatch();
 
     const [oldPassword, setOldPassword] = useState("");
     const [password, setPassword] = useState("");
     const [passwordConfirm, setPasswordConfirm] = useState("");
-    const dispatch = useDispatch();
+    const [avatarBase64, setAvatarBase64] = useState(null);
+
+    useEffect(() => {
+        fetchAvatar(setAvatarBase64, dispatch)
+    }, [dispatch])
 
     return (
         <Fragment>
@@ -46,30 +53,82 @@ const Preferences = () => {
                 </Col>
             </Row>
             <Row>
-                <Button onClick={() => doChangePassword(oldPassword, password, passwordConfirm, dispatch)}>Cambia
-                    password</Button>
+                <Button onClick={() => doChangePassword(oldPassword, password, passwordConfirm, dispatch)}>
+                    Cambia password
+                </Button>
+            </Row>
+            <Row className={"mt-2"}>
+                <Col>
+                    <Form.Group>
+                        <UploadAvatar avatar={avatarBase64} setAvatar={setAvatarBase64}/>
+                    </Form.Group>
+                </Col>
+            </Row>
+            <Row>
+                <Button onClick={() => doChangeAvatar(avatarBase64, dispatch)}>
+                    Cambia Avatar
+                </Button>
             </Row>
         </Fragment>
     )
+}
+
+const fetchAvatar = (setAvatarBase64, dispatch) => {
+    fetch(USER_URL, {
+        method: "GET",
+        headers: AUTH_HEADERS(),
+        mode: "cors",
+    })
+        .then(response => {
+            switch (response.status) {
+                case 200:
+                    dispatch(delWarning());
+                    response.json().then(data => {
+                        setAvatarBase64(data.avatarBase64)
+                    })
+                    break;
+                default:
+                    dispatch(setDanger("Errore generico"));
+            }
+        })
+        .catch(error => {
+            console.error(error)
+        })
 }
 
 const doChangePassword = (oldPassword, password, passwordConfirm, dispatch) => {
     if (!validate(password, passwordConfirm, dispatch)) {
         return;
     }
+    doSaveUser({
+        oldPassword: oldPassword,
+        newPassword: password,
+        dispatch: dispatch
+    })
+}
+
+const doChangeAvatar = (avatarBase64, dispatch) => {
+    doSaveUser({
+        avatarBase64: avatarBase64,
+        dispatch: dispatch
+    })
+}
+
+const doSaveUser = ({oldPassword, newPassword, avatarBase64, dispatch}) => {
     fetch(USER_URL, {
         method: "PATCH",
-        headers: getAuthHeaders(),
+        headers: AUTH_HEADERS(),
         mode: "cors",
         body: JSON.stringify({
             oldPassword: oldPassword,
-            newPassword: password
+            newPassword: newPassword,
+            avatarBase64: avatarBase64
         })
     })
         .then(response => {
             switch (response.status) {
                 case 200:
-                    dispatch(setSuccess("Password modificata con successo"));
+                    dispatch(setSuccess("Utente modificato con successo"));
                     break;
                 case 403:
                     dispatch(setDanger(`Utente sconosciuto`));

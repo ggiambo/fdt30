@@ -8,7 +8,7 @@ export const THREADS_URL = (pageNr) => BACKEND_URL() + `/threads/${pageNr}`
 export const USER_URL = BACKEND_URL() + "/user"
 
 export const DEFAULT_HEADERS = {"Content-Type": "application/json"};
-export const getAuthHeaders = () => {
+export const AUTH_HEADERS = () => {
     return {
         ...DEFAULT_HEADERS,
         "Authorization": "Bearer " + localStorage.getItem("token")

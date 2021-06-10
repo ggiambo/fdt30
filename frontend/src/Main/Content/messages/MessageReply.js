@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {GET_MESSAGE_URL, getAuthHeaders, MESSAGE_URL} from "../../../app/const";
+import {GET_MESSAGE_URL, AUTH_HEADERS, MESSAGE_URL} from "../../../app/const";
 import {delWarning, setWarning} from "../../../app/alertsSlice";
 import {useDispatch, useSelector} from "react-redux";
 import {useHistory, useParams} from "react-router-dom";
@@ -29,7 +29,7 @@ const MessageReply = () => {
 const fetchMessage = (messageId, dispatch) => {
     fetch(GET_MESSAGE_URL(messageId), {
         method: "GET",
-        headers: getAuthHeaders(),
+        headers: AUTH_HEADERS(),
         mode: "cors"
 
     })
@@ -54,7 +54,7 @@ const fetchMessage = (messageId, dispatch) => {
 const replyMessage = (subject, markDown, parentId, dispatch, history) => {
     fetch(MESSAGE_URL, {
         method: "POST",
-        headers: getAuthHeaders(),
+        headers: AUTH_HEADERS(),
         mode: "cors",
         body: JSON.stringify({
             subject: subject,

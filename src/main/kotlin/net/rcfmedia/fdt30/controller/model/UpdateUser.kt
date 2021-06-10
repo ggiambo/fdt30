@@ -1,6 +1,7 @@
 package net.rcfmedia.fdt30.controller.model
 
 class UpdateUser(
-    val oldPassword: String,
-    val newPassword: String,
+    val oldPassword: String? = null,
+    val newPassword: String? = null,
+    val avatarBase64: String? = null,
 )
