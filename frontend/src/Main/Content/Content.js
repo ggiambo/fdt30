@@ -8,6 +8,7 @@ import Preferences from "./user/Preferences";
 import Threads from "./messages/Threads";
 import Thread from "./messages/Thread";
 import MessageReply from "./messages/MessageReply";
+import Info from "./user/Info";
 
 const Content = () => {
     return (
@@ -35,6 +36,9 @@ const Content = () => {
             </Route>
             <Route exact path={"/preferences"}>
                 <Preferences/>
+            </Route>
+            <Route exact path={"/user/:userId"}>
+                <Info/>
             </Route>
         </Fragment>
     );

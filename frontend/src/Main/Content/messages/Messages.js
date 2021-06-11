@@ -1,6 +1,6 @@
 import React, {Fragment, useEffect} from 'react';
 import {Col, Row} from "react-bootstrap";
-import MessageView from "./MessageView";
+import MessageView from "./view/MessageView";
 import {DEFAULT_HEADERS, MESSAGES_URL} from "../../../app/const";
 import {useDispatch, useSelector} from "react-redux";
 import {useParams} from "react-router-dom"

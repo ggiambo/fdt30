@@ -56,6 +56,11 @@ class MessageController(private val messageRepository: MessageRepository, privat
         return ResponseEntity.ok(messageRepository.findByIdOrNull(messageId))
     }
 
+    @GetMapping("/messages/user/{userId}")
+    fun getMessageOfUser(@PathVariable userId: Int): ResponseEntity<List<Message>> {
+        return ResponseEntity.ok(messageRepository.findAllByUserId(userId))
+    }
+
     private fun getThreadId(parentId: Int?): Int? {
         if (parentId == null) {
             return null

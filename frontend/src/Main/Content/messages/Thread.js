@@ -4,7 +4,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {DEFAULT_HEADERS, THREAD_URL} from "../../../app/const";
 import {setMessages} from "../../../app/threadSlice";
 import {Col, Row} from "react-bootstrap";
-import MessageView from "./MessageView";
+import MessageView from "./view/MessageView";
 
 const Thread = () => {
 

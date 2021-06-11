@@ -6,6 +6,7 @@ export const MESSAGES_URL = (pageNr) => BACKEND_URL() + `/messages/${pageNr}`
 export const THREAD_URL = (threadId) => BACKEND_URL() + `/thread/${threadId}`
 export const THREADS_URL = (pageNr) => BACKEND_URL() + `/threads/${pageNr}`
 export const USER_URL = BACKEND_URL() + "/user"
+export const USER_INFO_URL = (userId) => BACKEND_URL() + `/user/${userId}`
 
 export const DEFAULT_HEADERS = {"Content-Type": "application/json"};
 export const AUTH_HEADERS = () => {

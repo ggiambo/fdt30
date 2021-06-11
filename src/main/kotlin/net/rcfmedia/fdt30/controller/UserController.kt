@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
 import org.springframework.data.domain.Sort
+import org.springframework.data.repository.findByIdOrNull
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.security.crypto.password.PasswordEncoder
@@ -41,6 +42,11 @@ class UserController(
         return loggedUserInfo.getUserInfo()
     }
 
+    @GetMapping("/user/{userId}")
+    fun getUserInfo(@PathVariable userId: Int): User? {
+        return userRepository.findByIdOrNull(userId)
+    }
+
     @PostMapping("/user")
     fun registerNewUser(@RequestBody newUser: NewUser): ResponseEntity<String> {
         if (userRepository.findByName(newUser.name) != null) {
@@ -68,7 +74,7 @@ class UserController(
             user.password = passwordEncoder.encode(updateUser.newPassword)
         }
 
-        if (isUpdateAvata(updateUser)) {
+        if (isUpdateAvatar(updateUser)) {
             user.avatarBase64 = updateUser.avatarBase64
         }
 
@@ -86,7 +92,7 @@ class UserController(
         return true
     }
 
-    private fun isUpdateAvata(updateUser: UpdateUser): Boolean {
+    private fun isUpdateAvatar(updateUser: UpdateUser): Boolean {
         return !updateUser.avatarBase64.isNullOrEmpty()
     }
 }

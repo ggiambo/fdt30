@@ -12,6 +12,8 @@ interface MessageRepository : PagingAndSortingRepository<Message?, Int?> {
 
     fun findAllByThreadIdOrderByCreatedAsc(threadId: Int) : List<Message>
 
+    fun findAllByUserId(userId: Int): List<Message>
+
     companion object {
         const val PAGE_SIZE = 10
     }
