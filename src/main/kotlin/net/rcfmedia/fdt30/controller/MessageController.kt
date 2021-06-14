@@ -56,9 +56,19 @@ class MessageController(private val messageRepository: MessageRepository, privat
         return ResponseEntity.ok(messageRepository.findByIdOrNull(messageId))
     }
 
-    @GetMapping("/messages/user/{userId}")
-    fun getMessageOfUser(@PathVariable userId: Int): ResponseEntity<List<Message>> {
-        return ResponseEntity.ok(messageRepository.findAllByUserId(userId))
+    @GetMapping("/messages/{pageNr}/user/{userId}")
+    fun getMessageOfUser(@PathVariable pageNr: Int, @PathVariable userId: Int): ResponseEntity<Messages> {
+        val sortedByCreationDate: Pageable =
+            PageRequest.of(pageNr, PAGE_SIZE, Sort.by(Message::created.name).descending())
+        val messages = messageRepository.findAllByUserId(userId, sortedByCreationDate)
+
+        return ResponseEntity.ok(
+            Messages(
+                messages = messages.content.filterNotNull(),
+                actualPage = pageNr - 1,
+                totalPages = messages.totalPages
+            )
+        )
     }
 
     private fun getThreadId(parentId: Int?): Int? {

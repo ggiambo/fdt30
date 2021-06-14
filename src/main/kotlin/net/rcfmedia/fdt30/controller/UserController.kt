@@ -52,7 +52,11 @@ class UserController(
         if (userRepository.findByName(newUser.name) != null) {
             return ResponseEntity("user ${newUser.name} already exists", HttpStatus.CONFLICT)
         }
-        val user = User(name = newUser.name, password = passwordEncoder.encode(newUser.password))
+        val user = User(
+            name = newUser.name,
+            password = passwordEncoder.encode(newUser.password),
+            avatarBase64 = newUser.avatarBase64
+        )
         userRepository.save(user)
 
         log.info("User created name:${user.name} id:${user.id}")

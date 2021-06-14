@@ -3,21 +3,20 @@ import {Pagination} from "react-bootstrap";
 import {useSelector} from "react-redux";
 import {useHistory} from "react-router-dom";
 
-const MessagesNavigator = ({actualPageNr}) => {
+const MessagesNavigator = ({actualPageNr, gotoPage}) => {
 
     const totalPages = useSelector(state => state.messages.totalPages);
-    const history = useHistory();
 
     const pageNr = parseInt(actualPageNr);
 
     const isFirstPage = pageNr === 0;
     const isLastPage = pageNr === totalPages - 1;
 
-    const goToFirst = isFirstPage ? null : <Pagination.First onClick={() => getMessages(0, history)}/>;
-    const goToLast = isLastPage ? null : <Pagination.Last onClick={() => getMessages(totalPages - 1, history)}/>;
+    const goToFirst = isFirstPage ? null : <Pagination.First onClick={() => gotoPage(0)}/>;
+    const goToLast = isLastPage ? null : <Pagination.Last onClick={() => gotoPage(totalPages - 1)}/>;
 
-    const goToPrevious = isFirstPage ? null : <Pagination.Prev onClick={() => getMessages(pageNr - 1, history)}/>;
-    const goToNext = isLastPage ? null : <Pagination.Next onClick={() => getMessages(pageNr + 1, history)}/>;
+    const goToPrevious = isFirstPage ? null : <Pagination.Prev onClick={() => gotoPage(pageNr - 1)}/>;
+    const goToNext = isLastPage ? null : <Pagination.Next onClick={() => gotoPage(pageNr + 1)}/>;
 
     const thisPage = <Pagination.Item>{pageNr + 1}</Pagination.Item>
 
@@ -28,10 +27,6 @@ const MessagesNavigator = ({actualPageNr}) => {
             {paginations.map((item, key) => item && <Fragment key={key}>{item}</Fragment>)}
         </Pagination>
     );
-}
-
-const getMessages = (pageNr, history) => {
-    history.push(`/messages/${pageNr}`);
 }
 
 export default MessagesNavigator

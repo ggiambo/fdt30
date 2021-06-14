@@ -5,7 +5,7 @@ import {DEFAULT_HEADERS, THREADS_URL} from "../../../app/const";
 import {useDispatch, useSelector} from "react-redux";
 import {useParams} from "react-router-dom"
 import {setMessages, setTotalPages} from "../../../app/messagesSlice";
-import MessagesNavigator from "./MessagesNavigator";
+import MessagesNavigator from "./messages/MessagesNavigator";
 
 const Threads = () => {
 

@@ -1,4 +1,4 @@
-import {useParams} from "react-router-dom";
+import {NavLink, useParams} from "react-router-dom";
 import {useDispatch} from "react-redux";
 import React, {Fragment, useEffect, useState} from "react";
 import {DEFAULT_HEADERS, USER_INFO_URL} from "../../../app/const";
@@ -46,9 +46,16 @@ const Info = () => {
                             <Col><b>Registrato il</b></Col>
                             <Col>{formatDateTime(userInfo.created)}</Col>
                         </Row>
-                        <Row>
+                        {userInfo.updated && <Row>
                             <Col><b>Modificato il</b></Col>
                             <Col>{formatDateTime(userInfo.updated)}</Col>
+                        </Row>
+                        }
+                        <Row>
+                            <Col><b>Messaggi</b></Col>
+                            <Col>
+                                <NavLink to={`/messages/0/user/${userId}`}>Lista</NavLink>
+                            </Col>
                         </Row>
                     </Container>
                 </Col>

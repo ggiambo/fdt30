@@ -7,6 +7,6 @@ interface UserRepository : PagingAndSortingRepository<User?, Int?> {
     fun findByNameAndPassword(name: String, password: String): User?
 
     companion object {
-        const val PAGE_SIZE = 25
+        const val PAGE_SIZE = 10
     }
 }
