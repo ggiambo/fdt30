@@ -1,6 +1,6 @@
-import {Col, Row} from "react-bootstrap";
-import {NavLink} from "react-router-dom";
-import React from "react";
+import {Col, Row} from "react-bootstrap"
+import {NavLink} from "react-router-dom"
+import React from "react"
 
 const MessageViewHeader = ({message}) => {
     return (
@@ -12,7 +12,7 @@ const MessageViewHeader = ({message}) => {
                 <NavLink to={`/thread/${message.threadId}`}>Thread #{message.threadId}</NavLink>
             </Col>
         </Row>
-    );
+    )
 }
 
 export default MessageViewHeader

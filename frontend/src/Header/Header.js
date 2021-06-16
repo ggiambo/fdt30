@@ -1,9 +1,9 @@
-import React from 'react';
-import {Col, Container, Row} from "react-bootstrap";
-import '../App.scss';
-import {useSelector} from "react-redux";
-import Alerts from "./Alerts";
-import UserInfo from "./UserInfo";
+import React from 'react'
+import {Col, Container, Row} from "react-bootstrap"
+import '../App.scss'
+import {useSelector} from "react-redux"
+import Alerts from "./Alerts"
+import UserInfo from "./UserInfo"
 
 const Header = () => {
 
@@ -22,6 +22,6 @@ const Header = () => {
             </Row>
         </Container>
     )
-};
+}
 
-export default Header;
+export default Header

@@ -1,19 +1,18 @@
-import React, {Fragment, useState} from 'react';
-import {Button, Col, Form, Row} from "react-bootstrap";
-import {doLogin} from "./Login";
-import {DEFAULT_HEADERS, USER_URL} from "../../../app/const";
-import {useDispatch} from "react-redux";
-import {setDanger, setWarning} from "../../../app/alertsSlice";
-import UploadAvatar from "./UploadAvatar";
+import React, {Fragment, useState} from 'react'
+import {Button, Col, Form, Row} from "react-bootstrap"
+import {useDispatch} from "react-redux"
+import {setWarning} from "../../../app/alertsSlice"
+import UploadAvatar from "./UploadAvatar"
+import {doRegisterUser} from "../../../app/restOperations"
 
 const Register = () => {
 
     const [name, setName] = useState("")
     const [password, setPassword] = useState("")
     const [passwordConfirm, setPasswordConfirm] = useState("")
-    const [avatarBase64, setAvatarBase64] = useState(null);
+    const [avatarBase64, setAvatarBase64] = useState(null)
 
-    const dispatch = useDispatch();
+    const dispatch = useDispatch()
 
     return (
         <Fragment>
@@ -55,10 +54,11 @@ const Register = () => {
                 </Col>
             </Row>
             <Row>
-                <Button onClick={() => doRegister(name, password, passwordConfirm, avatarBase64, dispatch)}>Crea</Button>
+                <Button
+                    onClick={() => doRegister(name, password, passwordConfirm, avatarBase64, dispatch)}>Crea</Button>
             </Row>
         </Fragment>
-    );
+    )
 }
 
 const doRegister = (username, password, passwordConfirm, avatarBase64, dispatch) => {
@@ -66,48 +66,24 @@ const doRegister = (username, password, passwordConfirm, avatarBase64, dispatch)
         return
     }
 
-    fetch(USER_URL, {
-        method: "POST",
-        headers: DEFAULT_HEADERS,
-        mode: "cors",
-        body: JSON.stringify({
-            name: username,
-            password: password,
-            avatarBase64: avatarBase64
-        })
-    })
-        .then(response => {
-            switch (response.status) {
-                case 200:
-                    doLogin(username, password, dispatch);
-                    break;
-                case 409:
-                    dispatch(setDanger(`L'utente "${username}" esiste già`));
-                    break;
-                default:
-                    dispatch(setDanger("Errore nella registrazione"));
-            }
-        })
-        .catch(error => {
-            console.error(error)
-        })
+    doRegisterUser(username, password, avatarBase64, dispatch)
 }
 
 const validate = (username, password, passwordConfirm, dispatch) => {
     if (username.length < 2 || username.length > 20) {
-        dispatch(setWarning("Nome utente minimo 2 caratteri, massimo 20"));
-        return false;
+        dispatch(setWarning("Nome utente minimo 2 caratteri, massimo 20"))
+        return false
     }
     if (password.length < 6 || password.length > 20) {
-        dispatch(setWarning("Password minimo 6 caratteri, massimo 20"));
-        return false;
+        dispatch(setWarning("Password minimo 6 caratteri, massimo 20"))
+        return false
     }
     if (password !== passwordConfirm) {
-        dispatch(setWarning("Le due password non corrispondono"));
-        return false;
+        dispatch(setWarning("Le due password non corrispondono"))
+        return false
     }
 
-    return true;
+    return true
 }
 
 export default Register

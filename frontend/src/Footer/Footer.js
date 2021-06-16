@@ -1,6 +1,6 @@
-import React from 'react';
-import {Col, Container, Row} from "react-bootstrap";
-import "../App.scss";
+import React from 'react'
+import {Col, Container, Row} from "react-bootstrap"
+import "../App.scss"
 
 const Footer = () => {
     return (
@@ -15,6 +15,6 @@ const Footer = () => {
             </Row>
         </Container>
     )
-};
+}
 
-export default Footer;
+export default Footer

@@ -1,9 +1,9 @@
 import {createSlice} from '@reduxjs/toolkit'
 
 const getUserMameFromLocalStorage = () => {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem("token")
     if (token == null) {
-        return null;
+        return null
     }
     const username = token.split(".")[1]
     const content = JSON.parse(atob(username))
@@ -18,15 +18,15 @@ export const userSlice = createSlice({
     },
     reducers: {
         login: (state, action) => {
-            state.logged = true;
-            state.name = action.payload;
+            state.logged = true
+            state.name = action.payload
         },
         logout: (state) => {
-            state.logged = false;
-            state.name = null;
+            state.logged = false
+            state.name = null
         },
     },
-});
+})
 
 export const {login, logout} = userSlice.actions
 export default userSlice.reducer

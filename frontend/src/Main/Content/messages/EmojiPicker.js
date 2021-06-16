@@ -1,12 +1,12 @@
-import Picker from "emoji-picker-react";
-import React, {Fragment, useState} from "react";
-import {Collapse, OverlayTrigger, Tooltip} from "react-bootstrap";
-import {CaretDownFill, CaretRightFill, EmojiSmile} from 'react-bootstrap-icons';
-import style from "./EmojiPicker.module.scss";
+import Picker from "emoji-picker-react"
+import React, {Fragment, useState} from "react"
+import {Collapse, OverlayTrigger, Tooltip} from "react-bootstrap"
+import {CaretDownFill, CaretRightFill, EmojiSmile} from 'react-bootstrap-icons'
+import style from "./EmojiPicker.module.scss"
 
 const EmojiPicker = ({handleEmojiClick}) => {
 
-    const [isPickerVisible, setIsPickerVisible] = useState(false);
+    const [isPickerVisible, setIsPickerVisible] = useState(false)
 
     return (
         <Fragment>
@@ -29,7 +29,7 @@ const EmojiPicker = ({handleEmojiClick}) => {
                 </div>
             </Collapse>
         </Fragment>
-    );
+    )
 }
 
 const groupNames = {
@@ -48,4 +48,4 @@ const groupVisibility = {
     recently_used: false,
 }
 
-export default EmojiPicker;
+export default EmojiPicker

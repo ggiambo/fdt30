@@ -1,10 +1,10 @@
-import {Card} from "react-bootstrap";
-import React from "react";
-import marked from "marked";
-import DOMPurify from "dompurify";
-import styles from './MessageView.module.scss';
-import MessageViewFooter from "./MessageViewFooter";
-import MessageViewHeader from "./MessageViewHeader";
+import {Card} from "react-bootstrap"
+import React from "react"
+import marked from "marked"
+import DOMPurify from "dompurify"
+import styles from './MessageView.module.scss'
+import MessageViewFooter from "./MessageViewFooter"
+import MessageViewHeader from "./MessageViewHeader"
 
 const MessageView = ({message}) => {
 
@@ -28,7 +28,7 @@ const getHTMLFromMarkDown = (markDown) => {
     const resultHTML = marked(markDown, {
         breaks: true,
         gfm: true
-    });
+    })
     return {__html: DOMPurify.sanitize(resultHTML)}
 }
 

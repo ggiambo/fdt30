@@ -1,16 +1,15 @@
-import React, {Fragment} from 'react';
-import MessageNew from "./messages/MessageNew";
-import {Route} from 'react-router-dom';
-import Login from "./user/Login";
-import Messages from "./messages/messages/Messages";
-import Register from "./user/Register";
-import Preferences from "./user/Preferences";
-import Threads from "./messages/Threads";
-import Thread from "./messages/Thread";
-import MessageReply from "./messages/MessageReply";
-import Info from "./user/Info";
-import MessagesByPage from "./messages/messages/MessagesByPage";
-import MessagesByPageAndUser from "./messages/messages/MessagesByPageAndUser";
+import React, {Fragment} from 'react'
+import MessageNew from "./messages/MessageNew"
+import {Route} from 'react-router-dom'
+import Login from "./user/Login"
+import Register from "./user/Register"
+import Preferences from "./user/Preferences"
+import Threads from "./messages/Threads"
+import Thread from "./messages/Thread"
+import MessageReply from "./messages/MessageReply"
+import Info from "./user/Info"
+import MessagesByPage from "./messages/messages/MessagesByPage"
+import MessagesByPageAndUser from "./messages/messages/MessagesByPageAndUser"
 
 const Content = () => {
     return (
@@ -46,7 +45,7 @@ const Content = () => {
                 <Info/>
             </Route>
         </Fragment>
-    );
+    )
 }
 
 export default Content

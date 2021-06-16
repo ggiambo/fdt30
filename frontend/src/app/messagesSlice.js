@@ -8,13 +8,13 @@ export const messagesSlice = createSlice({
     },
     reducers: {
         setMessages: (state, action) => {
-            state.messages = action.payload;
+            state.messages = action.payload
         },
         setTotalPages: (state, action) => {
-            state.totalPages = action.payload;
+            state.totalPages = action.payload
         },
     },
-});
+})
 
 export const {setMessages, setTotalPages} = messagesSlice.actions
 export default messagesSlice.reducer

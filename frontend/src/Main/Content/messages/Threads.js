@@ -1,20 +1,19 @@
-import React, {Fragment, useEffect} from 'react';
-import {Col, Row} from "react-bootstrap";
-import MessageView from "./view/MessageView";
-import {DEFAULT_HEADERS, THREADS_URL} from "../../../app/const";
-import {useDispatch, useSelector} from "react-redux";
+import React, {Fragment, useEffect} from 'react'
+import {Col, Row} from "react-bootstrap"
+import MessageView from "./view/MessageView"
+import {useDispatch, useSelector} from "react-redux"
 import {useParams} from "react-router-dom"
-import {setMessages, setTotalPages} from "../../../app/messagesSlice";
-import MessagesNavigator from "./messages/MessagesNavigator";
+import MessagesNavigator from "./messages/MessagesNavigator"
+import {doFetchThreads} from "../../../app/restOperations"
 
 const Threads = () => {
 
-    const messages = useSelector(state => state.messages.messages);
-    const dispatch = useDispatch();
+    const messages = useSelector(state => state.messages.messages)
+    const dispatch = useDispatch()
 
-    let {pageNr} = useParams();
+    let {pageNr} = useParams()
     useEffect(() => {
-        fetchThreads(pageNr, dispatch)
+        doFetchThreads(pageNr, dispatch)
     }, [pageNr, dispatch])
 
     return (
@@ -36,22 +35,6 @@ const Threads = () => {
             </Row>
         </Fragment>
     )
-}
-
-const fetchThreads = (pageNr, dispatch) => {
-    fetch(THREADS_URL(pageNr), {
-        method: "GET",
-        headers: DEFAULT_HEADERS,
-        mode: "cors"
-    })
-        .then(response => response.json())
-        .then(data => {
-            dispatch(setMessages(data.messages));
-            dispatch(setTotalPages(data.totalPages));
-        })
-        .catch(error => {
-            console.error(error)
-        })
 }
 
 export default Threads

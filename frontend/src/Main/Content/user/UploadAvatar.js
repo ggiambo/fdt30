@@ -1,26 +1,26 @@
-import React, {useCallback, useState} from 'react';
-import {useDropzone} from 'react-dropzone';
-import {delDanger, setDanger} from "../../../app/alertsSlice";
-import {useDispatch} from "react-redux";
-import styles from './UploadAvatar.module.scss';
-import {Container, Image, Row} from "react-bootstrap";
-import {XCircle} from "react-bootstrap-icons";
+import React, {useCallback, useState} from 'react'
+import {useDropzone} from 'react-dropzone'
+import {delDanger, setDanger} from "../../../app/alertsSlice"
+import {useDispatch} from "react-redux"
+import styles from './UploadAvatar.module.scss'
+import {Container, Image, Row} from "react-bootstrap"
+import {XCircle} from "react-bootstrap-icons"
 
 const UploadAvatar = ({avatar, setAvatar}) => {
 
-    const dispatch = useDispatch();
+    const dispatch = useDispatch()
     const [styleActive, setStyleActive] = useState("")
 
     const onDrop = useCallback(acceptedFiles => {
-        setStyleActive("");
-        dispatch(delDanger());
-        acceptedFiles.forEach(file => handleDrop(file, setAvatar, dispatch));
-    }, [])
+        setStyleActive("")
+        dispatch(delDanger())
+        acceptedFiles.forEach(file => handleDrop(file, setAvatar, dispatch))
+    }, [dispatch])
 
     const {getRootProps, getInputProps} = useDropzone({
         onDrop: onDrop,
         accept: 'image/*',
-    });
+    })
 
     return (
         <div {...getRootProps()} className={`${styles.dropArea} ${styleActive}`}
@@ -31,7 +31,7 @@ const UploadAvatar = ({avatar, setAvatar}) => {
             Drag&Drop il tuo Avatar qui. Grandezza massima: 100K
             {showAvatar(avatar, setAvatar)}
         </div>
-    );
+    )
 }
 
 const showAvatar = (avatar, setAvatar) => {
@@ -46,29 +46,29 @@ const showAvatar = (avatar, setAvatar) => {
                     />
                     <XCircle
                         onClick={(e) => {
-                            e.stopPropagation();
+                            e.stopPropagation()
                             setAvatar(null)
                         }}
                     />
                 </Row>
             </Container>
-        );
+        )
     }
-    return null;
+    return null
 }
 
 const handleDrop = (file, setAvatar, dispatch) => {
     file.arrayBuffer().then(buffer => {
         if (buffer.byteLength > 102400) {
-            dispatch(setDanger(`Immagine troppo grande: ${Math.ceil(buffer.byteLength / 1024)}K.`));
-            setAvatar(null);
-            return;
+            dispatch(setDanger(`Immagine troppo grande: ${Math.ceil(buffer.byteLength / 1024)}K.`))
+            setAvatar(null)
+            return
         }
-        const asArray = new Uint8Array(buffer);
-        const asStringChar = String.fromCharCode.apply(null, asArray);
-        const base64 = btoa(asStringChar);
-        setAvatar(base64);
-    });
+        const asArray = new Uint8Array(buffer)
+        const asStringChar = String.fromCharCode.apply(null, asArray)
+        const base64 = btoa(asStringChar)
+        setAvatar(base64)
+    })
 }
 
-export default UploadAvatar;
+export default UploadAvatar

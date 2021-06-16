@@ -1,11 +1,11 @@
-import React from 'react';
-import Header from "./Header/Header";
-import Footer from "./Footer/Footer";
-import {Col, Container, Row} from "react-bootstrap";
-import './App.scss';
-import {BrowserRouter} from "react-router-dom";
-import Sidebar from "./Main/Sidebar/Sidebar";
-import Content from "./Main/Content/Content";
+import React from 'react'
+import Header from "./Header/Header"
+import Footer from "./Footer/Footer"
+import {Col, Container, Row} from "react-bootstrap"
+import './App.scss'
+import {BrowserRouter} from "react-router-dom"
+import Sidebar from "./Main/Sidebar/Sidebar"
+import Content from "./Main/Content/Content"
 
 const App = () => {
     return (
@@ -31,7 +31,7 @@ const App = () => {
                 </Row>
             </Container>
         </BrowserRouter>
-    );
+    )
 }
 
-export default App;
+export default App

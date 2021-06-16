@@ -21,7 +21,7 @@ class Message(
 
     @OneToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
-    var user: User? = null,
+    var user: User,
 
     var subject: String,
 

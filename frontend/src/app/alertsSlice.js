@@ -9,25 +9,25 @@ export const alertsSlice = createSlice({
     },
     reducers: {
         setSuccess: (state, action) => {
-            state.success = action.payload;
+            state.success = action.payload
         },
         delSuccess: (state) => {
-            state.success = null;
+            state.success = null
         },
         setWarning: (state, action) => {
-            state.warning = action.payload;
+            state.warning = action.payload
         },
         delWarning: (state) => {
-            state.warning = null;
+            state.warning = null
         },
         setDanger: (state, action) => {
-            state.danger = action.payload;
+            state.danger = action.payload
         },
         delDanger: (state) => {
-            state.danger = null;
+            state.danger = null
         },
     }
-});
+})
 
 export const {setSuccess, delSuccess, setWarning, delWarning, setDanger, delDanger} = alertsSlice.actions
 export default alertsSlice.reducer

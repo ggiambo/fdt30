@@ -1,15 +1,15 @@
-import React, {Fragment} from 'react';
-import {Nav} from "react-bootstrap";
-import {NavLink} from "react-router-dom";
-import styles from './Sidebar.module.scss';
-import {useDispatch, useSelector} from "react-redux";
-import {logout} from "../../app/userSlice";
-import {setSuccess} from "../../app/alertsSlice";
+import React, {Fragment} from 'react'
+import {Nav} from "react-bootstrap"
+import {NavLink} from "react-router-dom"
+import styles from './Sidebar.module.scss'
+import {useDispatch, useSelector} from "react-redux"
+import {logout} from "../../app/userSlice"
+import {setSuccess} from "../../app/alertsSlice"
 
 const Sidebar = () => {
 
     const isLogged = useSelector(state => state.user.logged)
-    const dispatch = useDispatch();
+    const dispatch = useDispatch()
 
     return (
         <Fragment>
@@ -44,8 +44,8 @@ const Sidebar = () => {
 
 const doLogout = (dispatch) => {
     localStorage.removeItem("token")
-    dispatch(logout());
-    dispatch(setSuccess("Logout successfull"));
+    dispatch(logout())
+    dispatch(setSuccess("Logout successfull"))
 }
 
-export default Sidebar;
+export default Sidebar

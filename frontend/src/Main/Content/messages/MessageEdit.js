@@ -1,25 +1,25 @@
-import React, {Fragment, useRef} from 'react';
-import {Button, Col, Form, Row, Tab, Tabs} from "react-bootstrap";
-import styles from './MessageEdit.module.scss';
-import {setWarning} from "../../../app/alertsSlice";
-import {useDispatch, useSelector} from "react-redux";
-import MessagePreview from "./MessagePreview";
-import {setMarkdown, setSubject} from "../../../app/messageSlice";
-import EmojiPicker from "./EmojiPicker";
+import React, {Fragment, useRef} from 'react'
+import {Button, Col, Form, Row, Tab, Tabs} from "react-bootstrap"
+import styles from './MessageEdit.module.scss'
+import {setWarning} from "../../../app/alertsSlice"
+import {useDispatch, useSelector} from "react-redux"
+import MessagePreview from "./MessagePreview"
+import {setMarkdown, setSubject} from "../../../app/messageSlice"
+import EmojiPicker from "./EmojiPicker"
 
 const MessageEdit = ({title, saveHandleFunction}) => {
 
-    const subject = useSelector(state => state.message.subject);
-    const markDown = useSelector(state => state.message.markDown);
-    const dispatch = useDispatch();
+    const subject = useSelector(state => state.message.subject)
+    const markDown = useSelector(state => state.message.markDown)
+    const dispatch = useDispatch()
 
-    const validateFunction = () => validate(subject, markDown, dispatch);
+    const validateFunction = () => validate(subject, markDown, dispatch)
 
-    const textAreaRef = useRef();
+    const textAreaRef = useRef()
     const handleEmojiClick = (emoji) => {
-        const selectionStart = 0 || textAreaRef.current.selectionStart;
-        const selectionEnd = textAreaRef.current.selectionEnd;
-        const newMarkdown = markDown.substr(0, selectionStart) + emoji + markDown.substr(selectionEnd);
+        const selectionStart = 0 || textAreaRef.current.selectionStart
+        const selectionEnd = textAreaRef.current.selectionEnd
+        const newMarkdown = markDown.substr(0, selectionStart) + emoji + markDown.substr(selectionEnd)
         dispatch(setMarkdown(newMarkdown))
     }
 
@@ -60,7 +60,7 @@ const MessageEdit = ({title, saveHandleFunction}) => {
             </Row>
             <Row>
                 <Col>
-                    <img alt={"Markdown logo"} className={styles.markdownLogo} src={"./markdown.svg"}/>
+                    <img alt={"Markdown logo"} className={styles.markdownLogo} src={"/markdown.svg"}/>
                     &nbsp;
                     <small>
                         <a href={"https://www.markdownguide.org/basic-syntax/"} target={"_blank"} rel={"noreferrer"}>
@@ -82,22 +82,22 @@ const MessageEdit = ({title, saveHandleFunction}) => {
 
 const onClickSave = (validateFunction, saveHandleFunction) => {
     if (validateFunction() === false) {
-        return;
+        return
     }
-    saveHandleFunction();
+    saveHandleFunction()
 }
 
 const validate = (subject, markDown, dispatch) => {
     if (!subject || subject.length < 2 || subject.length > 255) {
-        dispatch(setWarning("Soggetto: Minimo 1 carattere, massimo 255"));
-        return false;
+        dispatch(setWarning("Soggetto: Minimo 1 carattere, massimo 255"))
+        return false
     }
     if (!markDown || markDown.length < 2 || markDown.length > 4096) {
-        dispatch(setWarning("Testo: Minimo 1 carattere, massimo 4096"));
-        return false;
+        dispatch(setWarning("Testo: Minimo 1 carattere, massimo 4096"))
+        return false
     }
 
-    return true;
+    return true
 }
 
 export default MessageEdit

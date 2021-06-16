@@ -1,15 +1,15 @@
-import React from 'react';
-import {Alert, Col} from "react-bootstrap";
-import {useDispatch, useSelector} from "react-redux";
-import {delDanger, delSuccess, delWarning} from "../app/alertsSlice";
+import React from 'react'
+import {Alert, Col} from "react-bootstrap"
+import {useDispatch, useSelector} from "react-redux"
+import {delDanger, delSuccess, delWarning} from "../app/alertsSlice"
 
 const Alerts = () => {
 
     const dispatch = useDispatch()
 
-    const success = useSelector(state => state.alerts.success);
-    const warning = useSelector(state => state.alerts.warning);
-    const danger = useSelector(state => state.alerts.danger);
+    const success = useSelector(state => state.alerts.success)
+    const warning = useSelector(state => state.alerts.warning)
+    const danger = useSelector(state => state.alerts.danger)
 
     return (
         <Col>
@@ -24,6 +24,6 @@ const Alerts = () => {
             }
         </Col>
     )
-};
+}
 
-export default Alerts;
+export default Alerts

@@ -1,21 +1,19 @@
-import {NavLink, useParams} from "react-router-dom";
-import {useDispatch} from "react-redux";
-import React, {Fragment, useEffect, useState} from "react";
-import {DEFAULT_HEADERS, USER_INFO_URL} from "../../../app/const";
-import {Col, Container, Image, Row} from "react-bootstrap";
-import {formatDateTime} from "../../../app/utils";
+import {NavLink, useParams} from "react-router-dom"
+import React, {Fragment, useEffect, useState} from "react"
+import {Col, Container, Image, Row} from "react-bootstrap"
+import {formatDateTime} from "../../../app/utils"
 import styles from "./UploadAvatar.module.scss"
+import {doFetchUserInfo} from "../../../app/restOperations"
 
 const Info = () => {
 
-    const dispatch = useDispatch();
-    const [userInfo, setUserInfo] = useState();
+    const [userInfo, setUserInfo] = useState()
 
-    let {userId} = useParams();
+    let {userId} = useParams()
     useEffect(() => {
-            fetchUserInfo(userId, setUserInfo, dispatch)
-        }, []
-    );
+            doFetchUserInfo(userId, setUserInfo)
+        }, [userId]
+    )
 
     if (!userInfo) {
         return <Fragment/>
@@ -62,21 +60,6 @@ const Info = () => {
             </Row>
         </Fragment>
     )
-}
-
-const fetchUserInfo = (userId, setUserInfo, dispatch) => {
-    fetch(USER_INFO_URL(userId), {
-        method: "GET",
-        headers: DEFAULT_HEADERS,
-        mode: "cors"
-    })
-        .then(response => response.json())
-        .then(data => {
-            setUserInfo(data);
-        })
-        .catch(error => {
-            console.error(error)
-        })
 }
 
 export default Info

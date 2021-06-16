@@ -46,7 +46,7 @@ class MessageController(private val messageRepository: MessageRepository, privat
             content = newMessage.content,
             parentId = newMessage.parentId,
             threadId = getThreadId(newMessage.parentId),
-            user = loggedUserInfo.getUserInfo()
+            user = loggedUserInfo.getUserInfo()!!
         )
         return ResponseEntity.ok(messageRepository.save(message))
     }

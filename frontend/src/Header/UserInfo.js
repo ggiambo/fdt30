@@ -1,9 +1,9 @@
-import React from 'react';
-import {NavLink} from "react-router-dom";
-import styles from "./UserInfo.module.scss";
-import { PersonFill } from 'react-bootstrap-icons';
-import {useSelector} from "react-redux";
-import {Col, OverlayTrigger, Tooltip} from "react-bootstrap";
+import React from 'react'
+import {NavLink} from "react-router-dom"
+import styles from "./UserInfo.module.scss"
+import { PersonFill } from 'react-bootstrap-icons'
+import {useSelector} from "react-redux"
+import {Col, OverlayTrigger, Tooltip} from "react-bootstrap"
 
 const UserInfo = () => {
 
@@ -19,7 +19,7 @@ const UserInfo = () => {
                 </NavLink>
             </OverlayTrigger>
         </Col>
-    );
+    )
 }
 
 export default UserInfo

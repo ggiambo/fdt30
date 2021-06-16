@@ -1,7 +1,7 @@
-import {Col, Image, Row} from "react-bootstrap";
-import {NavLink} from "react-router-dom";
-import React from "react";
-import {formatDateTime} from "../../../../app/utils";
+import {Col, Image, Row} from "react-bootstrap"
+import {NavLink} from "react-router-dom"
+import React from "react"
+import {formatDateTime} from "../../../../app/utils"
 import styles from "./MessageViewFooter.module.scss"
 
 const MessageViewFooter = ({message}) => {
@@ -10,15 +10,18 @@ const MessageViewFooter = ({message}) => {
             <Col>
                 {getAvatar(message)}
                 Scritto da
-                <NavLink className={styles.userInfoLink} to={`/user/${message.user.id}`}>{message.user.name}</NavLink>
+                &nbsp;
+                <NavLink to={`/user/${message.user.id}`}>{message.user.name}</NavLink>
+                &nbsp;
                 il
+                &nbsp;
                 {formatDateTime(message.created)}
             </Col>
             <Col className={"text-right"}>
                 <NavLink to={`/reply/${message.id}`}>Rispondi</NavLink>
             </Col>
         </Row>
-    );
+    )
 }
 
 const getAvatar = (message) => {
@@ -29,9 +32,9 @@ const getAvatar = (message) => {
                    src={"data:image/png;base64, " + message.user.avatarBase64}
                    alt={"Avatar"}
             />
-        );
+        )
     }
-    return null;
+    return null
 }
 
 export default MessageViewFooter
