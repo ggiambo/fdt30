@@ -16,7 +16,7 @@ const Login = () => {
 
     return (
         <Fragment>
-            <Row>
+            <Row onKeyPress={(e) => (e.key === 'Enter') && doLogin(username, password, dispatch, history)}>
                 <Col>
                     <h3>Login</h3>
                     <Form.Group>
