@@ -1,11 +1,11 @@
 import React from 'react'
-import Header from "./Header/Header"
-import Footer from "./Footer/Footer"
+import Header from "./header/Header"
+import Footer from "./footer/Footer"
 import {Col, Container, Row} from "react-bootstrap"
 import './App.scss'
 import {BrowserRouter} from "react-router-dom"
-import Sidebar from "./Main/Sidebar/Sidebar"
-import Content from "./Main/Content/Content"
+import Sidebar from "./main/sidebar/Sidebar"
+import Content from "./main/content/Content"
 
 const App = () => {
     return (
