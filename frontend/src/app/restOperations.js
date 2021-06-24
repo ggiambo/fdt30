@@ -1,16 +1,11 @@
 import {delWarning, setDanger, setSuccess, setWarning} from "./alertsSlice"
 import {setMarkdown, setSubject, clear} from "./messageSlice"
-import {setMessages, setTotalPages} from "./messagesSlice"
 import {login} from "./userSlice"
 
 const BACKEND_URL = `${window.location.protocol}//${window.location.hostname}:8080`
 const LOGIN_URL = BACKEND_URL + "/login"
 const MESSAGE_URL = BACKEND_URL + "/message"
 const GET_MESSAGE_URL = (messageId) => BACKEND_URL + `/message/${messageId}`
-const MESSAGES_URL = (pageNr) => BACKEND_URL + `/messages/${pageNr}`
-const MESSAGES_BY_USER_URL = (pageNr, userId) => BACKEND_URL + `/messages/${pageNr}/user/${userId}`
-const THREAD_URL = (threadId) => BACKEND_URL + `/thread/${threadId}`
-const THREADS_URL = (pageNr) => BACKEND_URL + `/threads/${pageNr}`
 const USER_URL = BACKEND_URL + "/user"
 const USER_INFO_URL = (userId) => BACKEND_URL + `/user/${userId}`
 const DEFAULT_HEADERS = {"Content-Type": "application/json"}
@@ -170,38 +165,6 @@ export const doFetchMessage = (messageId, dispatch) => {
         })
 }
 
-export const doFetchMessagesByPage = (pageNr, dispatch) => {
-    fetch(MESSAGES_URL(pageNr), {
-        method: "GET",
-        headers: DEFAULT_HEADERS,
-        mode: "cors"
-    })
-        .then(response => response.json())
-        .then(data => {
-            dispatch(setMessages(data.messages))
-            dispatch(setTotalPages(data.totalPages))
-        })
-        .catch(error => {
-            console.error(error)
-        })
-}
-
-export const doFetchMessagesByPageAndUser = (pageNr, userId, dispatch) => {
-    fetch(MESSAGES_BY_USER_URL(pageNr, userId), {
-        method: "GET",
-        headers: DEFAULT_HEADERS,
-        mode: "cors"
-    })
-        .then(response => response.json())
-        .then(data => {
-            dispatch(setMessages(data.messages))
-            dispatch(setTotalPages(data.totalPages))
-        })
-        .catch(error => {
-            console.error(error)
-        })
-}
-
 export const doReplyMessage = (subject, markDown, parentId, dispatch, history) => {
     fetch(MESSAGE_URL, {
         method: "POST",
@@ -223,37 +186,6 @@ export const doReplyMessage = (subject, markDown, parentId, dispatch, history) =
                 default:
                     dispatch(setWarning("Errore nell'inserimento del messaggio"))
             }
-        })
-        .catch(error => {
-            console.error(error)
-        })
-}
-
-export const doFetchThread = (threadId, dispatch) => {
-    fetch(THREAD_URL(threadId), {
-        method: "GET",
-        headers: DEFAULT_HEADERS,
-        mode: "cors"
-    })
-        .then(response => response.json())
-        .then(data => {
-            dispatch(setMessages(data.messages))
-        })
-        .catch(error => {
-            console.error(error)
-        })
-}
-
-export const doFetchThreads = (pageNr, dispatch) => {
-    fetch(THREADS_URL(pageNr), {
-        method: "GET",
-        headers: DEFAULT_HEADERS,
-        mode: "cors"
-    })
-        .then(response => response.json())
-        .then(data => {
-            dispatch(setMessages(data.messages))
-            dispatch(setTotalPages(data.totalPages))
         })
         .catch(error => {
             console.error(error)

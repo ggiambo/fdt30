@@ -33,7 +33,6 @@ class MessageController(private val messageRepository: MessageRepository, privat
         return ResponseEntity.ok(
             Messages(
                 messages = messages.content.filterNotNull(),
-                actualPage = pageNr - 1,
                 totalPages = messages.totalPages
             )
         )
@@ -65,7 +64,6 @@ class MessageController(private val messageRepository: MessageRepository, privat
         return ResponseEntity.ok(
             Messages(
                 messages = messages.content.filterNotNull(),
-                actualPage = pageNr - 1,
                 totalPages = messages.totalPages
             )
         )

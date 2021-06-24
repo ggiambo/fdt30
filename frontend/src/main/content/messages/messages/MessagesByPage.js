@@ -1,26 +1,27 @@
-import React, {useEffect} from 'react'
-import {useDispatch} from "react-redux"
+import React from 'react'
 import {useHistory, useParams} from "react-router-dom"
 import Messages from "./Messages"
-import {doFetchMessagesByPage} from "../../../../app/restOperations"
+import {useGetMessagesByPageQuery} from "../../../../app/api";
+import {Spinner} from "react-bootstrap";
 
 const MessagesByPage = () => {
-
-    const dispatch = useDispatch()
     const history = useHistory()
-
     const gotoPage = (pageNr) => {
         history.push(`/messages/${pageNr}`)
     }
 
-    let {pageNr} = useParams()
-    useEffect(() => {
-        doFetchMessagesByPage(pageNr, dispatch)
-    }, [pageNr, dispatch])
+    const {pageNr} = useParams()
+    const {data, error, isLoading} = useGetMessagesByPageQuery(pageNr)
 
-    return (
-        <Messages gotoPage={gotoPage}/>
-    )
+    if (isLoading) {
+        return <Spinner animation="border" variant="secondary"/>
+    }
+
+    if (error) {
+        return "error"
+    }
+
+    return <Messages gotoPage={gotoPage} totalPages={data.totalPages} messages={data.messages}/>
 }
 
 export default MessagesByPage

@@ -1,27 +1,33 @@
 import React, {Fragment, useEffect} from 'react'
-import {Col, Row} from "react-bootstrap"
+import {Col, Row, Spinner} from "react-bootstrap"
 import MessageView from "./view/MessageView"
 import {useDispatch, useSelector} from "react-redux"
 import {useParams} from "react-router-dom"
 import MessagesNavigator from "./messages/MessagesNavigator"
 import {doFetchThreads} from "../../../app/restOperations"
+import {useGetMessagesByPageAndUserQuery, useGetThreadsByPageQuery} from "../../../app/api";
+import {setDanger} from "../../../app/alertsSlice";
 
 const Threads = () => {
 
-    const messages = useSelector(state => state.messages.messages)
-    const dispatch = useDispatch()
-
     let {pageNr} = useParams()
-    useEffect(() => {
-        doFetchThreads(pageNr, dispatch)
-    }, [pageNr, dispatch])
+    const {data, error, isLoading} = useGetThreadsByPageQuery(pageNr)
+
+    const dispatch = useDispatch()
+    if (error) {
+        dispatch(setDanger(`Impossibile leggere i messaggi del thread - ${error.message}`))
+    }
+
+    if (isLoading) {
+        return <Spinner animation="border" variant="secondary"/>
+    }
 
     return (
         <Fragment>
             <Row>
                 <Col>
                     <h3>Threads</h3>
-                    {messages.map((message, index) =>
+                    {data.messages.map((message, index) =>
                         <div key={index} className={"mb-4"}>
                             <MessageView message={message}/>
                         </div>

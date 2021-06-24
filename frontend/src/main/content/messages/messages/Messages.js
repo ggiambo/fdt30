@@ -5,12 +5,9 @@ import {useSelector} from "react-redux"
 import MessagesNavigator from "./MessagesNavigator"
 import {useParams} from "react-router-dom"
 
-const Messages = ({gotoPage}) => {
+const Messages = ({gotoPage, totalPages, messages}) => {
 
-    const messages = useSelector(state => state.messages.messages)
     const {pageNr} = useParams()
-
-
 
     return (
         <Fragment>
@@ -26,7 +23,7 @@ const Messages = ({gotoPage}) => {
             </Row>
             <Row className={"mb-3"}>
                 <Col>
-                    <MessagesNavigator actualPageNr={pageNr} gotoPage={gotoPage}/>
+                    <MessagesNavigator actualPageNr={pageNr} totalPages={totalPages} gotoPage={gotoPage}/>
                 </Col>
             </Row>
         </Fragment>
