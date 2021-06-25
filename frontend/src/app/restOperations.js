@@ -7,7 +7,6 @@ const LOGIN_URL = BACKEND_URL + "/login"
 const MESSAGE_URL = BACKEND_URL + "/message"
 const GET_MESSAGE_URL = (messageId) => BACKEND_URL + `/message/${messageId}`
 const USER_URL = BACKEND_URL + "/user"
-const USER_INFO_URL = (userId) => BACKEND_URL + `/user/${userId}`
 const DEFAULT_HEADERS = {"Content-Type": "application/json"}
 const AUTH_HEADERS = () => {
     return {
@@ -186,21 +185,6 @@ export const doReplyMessage = (subject, markDown, parentId, dispatch, history) =
                 default:
                     dispatch(setWarning("Errore nell'inserimento del messaggio"))
             }
-        })
-        .catch(error => {
-            console.error(error)
-        })
-}
-
-export const doFetchUserInfo = (userId, setUserInfo) => {
-    fetch(USER_INFO_URL(userId), {
-        method: "GET",
-        headers: DEFAULT_HEADERS,
-        mode: "cors"
-    })
-        .then(response => response.json())
-        .then(data => {
-            setUserInfo(data)
         })
         .catch(error => {
             console.error(error)

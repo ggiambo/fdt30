@@ -5,20 +5,32 @@ export const BASE_URL = `${window.location.protocol}//${window.location.hostname
 export const messagesApi = createApi({
     reducerPath: 'messagesApi',
     baseQuery: fetchBaseQuery({baseUrl: BASE_URL}),
+    refetchOnMountOrArgChange: true,
     endpoints: (builder) => ({
         getMessagesByPage: builder.query({
-            query: (pageNr) => `messages/${pageNr}`
+            query: (pageNr) => `messages/${pageNr}`,
         }),
         getMessagesByPageAndUser: builder.query({
-            query: ({pageNr, userId}) => `messages/${pageNr}/user/${userId}`
+            query: ({pageNr, userId}) => `messages/${pageNr}/user/${userId}`,
         }),
         getMessagesByThreadId: builder.query({
-            query: (threadId) => `thread/${threadId}`
+            query: (threadId) => `thread/${threadId}`,
         }),
         getThreadsByPage: builder.query({
-            query: (pageNr) => `threads/${pageNr}`
+            query: (pageNr) => `threads/${pageNr}`,
         }),
     }),
+})
+
+export const userApi = createApi({
+    reducerPath: 'userApi',
+    baseQuery: fetchBaseQuery({baseUrl: BASE_URL}),
+    refetchOnMountOrArgChange: true,
+    endpoints: (builder) => ({
+        getUserInfo: builder.query({
+            query: (userId) => `user/${userId}`,
+        }),
+    })
 })
 
 export const {
@@ -27,3 +39,7 @@ export const {
     useGetMessagesByThreadIdQuery,
     useGetThreadsByPageQuery
 } = messagesApi
+
+export const {
+    useGetUserInfoQuery,
+} = userApi

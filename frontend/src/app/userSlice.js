@@ -1,6 +1,6 @@
 import {createSlice} from '@reduxjs/toolkit'
 
-const getUserMameFromLocalStorage = () => {
+const getUserNameFromLocalStorage = () => {
     const token = localStorage.getItem("token")
     if (token == null) {
         return null
@@ -13,8 +13,8 @@ const getUserMameFromLocalStorage = () => {
 export const userSlice = createSlice({
     name: 'user',
     initialState: {
-        logged: getUserMameFromLocalStorage() != null,
-        name: getUserMameFromLocalStorage(),
+        logged: getUserNameFromLocalStorage() != null,
+        name: getUserNameFromLocalStorage(),
     },
     reducers: {
         login: (state, action) => {

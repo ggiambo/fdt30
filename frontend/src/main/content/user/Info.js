@@ -1,23 +1,24 @@
 import {NavLink, useParams} from "react-router-dom"
-import React, {Fragment, useEffect, useState} from "react"
-import {Col, Container, Image, Row} from "react-bootstrap"
+import React, {Fragment} from "react"
+import {Col, Container, Image, Row, Spinner} from "react-bootstrap"
 import {formatDateTime} from "../../../app/utils"
 import styles from "./UploadAvatar.module.scss"
-import {doFetchUserInfo} from "../../../app/restOperations"
-import {BASE_URL} from "../../../app/api";
+import {BASE_URL, useGetUserInfoQuery} from "../../../app/api";
+import {useDispatch} from "react-redux";
+import {setDanger} from "../../../app/alertsSlice";
 
 const Info = () => {
 
-    const [userInfo, setUserInfo] = useState()
-
     let {userId} = useParams()
-    useEffect(() => {
-            doFetchUserInfo(userId, setUserInfo)
-        }, [userId]
-    )
+    const {data: userInfo, error, isLoading} = useGetUserInfoQuery(userId)
 
-    if (!userInfo) {
-        return <Fragment/>
+    const dispatch = useDispatch();
+    if (error) {
+        dispatch(setDanger(`Impossibile leggere i messaggi - ${error.message}`))
+    }
+
+    if (isLoading) {
+        return <Spinner animation="border" variant="secondary"/>
     }
 
     return (

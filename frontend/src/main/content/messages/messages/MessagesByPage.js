@@ -3,6 +3,8 @@ import {useHistory, useParams} from "react-router-dom"
 import Messages from "./Messages"
 import {useGetMessagesByPageQuery} from "../../../../app/api";
 import {Spinner} from "react-bootstrap";
+import {setDanger} from "../../../../app/alertsSlice";
+import {useDispatch} from "react-redux";
 
 const MessagesByPage = () => {
     const history = useHistory()
@@ -13,12 +15,13 @@ const MessagesByPage = () => {
     const {pageNr} = useParams()
     const {data, error, isLoading} = useGetMessagesByPageQuery(pageNr)
 
-    if (isLoading) {
-        return <Spinner animation="border" variant="secondary"/>
+    const dispatch = useDispatch();
+    if (error) {
+        dispatch(setDanger(`Impossibile leggere i messaggi - ${error.message}`))
     }
 
-    if (error) {
-        return "error"
+    if (isLoading) {
+        return <Spinner animation="border" variant="secondary"/>
     }
 
     return <Messages gotoPage={gotoPage} totalPages={data.totalPages} messages={data.messages}/>
