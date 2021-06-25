@@ -4,6 +4,7 @@ import {Col, Container, Image, Row} from "react-bootstrap"
 import {formatDateTime} from "../../../app/utils"
 import styles from "./UploadAvatar.module.scss"
 import {doFetchUserInfo} from "../../../app/restOperations"
+import {BASE_URL} from "../../../app/api";
 
 const Info = () => {
 
@@ -30,7 +31,7 @@ const Info = () => {
                 <Col>
                     <Image rounded
                            className={styles.avatarImage}
-                           src={"data:image/png;base64, " + userInfo.avatarBase64}
+                           src={`${BASE_URL}avatar/${userInfo.id}`}
                            alt={"Avatar"}
                     />
                 </Col>

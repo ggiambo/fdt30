@@ -3,6 +3,7 @@ import {NavLink} from "react-router-dom"
 import React from "react"
 import {formatDateTime} from "../../../../app/utils"
 import styles from "./MessageViewFooter.module.scss"
+import {BASE_URL} from "../../../../app/api";
 
 const MessageViewFooter = ({message}) => {
     return (
@@ -25,16 +26,13 @@ const MessageViewFooter = ({message}) => {
 }
 
 const getAvatar = (message) => {
-    if (message.user.avatarBase64) {
-        return (
-            <Image rounded
-                   className={styles.smallAvatar}
-                   src={"data:image/png;base64, " + message.user.avatarBase64}
-                   alt={"Avatar"}
-            />
-        )
-    }
-    return null
+    return (
+        <Image rounded
+               className={styles.smallAvatar}
+               src={`${BASE_URL}avatar/${message.user.id}`}
+               alt={"Avatar"}
+        />
+    )
 }
 
 export default MessageViewFooter

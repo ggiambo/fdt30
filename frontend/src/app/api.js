@@ -1,8 +1,10 @@
 import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react'
 
+export const BASE_URL = `${window.location.protocol}//${window.location.hostname}:8080/`
+
 export const messagesApi = createApi({
     reducerPath: 'messagesApi',
-    baseQuery: fetchBaseQuery({baseUrl: `${window.location.protocol}//${window.location.hostname}:8080/`}),
+    baseQuery: fetchBaseQuery({baseUrl: BASE_URL}),
     endpoints: (builder) => ({
         getMessagesByPage: builder.query({
             query: (pageNr) => `messages/${pageNr}`

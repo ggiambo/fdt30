@@ -1,10 +1,14 @@
 package net.rcfmedia.fdt30.peristence
 
+import net.rcfmedia.fdt30.configuration.Configuration
+import org.springframework.cache.annotation.CacheEvict
 import org.springframework.data.repository.PagingAndSortingRepository
 
 interface UserRepository : PagingAndSortingRepository<User?, Int?> {
     fun findByName(name: String): User?
-    fun findByNameAndPassword(name: String, password: String): User?
+
+    @CacheEvict(value = [Configuration.avatarCache], key = "#user.id")
+    override fun <S : User?> save(user: S): S
 
     companion object {
         const val PAGE_SIZE = 10

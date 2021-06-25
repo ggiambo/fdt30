@@ -1,6 +1,7 @@
 package net.rcfmedia.fdt30.controller
 
 import net.rcfmedia.fdt30.auth.LoggedUserInfo
+import net.rcfmedia.fdt30.configuration.Configuration
 import net.rcfmedia.fdt30.controller.model.NewUser
 import net.rcfmedia.fdt30.controller.model.UpdateUser
 import net.rcfmedia.fdt30.peristence.User
@@ -8,6 +9,8 @@ import net.rcfmedia.fdt30.peristence.UserRepository
 import net.rcfmedia.fdt30.peristence.UserRepository.Companion.PAGE_SIZE
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
+import org.springframework.cache.annotation.CacheEvict
+import org.springframework.cache.annotation.Cacheable
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
 import org.springframework.data.domain.Sort
