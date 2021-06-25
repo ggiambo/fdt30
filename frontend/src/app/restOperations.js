@@ -1,11 +1,8 @@
 import {delWarning, setDanger, setSuccess, setWarning} from "./alertsSlice"
-import {setMarkdown, setSubject, clear} from "./messageSlice"
 import {login} from "./userSlice"
 
 const BACKEND_URL = `${window.location.protocol}//${window.location.hostname}:8080`
 const LOGIN_URL = BACKEND_URL + "/login"
-const MESSAGE_URL = BACKEND_URL + "/message"
-const GET_MESSAGE_URL = (messageId) => BACKEND_URL + `/message/${messageId}`
 const USER_URL = BACKEND_URL + "/user"
 const DEFAULT_HEADERS = {"Content-Type": "application/json"}
 const AUTH_HEADERS = () => {
@@ -103,87 +100,6 @@ export const doUpdateUser = ({oldPassword, newPassword, avatarBase64, dispatch})
                     break
                 default:
                     dispatch(setDanger("Errore generico"))
-            }
-        })
-        .catch(error => {
-            console.error(error)
-        })
-}
-
-export const doSaveNewMessage = (subject, markDown, dispatch, history) => {
-    fetch(MESSAGE_URL, {
-        method: "POST",
-        headers: AUTH_HEADERS(),
-        mode: "cors",
-        body: JSON.stringify({
-            subject: subject,
-            content: markDown
-        })
-    })
-        .then(response => {
-            switch (response.status) {
-                case 200:
-                    dispatch(delWarning())
-                    history.push("/messages/0")
-                    dispatch(clear())
-                    break
-                case 403:
-                    dispatch(setWarning("Non sei autorizzato a inserire il messaggio"))
-                    break
-                default:
-                    dispatch(setWarning("Errore nell'inserimento del messaggio"))
-            }
-        })
-        .catch(error => {
-            console.error(error)
-        })
-}
-
-export const doFetchMessage = (messageId, dispatch) => {
-    fetch(GET_MESSAGE_URL(messageId), {
-        method: "GET",
-        headers: AUTH_HEADERS(),
-        mode: "cors"
-
-    })
-        .then(response => {
-            switch (response.status) {
-                case 200:
-                    dispatch(delWarning())
-                    response.json().then(data => {
-                        dispatch(setSubject("Re: " + data.subject))
-                        dispatch(setMarkdown(data.content.split("\n").map(line => `> ${line}`).join("\n")))
-                    })
-                    break
-                default:
-                    dispatch(setWarning("Errore nel caricare il messaggio"))
-            }
-        })
-        .catch(error => {
-            console.error(error)
-        })
-}
-
-export const doReplyMessage = (subject, markDown, parentId, dispatch, history) => {
-    fetch(MESSAGE_URL, {
-        method: "POST",
-        headers: AUTH_HEADERS(),
-        mode: "cors",
-        body: JSON.stringify({
-            subject: subject,
-            content: markDown,
-            parentId: parentId
-        })
-    })
-        .then(response => {
-            switch (response.status) {
-                case 200:
-                    dispatch(delWarning())
-                    history.push("/messages/0")
-                    dispatch(clear())
-                    break
-                default:
-                    dispatch(setWarning("Errore nell'inserimento del messaggio"))
             }
         })
         .catch(error => {

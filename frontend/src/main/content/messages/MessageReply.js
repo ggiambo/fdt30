@@ -1,26 +1,35 @@
-import React, {useEffect} from 'react'
-import {useDispatch, useSelector} from "react-redux"
-import {useHistory, useParams} from "react-router-dom"
+import React from 'react'
+import {useDispatch} from "react-redux"
+import {useParams} from "react-router-dom"
 import MessageEdit from "./MessageEdit"
-import {doFetchMessage, doReplyMessage} from "../../../app/restOperations"
+import {useGetMessageByIdQuery} from "../../../app/api";
+import {setDanger} from "../../../app/alertsSlice";
+import {Spinner} from "react-bootstrap";
 
 const MessageReply = () => {
 
-    const subject = useSelector(state => state.message.subject)
-    const markDown = useSelector(state => state.message.markDown)
-    const history = useHistory()
+    let {parentId} = useParams()
+    const {data, error, isLoading} = useGetMessageByIdQuery(parentId)
 
     const dispatch = useDispatch()
+    if (error) {
+        dispatch(setDanger(`Impossibile leggere i messaggi - ${error.message}`))
+    }
 
-    let {parentId} = useParams()
-    useEffect(() => {
-        doFetchMessage(parentId, dispatch)
-    }, [parentId, dispatch])
+    if (isLoading) {
+        return <Spinner animation="border" variant="secondary"/>
+    }
 
-    const saveHandleFunction = () => doReplyMessage(subject, markDown, parentId, dispatch, history)
+    const subject = `Re: ${data.subject}`
+    const markDown = data.content.split("\n").map(line => `> ${line}`).join("\n")
 
     return (
-        <MessageEdit title={"Rispondi al messaggio"} saveHandleFunction={saveHandleFunction}/>
+        <MessageEdit
+            title={"Rispondi al messaggio"}
+            subject={subject}
+            markDown={markDown}
+            parentId={parentId}
+        />
     )
 }
 

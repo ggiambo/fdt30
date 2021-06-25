@@ -1,11 +1,10 @@
-import React, {Fragment, useEffect} from 'react'
+import React, {Fragment} from 'react'
 import {Col, Row, Spinner} from "react-bootstrap"
 import MessageView from "./view/MessageView"
-import {useDispatch, useSelector} from "react-redux"
+import {useDispatch} from "react-redux"
 import {useParams} from "react-router-dom"
 import MessagesNavigator from "./messages/MessagesNavigator"
-import {doFetchThreads} from "../../../app/restOperations"
-import {useGetMessagesByPageAndUserQuery, useGetThreadsByPageQuery} from "../../../app/api";
+import {useGetThreadsByPageQuery} from "../../../app/api";
 import {setDanger} from "../../../app/alertsSlice";
 
 const Threads = () => {

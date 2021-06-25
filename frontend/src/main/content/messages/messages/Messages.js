@@ -1,7 +1,6 @@
 import React, {Fragment} from 'react'
 import {Col, Row} from "react-bootstrap"
 import MessageView from "../view/MessageView"
-import {useSelector} from "react-redux"
 import MessagesNavigator from "./MessagesNavigator"
 import {useParams} from "react-router-dom"
 
