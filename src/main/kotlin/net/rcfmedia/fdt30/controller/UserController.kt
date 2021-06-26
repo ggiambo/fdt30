@@ -68,7 +68,7 @@ class UserController(
     }
 
     @PatchMapping("/user")
-    fun updateUserPassword(@RequestBody updateUser: UpdateUser): ResponseEntity<String> {
+    fun updateUser(@RequestBody updateUser: UpdateUser): ResponseEntity<String> {
         val user = loggedUserInfo.getUserInfo()
         if (user == null) {
             return ResponseEntity("user not found", HttpStatus.NOT_FOUND)

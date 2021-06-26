@@ -3,7 +3,7 @@ import {NavLink} from "react-router-dom"
 import React from "react"
 import {formatDateTime} from "../../../../app/utils"
 import styles from "./MessageViewFooter.module.scss"
-import {BASE_URL} from "../../../../app/api";
+import {BASE_URL} from "../../../../app/api"
 
 const MessageViewFooter = ({message}) => {
     return (

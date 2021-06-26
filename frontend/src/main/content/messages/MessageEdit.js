@@ -1,12 +1,12 @@
 import React, {Fragment, useRef, useState} from 'react'
 import {Button, Col, Form, Row, Tab, Tabs} from "react-bootstrap"
 import styles from './MessageEdit.module.scss'
-import {delWarning, setWarning} from "../../../app/alertsSlice"
+import {delWarning, setWarning, setSuccess} from "../../../app/alertsSlice"
 import {useDispatch} from "react-redux"
 import MessagePreview from "./MessagePreview"
 import EmojiPicker from "./EmojiPicker"
-import {useSaveMessageMutation} from "../../../app/api";
-import {useHistory} from "react-router-dom";
+import {useSaveMessageMutation} from "../../../app/api"
+import {useHistory} from "react-router-dom"
 
 const MessageEdit = ({title, subject: sourceSubject, markDown: sourceMarkdown, parentId = null}) => {
 
@@ -25,19 +25,22 @@ const MessageEdit = ({title, subject: sourceSubject, markDown: sourceMarkdown, p
         setMarkdown(newMarkdown)
     }
 
-    const [saveMessage, {isSuccess, isError}] = useSaveMessageMutation()
-    const saveHandleFunction = () => {
+    const [saveMessage, {isSuccess, error}] = useSaveMessageMutation()
+    const save = () => {
         saveMessage({
             subject: subject,
             content: markDown,
+            parentId: parentId,
         })
-        if (isSuccess) {
-            dispatch(delWarning())
-            history.push("/messages/0")
-        }
-        if (isError) {
-            dispatch(setWarning("Errore nell'inserimento del messaggio"))
-        }
+    }
+
+    if (isSuccess) {
+        dispatch(delWarning())
+        history.push("/messages/0")
+        dispatch(setSuccess("Messaggio inserito con successo"))
+    }
+    if (error) {
+        dispatch(setWarning(`Errore nell'inserimento del messaggio: ${error.message}`))
     }
 
     return (
@@ -90,7 +93,7 @@ const MessageEdit = ({title, subject: sourceSubject, markDown: sourceMarkdown, p
             <Row>
                 <Col>
                     <Button
-                        onClick={() => onClickSave(validateFunction, () => saveHandleFunction(subject, markDown, parentId))}>Save</Button>
+                        onClick={() => onClickSave(validateFunction, () => save())}>Save</Button>
                 </Col>
             </Row>
         </Fragment>

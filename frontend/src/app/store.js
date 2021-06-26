@@ -1,7 +1,7 @@
 import {configureStore} from '@reduxjs/toolkit'
 import userReducer from './userSlice'
 import alertsReducer from './alertsSlice'
-import {messagesApi, userApi} from "./api";
+import {messagesApi, userApi} from "./api"
 
 export default configureStore({
     reducer: {

@@ -1,10 +1,10 @@
 import React from 'react'
 import {useHistory, useParams} from "react-router-dom"
 import Messages from "./Messages"
-import {useGetMessagesByPageAndUserQuery} from "../../../../app/api";
-import {Spinner} from "react-bootstrap";
-import {useDispatch} from "react-redux";
-import {setDanger} from "../../../../app/alertsSlice";
+import {useGetMessagesByPageAndUserQuery} from "../../../../app/api"
+import {Spinner} from "react-bootstrap"
+import {useDispatch} from "react-redux"
+import {setDanger} from "../../../../app/alertsSlice"
 
 const MessagesByPageAndUser = () => {
 

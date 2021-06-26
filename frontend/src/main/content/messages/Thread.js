@@ -3,8 +3,8 @@ import React from "react"
 import {useDispatch} from "react-redux"
 import {Col, Row, Spinner} from "react-bootstrap"
 import MessageView from "./view/MessageView"
-import {useGetMessagesByThreadIdQuery} from "../../../app/api";
-import {setDanger} from "../../../app/alertsSlice";
+import {useGetMessagesByThreadIdQuery} from "../../../app/api"
+import {setDanger} from "../../../app/alertsSlice"
 
 const Thread = () => {
 

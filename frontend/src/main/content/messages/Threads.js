@@ -4,8 +4,8 @@ import MessageView from "./view/MessageView"
 import {useDispatch} from "react-redux"
 import {useParams} from "react-router-dom"
 import MessagesNavigator from "./messages/MessagesNavigator"
-import {useGetThreadsByPageQuery} from "../../../app/api";
-import {setDanger} from "../../../app/alertsSlice";
+import {useGetThreadsByPageQuery} from "../../../app/api"
+import {setDanger} from "../../../app/alertsSlice"
 
 const Threads = () => {
 

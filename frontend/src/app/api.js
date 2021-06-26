@@ -6,15 +6,13 @@ export const messagesApi = createApi({
     reducerPath: 'messagesApi',
     baseQuery: fetchBaseQuery({
         baseUrl: BASE_URL,
-            /*
-        prepareHeaders: (headers, { getState }) => {
+        prepareHeaders: (headers) => {
             const token = localStorage.getItem("token")
             if (token) {
                 headers.set("Authorization", "Bearer " + token)
             }
-
+            return headers
         },
-             */
     }),
     refetchOnMountOrArgChange: true,
     endpoints: (builder) => ({
@@ -28,13 +26,10 @@ export const messagesApi = createApi({
             query: (messageId) => `message/${messageId}`
         }),
         saveMessage: builder.mutation({
-            query: ({subject, markDown, parentId}) => ({
+            query: (body) => ({
                 url: `message`,
-                body: {
-                    subject: subject,
-                    content: markDown,
-                    parentId: parentId
-                }
+                method: 'POST',
+                body: body
             })
         }),
         getMessagesByThreadId: builder.query({

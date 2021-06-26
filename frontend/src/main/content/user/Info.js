@@ -3,16 +3,16 @@ import React, {Fragment} from "react"
 import {Col, Container, Image, Row, Spinner} from "react-bootstrap"
 import {formatDateTime} from "../../../app/utils"
 import styles from "./UploadAvatar.module.scss"
-import {BASE_URL, useGetUserInfoQuery} from "../../../app/api";
-import {useDispatch} from "react-redux";
-import {setDanger} from "../../../app/alertsSlice";
+import {BASE_URL, useGetUserInfoQuery} from "../../../app/api"
+import {useDispatch} from "react-redux"
+import {setDanger} from "../../../app/alertsSlice"
 
 const Info = () => {
 
     let {userId} = useParams()
     const {data: userInfo, error, isLoading} = useGetUserInfoQuery(userId)
 
-    const dispatch = useDispatch();
+    const dispatch = useDispatch()
     if (error) {
         dispatch(setDanger(`Impossibile leggere i messaggi - ${error.message}`))
     }
