@@ -5,12 +5,6 @@ const BACKEND_URL = `${window.location.protocol}//${window.location.hostname}:80
 const LOGIN_URL = BACKEND_URL + "/login"
 const USER_URL = BACKEND_URL + "/user"
 const DEFAULT_HEADERS = {"Content-Type": "application/json"}
-const AUTH_HEADERS = () => {
-    return {
-        ...DEFAULT_HEADERS,
-        "Authorization": "Bearer " + localStorage.getItem("token")
-    }
-}
 
 export const doLogin = (username, password, dispatch, history) => {
     fetch(LOGIN_URL, {
@@ -69,37 +63,6 @@ export const doRegisterUser = (username, password, avatarBase64, dispatch) => {
                     break
                 default:
                     dispatch(setDanger("Errore nella registrazione"))
-            }
-        })
-        .catch(error => {
-            console.error(error)
-        })
-}
-
-export const doUpdateUser = ({oldPassword, newPassword, avatarBase64, dispatch}) => {
-    fetch(USER_URL, {
-        method: "PATCH",
-        headers: AUTH_HEADERS(),
-        mode: "cors",
-        body: JSON.stringify({
-            oldPassword: oldPassword,
-            newPassword: newPassword,
-            avatarBase64: avatarBase64
-        })
-    })
-        .then(response => {
-            switch (response.status) {
-                case 200:
-                    dispatch(setSuccess("Utente modificato con successo"))
-                    break
-                case 403:
-                    dispatch(setDanger(`Utente sconosciuto`))
-                    break
-                case 404:
-                    dispatch(setDanger(`Errore nel cambio della password`))
-                    break
-                default:
-                    dispatch(setDanger("Errore generico"))
             }
         })
         .catch(error => {

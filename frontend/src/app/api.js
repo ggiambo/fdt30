@@ -71,7 +71,7 @@ export const userApi = createApi({
                 return btoa(response)
             }
         }),
-        doLogin: builder.mutation({
+        login: builder.mutation({
             query: ({username, password}) => ({
                 url: `login`,
                 method: 'POST',
@@ -81,6 +81,17 @@ export const userApi = createApi({
                 }
             }),
             transformResponse: (data, meta) => meta?.response?.headers?.get("Authorization"),
+        }),
+        updateUser: builder.mutation({
+            query: ({oldPassword, newPassword, avatarBase64}) => ({
+                url: `user`,
+                method: 'PATCH',
+                body: {
+                    oldPassword: oldPassword,
+                    newPassword: newPassword,
+                    avatarBase64: avatarBase64
+                }
+            }),
         }),
     })
 })
@@ -98,5 +109,6 @@ export const {
     useGetUserInfoQuery,
     useGetLoggedUserInfoQuery,
     useGetAvatarBase64Query,
-    useDoLoginMutation
+    useLoginMutation,
+    useUpdateUserMutation,
 } = userApi

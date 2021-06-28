@@ -1,9 +1,9 @@
 import React, {Fragment, useState} from 'react'
 import {Button, Col, Form, Row} from "react-bootstrap"
 import {useDispatch} from "react-redux"
-import {setWarning} from "../../../app/alertsSlice"
+import {setDanger, setSuccess, setWarning} from "../../../app/alertsSlice"
 import UploadAvatar from "./UploadAvatar"
-import {doUpdateUser} from "../../../app/restOperations"
+import {useUpdateUserMutation} from "../../../app/api";
 
 const Preferences = () => {
 
@@ -13,6 +13,41 @@ const Preferences = () => {
     const [password, setPassword] = useState("")
     const [passwordConfirm, setPasswordConfirm] = useState("")
     const [avatarBase64, setAvatarBase64] = useState(null)
+
+    const [doUpdateUser, {isSuccess, error}] = useUpdateUserMutation()
+    const doChangePassword = () => {
+        if (!validate(password, passwordConfirm, dispatch)) {
+            return
+        }
+        doUpdateUser({
+            oldPassword: oldPassword,
+            newPassword: password,
+            dispatch: dispatch
+        })
+    }
+    const doChangeAvatar = (avatarBase64, dispatch) => {
+        doUpdateUser({
+            avatarBase64: avatarBase64,
+            dispatch: dispatch
+        })
+    }
+
+    if (isSuccess) {
+        dispatch(setSuccess("Utente modificato con successo"))
+    }
+
+    switch (error?.status) {
+        case undefined:
+            break
+        case 403:
+            dispatch(setDanger(`Utente sconosciuto`))
+            break
+        case 404:
+            dispatch(setDanger(`Errore nel cambio della password`))
+            break
+        default:
+            dispatch(setDanger("Errore generico"))
+    }
 
     return (
         <Fragment>
@@ -67,24 +102,6 @@ const Preferences = () => {
             </Row>
         </Fragment>
     )
-}
-
-const doChangePassword = (oldPassword, password, passwordConfirm, dispatch) => {
-    if (!validate(password, passwordConfirm, dispatch)) {
-        return
-    }
-    doUpdateUser({
-        oldPassword: oldPassword,
-        newPassword: password,
-        dispatch: dispatch
-    })
-}
-
-const doChangeAvatar = (avatarBase64, dispatch) => {
-    doUpdateUser({
-        avatarBase64: avatarBase64,
-        dispatch: dispatch
-    })
 }
 
 const validate = (password, passwordConfirm, dispatch) => {

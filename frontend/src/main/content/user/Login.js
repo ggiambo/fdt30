@@ -2,7 +2,7 @@ import React, {Fragment, useState} from "react"
 import {Button, Col, Form, Row} from "react-bootstrap"
 import {useDispatch} from "react-redux"
 import {useHistory} from "react-router-dom"
-import {useDoLoginMutation} from '../../../app/api.js'
+import {useLoginMutation} from '../../../app/api.js'
 import {setDanger, setSuccess, setWarning} from "../../../app/alertsSlice";
 import {login} from "../../../app/userSlice";
 
@@ -14,14 +14,14 @@ const Login = () => {
     const history = useHistory()
     const dispatch = useDispatch()
 
-    const [doLogin, {data: authorization, isSuccess, error}] = useDoLoginMutation()
+    const [doLogin, {data: authorization, isSuccess, error}] = useLoginMutation()
     if (isSuccess) {
         // set token in local storage
         const token = authorization.replace("Bearer", "").trim()
         localStorage.setItem("token", token)
-            dispatch(setSuccess("Login OK"))
-            dispatch(login(username))
-            history.push("/message")
+        dispatch(setSuccess("Login OK"))
+        dispatch(login(username))
+        history.push("/message")
     }
 
     switch (error?.status) {
