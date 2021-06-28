@@ -1,26 +1,45 @@
-import React, {Fragment, useRef} from 'react'
+import React, {Fragment, useRef, useState} from 'react'
 import {Button, Col, Form, Row, Tab, Tabs} from "react-bootstrap"
 import styles from './MessageEdit.module.scss'
-import {setWarning} from "../../../app/alertsSlice"
-import {useDispatch, useSelector} from "react-redux"
+import {delWarning, setSuccess, setWarning} from "../../../app/alertsSlice"
+import {useDispatch} from "react-redux"
 import MessagePreview from "./MessagePreview"
-import {setMarkdown, setSubject} from "../../../app/messageSlice"
 import EmojiPicker from "./EmojiPicker"
+import {useSaveMessageMutation} from "../../../app/api"
+import {useHistory} from "react-router-dom"
 
-const MessageEdit = ({title, saveHandleFunction}) => {
+const MessageEdit = ({title, subject: sourceSubject, markDown: sourceMarkdown, parentId = null}) => {
 
-    const subject = useSelector(state => state.message.subject)
-    const markDown = useSelector(state => state.message.markDown)
     const dispatch = useDispatch()
-
-    const validateFunction = () => validate(subject, markDown, dispatch)
+    const history = useHistory()
+    const [subject, setSubject] = useState(sourceSubject)
+    const [markDown, setMarkdown] = useState(sourceMarkdown)
 
     const textAreaRef = useRef()
     const handleEmojiClick = (emoji) => {
         const selectionStart = 0 || textAreaRef.current.selectionStart
         const selectionEnd = textAreaRef.current.selectionEnd
         const newMarkdown = markDown.substr(0, selectionStart) + emoji + markDown.substr(selectionEnd)
-        dispatch(setMarkdown(newMarkdown))
+        setMarkdown(newMarkdown)
+    }
+
+    const [saveMessage, {isSuccess, error}] = useSaveMessageMutation()
+    const save = () => {
+        if (!validate(subject, markDown, dispatch)) return
+        saveMessage({
+            subject: subject,
+            content: markDown,
+            parentId: parentId,
+        })
+    }
+
+    if (isSuccess) {
+        dispatch(delWarning())
+        history.push("/messages/0")
+        dispatch(setSuccess("Messaggio inserito con successo"))
+    }
+    if (error) {
+        dispatch(setWarning(`Errore nell'inserimento del messaggio: ${error.message}`))
     }
 
     return (
@@ -35,7 +54,7 @@ const MessageEdit = ({title, saveHandleFunction}) => {
                                     className={"shadow-none"}
                                     type={"text"}
                                     placeholder={"Soggetto"}
-                                    onChange={(e) => dispatch(setSubject(e.target.value))}
+                                    onChange={(e) => setSubject(e.target.value)}
                                     value={subject}
                                 />
 
@@ -44,7 +63,7 @@ const MessageEdit = ({title, saveHandleFunction}) => {
                                     as={"textarea"}
                                     rows={20}
                                     className={styles.messageSize}
-                                    onChange={(e) => dispatch(setMarkdown(e.target.value))}
+                                    onChange={(e) => setMarkdown(e.target.value)}
                                     value={markDown}
                                 />
                             </Form.Group>
@@ -52,7 +71,7 @@ const MessageEdit = ({title, saveHandleFunction}) => {
                         </Tab>
                         <Tab eventKey="view" title="Preview">
                             <Form.Group>
-                                <MessagePreview/>
+                                <MessagePreview subject={subject} markDown={markDown}/>
                             </Form.Group>
                         </Tab>
                     </Tabs>
@@ -73,18 +92,11 @@ const MessageEdit = ({title, saveHandleFunction}) => {
             <Row>
                 <Col>
                     <Button
-                        onClick={() => onClickSave(validateFunction, saveHandleFunction)}>Save</Button>
+                        onClick={() => save()}>Save</Button>
                 </Col>
             </Row>
         </Fragment>
     )
-}
-
-const onClickSave = (validateFunction, saveHandleFunction) => {
-    if (validateFunction() === false) {
-        return
-    }
-    saveHandleFunction()
 }
 
 const validate = (subject, markDown, dispatch) => {

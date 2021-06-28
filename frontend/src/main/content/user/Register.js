@@ -1,9 +1,11 @@
 import React, {Fragment, useState} from 'react'
 import {Button, Col, Form, Row} from "react-bootstrap"
 import {useDispatch} from "react-redux"
-import {setWarning} from "../../../app/alertsSlice"
+import {setDanger, setSuccess, setWarning} from "../../../app/alertsSlice"
 import UploadAvatar from "./UploadAvatar"
-import {doRegisterUser} from "../../../app/restOperations"
+import {useRegisterUserMutation} from "../../../app/api"
+import {login} from "../../../app/userSlice";
+import {useHistory} from "react-router-dom";
 
 const Register = () => {
 
@@ -12,7 +14,38 @@ const Register = () => {
     const [passwordConfirm, setPasswordConfirm] = useState("")
     const [avatarBase64, setAvatarBase64] = useState(null)
 
+    const history = useHistory()
     const dispatch = useDispatch()
+    const [doRegisterUser, {data: authorization, isSuccess, error}] = useRegisterUserMutation()
+    const doRegister = () => {
+        if (!validate(name, password, passwordConfirm, dispatch)) {
+            return
+        }
+        doRegisterUser({
+            username: name,
+            password: password,
+            avatarBase64: avatarBase64
+        })
+    }
+
+    if (isSuccess) {
+        // set token in local storage
+        const token = authorization.replace("Bearer", "").trim()
+        localStorage.setItem("token", token)
+        dispatch(setSuccess("Login OK"))
+        dispatch(login(name))
+        history.push("/message")
+    }
+
+    switch (error?.status) {
+        case undefined:
+            break
+        case 401:
+            dispatch(setWarning("Nome utente o password errati"))
+            break
+        default:
+            dispatch(setDanger("Errore generico"))
+    }
 
     return (
         <Fragment>
@@ -59,14 +92,6 @@ const Register = () => {
             </Row>
         </Fragment>
     )
-}
-
-const doRegister = (username, password, passwordConfirm, avatarBase64, dispatch) => {
-    if (!validate(username, password, passwordConfirm, dispatch)) {
-        return
-    }
-
-    doRegisterUser(username, password, avatarBase64, dispatch)
 }
 
 const validate = (username, password, passwordConfirm, dispatch) => {

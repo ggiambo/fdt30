@@ -1,10 +1,7 @@
 import React, {Fragment} from 'react'
 import {Pagination} from "react-bootstrap"
-import {useSelector} from "react-redux"
 
-const MessagesNavigator = ({actualPageNr, gotoPage}) => {
-
-    const totalPages = useSelector(state => state.messages.totalPages)
+const MessagesNavigator = ({actualPageNr, totalPages, gotoPage}) => {
 
     const pageNr = parseInt(actualPageNr)
 

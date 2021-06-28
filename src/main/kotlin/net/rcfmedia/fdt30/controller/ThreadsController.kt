@@ -28,7 +28,6 @@ class ThreadsController(private val messageRepository: MessageRepository) {
         return ResponseEntity.ok(
             Messages(
                 messages = messages.content.filterNotNull(),
-                actualPage = pageNr - 1,
                 totalPages = messages.totalPages
             )
         )
@@ -41,7 +40,6 @@ class ThreadsController(private val messageRepository: MessageRepository) {
         return ResponseEntity.ok(
             Messages(
                 messages = messages,
-                actualPage = 1,
                 totalPages = 1
             )
         )

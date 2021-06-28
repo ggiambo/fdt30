@@ -18,7 +18,7 @@ class FdtWebSecurityConfigurerAdapter(
             .authorizeRequests()
             .antMatchers(HttpMethod.GET, "/messages", "/messages/*", "/messages/*/user/*").permitAll()
             .antMatchers(HttpMethod.POST, "/message").fullyAuthenticated()
-            .antMatchers(HttpMethod.GET, "/users", "/users/*").permitAll()
+            .antMatchers(HttpMethod.GET, "/users", "/users/*", "avatar/*").permitAll()
             .antMatchers(HttpMethod.POST, "/user").permitAll()
             .antMatchers(HttpMethod.PATCH, "/user").fullyAuthenticated()
             .and()

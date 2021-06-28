@@ -1,27 +1,35 @@
-import React, {useEffect} from 'react'
-import {useDispatch} from "react-redux"
+import React from 'react'
 import {useHistory, useParams} from "react-router-dom"
 import Messages from "./Messages"
-import {doFetchMessagesByPageAndUser} from "../../../../app/restOperations"
+import {useGetMessagesByPageAndUserQuery} from "../../../../app/api"
+import {Spinner} from "react-bootstrap"
+import {useDispatch} from "react-redux"
+import {setDanger} from "../../../../app/alertsSlice"
 
 const MessagesByPageAndUser = () => {
 
-    const dispatch = useDispatch()
     const history = useHistory()
-
-    const {userId} = useParams()
+    const {userId, pageNr} = useParams()
     const gotoPage = (pageNr) => {
         history.push(`/messages/${pageNr}/user/${userId}`)
     }
 
-    const {pageNr} = useParams()
-    useEffect(() => {
-        doFetchMessagesByPageAndUser(pageNr, userId, dispatch)
-    }, [pageNr, userId, dispatch])
+    const {data, error, isLoading, isSuccess} = useGetMessagesByPageAndUserQuery({pageNr: pageNr, userId: userId})
 
-    return (
-        <Messages gotoPage={gotoPage}/>
-    )
+    const dispatch = useDispatch()
+    if (error) {
+        dispatch(setDanger(`Impossibile leggere i messaggi - ${error.message}`))
+    }
+
+    if (isLoading) {
+        return <Spinner animation="border" variant="secondary"/>
+    }
+
+    if (isSuccess) {
+        return <Messages gotoPage={gotoPage} totalPages={data.totalPages} messages={data.messages}/>
+    }
+
+    return null
 }
 
 export default MessagesByPageAndUser

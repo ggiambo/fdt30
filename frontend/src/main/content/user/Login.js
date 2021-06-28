@@ -2,7 +2,9 @@ import React, {Fragment, useState} from "react"
 import {Button, Col, Form, Row} from "react-bootstrap"
 import {useDispatch} from "react-redux"
 import {useHistory} from "react-router-dom"
-import {doLogin} from "../../../app/restOperations"
+import {useLoginMutation} from '../../../app/api.js'
+import {setDanger, setSuccess, setWarning} from "../../../app/alertsSlice";
+import {login} from "../../../app/userSlice";
 
 const Login = () => {
 
@@ -12,9 +14,29 @@ const Login = () => {
     const history = useHistory()
     const dispatch = useDispatch()
 
+    const [doLogin, {data: authorization, isSuccess, error}] = useLoginMutation()
+    if (isSuccess) {
+        // set token in local storage
+        const token = authorization.replace("Bearer", "").trim()
+        localStorage.setItem("token", token)
+        dispatch(setSuccess("Login OK"))
+        dispatch(login(username))
+        history.push("/message")
+    }
+
+    switch (error?.status) {
+        case undefined:
+            break
+        case 401:
+            dispatch(setWarning("Nome utente o password errati"))
+            break
+        default:
+            dispatch(setDanger("Errore sconosciuto"))
+    }
+
     return (
         <Fragment>
-            <Row onKeyPress={(e) => (e.key === 'Enter') && doLogin(username, password, dispatch, history)}>
+            <Row onKeyPress={(e) => (e.key === 'Enter') && doLogin({username: username, password: password})}>
                 <Col>
                     <h3>Login</h3>
                     <Form.Group>
@@ -42,7 +64,7 @@ const Login = () => {
             <Row>
                 <Button
                     variant="primary"
-                    onClick={() => doLogin(username, password, dispatch, history)}
+                    onClick={() => doLogin({username: username, password: password})}
                 >
                     Login
                 </Button>

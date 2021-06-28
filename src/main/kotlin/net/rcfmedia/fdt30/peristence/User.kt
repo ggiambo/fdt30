@@ -23,6 +23,7 @@ class User(
     var password: String,
 
     @Lob
+    @get:JsonIgnore
     var avatarBase64: String? = null,
 ) {
     @PrePersist
