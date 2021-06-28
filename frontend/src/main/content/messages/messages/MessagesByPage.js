@@ -13,7 +13,7 @@ const MessagesByPage = () => {
     }
 
     const {pageNr} = useParams()
-    const {data, error, isLoading} = useGetMessagesByPageQuery(pageNr)
+    const {data, error, isLoading, isSuccess} = useGetMessagesByPageQuery(pageNr)
 
     const dispatch = useDispatch()
     if (error) {
@@ -24,7 +24,11 @@ const MessagesByPage = () => {
         return <Spinner animation="border" variant="secondary"/>
     }
 
-    return <Messages gotoPage={gotoPage} totalPages={data.totalPages} messages={data.messages}/>
+    if (isSuccess ) {
+        return <Messages gotoPage={gotoPage} totalPages={data.totalPages} messages={data.messages}/>
+    }
+
+    return null
 }
 
 export default MessagesByPage

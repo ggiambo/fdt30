@@ -69,7 +69,6 @@ const Preferences = () => {
     )
 }
 
-
 const doChangePassword = (oldPassword, password, passwordConfirm, dispatch) => {
     if (!validate(password, passwordConfirm, dispatch)) {
         return

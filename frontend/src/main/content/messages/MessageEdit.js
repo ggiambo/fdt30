@@ -1,7 +1,7 @@
 import React, {Fragment, useRef, useState} from 'react'
 import {Button, Col, Form, Row, Tab, Tabs} from "react-bootstrap"
 import styles from './MessageEdit.module.scss'
-import {delWarning, setWarning, setSuccess} from "../../../app/alertsSlice"
+import {delWarning, setSuccess, setWarning} from "../../../app/alertsSlice"
 import {useDispatch} from "react-redux"
 import MessagePreview from "./MessagePreview"
 import EmojiPicker from "./EmojiPicker"
@@ -15,8 +15,6 @@ const MessageEdit = ({title, subject: sourceSubject, markDown: sourceMarkdown, p
     const [subject, setSubject] = useState(sourceSubject)
     const [markDown, setMarkdown] = useState(sourceMarkdown)
 
-    const validateFunction = () => validate(subject, markDown, dispatch)
-
     const textAreaRef = useRef()
     const handleEmojiClick = (emoji) => {
         const selectionStart = 0 || textAreaRef.current.selectionStart
@@ -27,6 +25,7 @@ const MessageEdit = ({title, subject: sourceSubject, markDown: sourceMarkdown, p
 
     const [saveMessage, {isSuccess, error}] = useSaveMessageMutation()
     const save = () => {
+        if (!validate(subject, markDown, dispatch)) return
         saveMessage({
             subject: subject,
             content: markDown,
@@ -93,18 +92,11 @@ const MessageEdit = ({title, subject: sourceSubject, markDown: sourceMarkdown, p
             <Row>
                 <Col>
                     <Button
-                        onClick={() => onClickSave(validateFunction, () => save())}>Save</Button>
+                        onClick={() => save()}>Save</Button>
                 </Col>
             </Row>
         </Fragment>
     )
-}
-
-const onClickSave = (validateFunction, saveHandleFunction) => {
-    if (validateFunction() === false) {
-        return
-    }
-    saveHandleFunction()
 }
 
 const validate = (subject, markDown, dispatch) => {

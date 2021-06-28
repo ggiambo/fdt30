@@ -14,7 +14,7 @@ const MessagesByPageAndUser = () => {
         history.push(`/messages/${pageNr}/user/${userId}`)
     }
 
-    const {data, error, isLoading} = useGetMessagesByPageAndUserQuery({pageNr: pageNr, userId: userId})
+    const {data, error, isLoading, isSuccess} = useGetMessagesByPageAndUserQuery({pageNr: pageNr, userId: userId})
 
     const dispatch = useDispatch()
     if (error) {
@@ -25,7 +25,11 @@ const MessagesByPageAndUser = () => {
         return <Spinner animation="border" variant="secondary"/>
     }
 
-    return <Messages gotoPage={gotoPage} totalPages={data.totalPages} messages={data.messages}/>
+    if (isSuccess) {
+        return <Messages gotoPage={gotoPage} totalPages={data.totalPages} messages={data.messages}/>
+    }
+
+    return null
 }
 
 export default MessagesByPageAndUser
