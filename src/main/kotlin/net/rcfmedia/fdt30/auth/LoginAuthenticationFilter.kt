@@ -1,8 +1,6 @@
 package net.rcfmedia.fdt30.auth
 
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
-import io.jsonwebtoken.Jwts
-import io.jsonwebtoken.SignatureAlgorithm
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.Authentication
@@ -10,8 +8,6 @@ import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
 import org.springframework.stereotype.Service
 import java.io.IOException
-import java.time.ZonedDateTime
-import java.util.*
 import javax.annotation.PostConstruct
 import javax.servlet.FilterChain
 import javax.servlet.http.HttpServletRequest
@@ -20,13 +16,9 @@ import javax.servlet.http.HttpServletResponse
 @Service
 class LoginAuthenticationFilter(
     authenticationManager: FdTAuthenticationManager,
+    private val tokenUtils: TokenUtils
 ) :
     UsernamePasswordAuthenticationFilter(authenticationManager) {
-
-    // token expires 100 years from "now"
-    private val tokenExpirationDate = Date.from(
-        ZonedDateTime.now().plusYears(100).toInstant()
-    )
 
     @Value("\${jwt.secret:}")
     lateinit var jwtSecret: String
@@ -53,11 +45,7 @@ class LoginAuthenticationFilter(
         filterChain: FilterChain,
         authentication: Authentication
     ) {
-        val token = Jwts.builder()
-            .setSubject((authentication.principal as String))
-            .setExpiration(tokenExpirationDate)
-            .signWith(SignatureAlgorithm.HS512, jwtSecret.toByteArray())
-            .compact()
+        val token = tokenUtils.getToken(authentication.principal as String)
         response.addHeader("Authorization", "Bearer $token")
 
         SecurityContextHolder.getContext().authentication = authentication
@@ -67,5 +55,6 @@ class LoginAuthenticationFilter(
         val name: String,
         val password: String
     )
+
 }
 

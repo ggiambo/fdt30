@@ -37,7 +37,7 @@ export const messagesApi = createApi({
             })
         }),
         getMessagesByThreadId: builder.query({
-            query: ({threadId}) => `thread/${threadId}`,
+            query: (threadId) => `thread/${threadId}`,
         }),
         getThreadsByPage: builder.query({
             query: (pageNr) => `threads/${pageNr}`,
@@ -93,6 +93,18 @@ export const userApi = createApi({
                 }
             }),
         }),
+        registerUser: builder.mutation({
+            query: ({username, password, avatarBase64}) => ({
+                url: `user`,
+                method: 'POST',
+                body: {
+                    name: username,
+                    password: password,
+                    avatarBase64: avatarBase64
+                }
+            }),
+            transformResponse: (data, meta) => meta?.response?.headers?.get("Authorization"),
+        }),
     })
 })
 
@@ -111,4 +123,5 @@ export const {
     useGetAvatarBase64Query,
     useLoginMutation,
     useUpdateUserMutation,
+    useRegisterUserMutation
 } = userApi

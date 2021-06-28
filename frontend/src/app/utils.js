@@ -5,14 +5,15 @@ export const getUserNameFromLocalStorage = () => {
     if (token == null) {
         return null
     }
-    const parts = token.split["."]
-    if (parts === 2) {
+    const parts = token.split(".")
+    if (parts.length > 1) {
         const username = token.split(".")[1]
         try {
             const content = JSON.parse(atob(username))
             return content.sub
         } catch (e) {
             console.log(`Cannot parse username '${username}'`)
+            localStorage.removeItem("token")
         }
     }
 }

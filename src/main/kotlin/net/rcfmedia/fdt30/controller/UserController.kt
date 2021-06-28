@@ -1,7 +1,7 @@
 package net.rcfmedia.fdt30.controller
 
 import net.rcfmedia.fdt30.auth.LoggedUserInfo
-import net.rcfmedia.fdt30.configuration.Configuration
+import net.rcfmedia.fdt30.auth.TokenUtils
 import net.rcfmedia.fdt30.controller.model.NewUser
 import net.rcfmedia.fdt30.controller.model.UpdateUser
 import net.rcfmedia.fdt30.peristence.User
@@ -9,12 +9,11 @@ import net.rcfmedia.fdt30.peristence.UserRepository
 import net.rcfmedia.fdt30.peristence.UserRepository.Companion.PAGE_SIZE
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
-import org.springframework.cache.annotation.CacheEvict
-import org.springframework.cache.annotation.Cacheable
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
 import org.springframework.data.domain.Sort
 import org.springframework.data.repository.findByIdOrNull
+import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.security.crypto.password.PasswordEncoder
@@ -24,7 +23,8 @@ import org.springframework.web.bind.annotation.*
 class UserController(
     private val userRepository: UserRepository,
     private val passwordEncoder: PasswordEncoder,
-    private val loggedUserInfo: LoggedUserInfo
+    private val loggedUserInfo: LoggedUserInfo,
+    private val tokenUtils: TokenUtils
 ) {
 
     var log: Logger = LoggerFactory.getLogger(UserController::class.java)
@@ -64,7 +64,11 @@ class UserController(
 
         log.info("User created name:${user.name} id:${user.id}")
 
-        return ResponseEntity(HttpStatus.OK)
+        val token = tokenUtils.getToken(user.name)
+        val headers = HttpHeaders().apply {
+            add("Authorization", "Bearer $token")
+        }
+        return ResponseEntity(headers, HttpStatus.OK)
     }
 
     @PatchMapping("/user")
