@@ -26,10 +26,14 @@ export const messagesApi = createApi({
             query: (messageId) => `message/${messageId}`
         }),
         saveMessage: builder.mutation({
-            query: (body) => ({
+            query: ({subject, content, parentId}) => ({
                 url: `message`,
                 method: 'POST',
-                body: body
+                body: {
+                    subject: subject,
+                    content: content,
+                    parentId: parentId,
+                }
             })
         }),
         getMessagesByThreadId: builder.query({
@@ -43,11 +47,40 @@ export const messagesApi = createApi({
 
 export const userApi = createApi({
     reducerPath: 'userApi',
-    baseQuery: fetchBaseQuery({baseUrl: BASE_URL}),
+    baseQuery: fetchBaseQuery({
+        baseUrl: BASE_URL,
+        prepareHeaders: (headers) => {
+            const token = localStorage.getItem("token")
+            if (token) {
+                headers.set("Authorization", "Bearer " + token)
+            }
+            return headers
+        },
+    }),
     refetchOnMountOrArgChange: true,
     endpoints: (builder) => ({
         getUserInfo: builder.query({
             query: (userId) => `user/${userId}`,
+        }),
+        getLoggedUserInfo: builder.query({
+            query: () => `user`,
+        }),
+        getAvatarBase64: builder.query({
+            query: (userId) => `avatar/${userId}`,
+            transformResponse: (response) => {
+                return btoa(response)
+            }
+        }),
+        doLogin: builder.mutation({
+            query: ({username, password}) => ({
+                url: `login`,
+                method: 'POST',
+                body: {
+                    name: username,
+                    password: password,
+                }
+            }),
+            transformResponse: (data, meta) => meta?.response?.headers?.get("Authorization"),
         }),
     })
 })
@@ -63,4 +96,7 @@ export const {
 
 export const {
     useGetUserInfoQuery,
+    useGetLoggedUserInfoQuery,
+    useGetAvatarBase64Query,
+    useDoLoginMutation
 } = userApi

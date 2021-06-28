@@ -1,5 +1,22 @@
 import {DateTime} from "luxon"
 
+export const getUserNameFromLocalStorage = () => {
+    const token = localStorage.getItem("token")
+    if (token == null) {
+        return null
+    }
+    const parts = token.split["."]
+    if (parts === 2) {
+        const username = token.split(".")[1]
+        try {
+            const content = JSON.parse(atob(username))
+            return content.sub
+        } catch (e) {
+            console.log(`Cannot parse username '${username}'`)
+        }
+    }
+}
+
 export const formatDate = (date) => {
     const isoDate = DateTime.fromISO(date)
     return isoDate.toLocaleString(DateTime.DATE_SHORT)

@@ -1,4 +1,4 @@
-import {delWarning, setDanger, setSuccess, setWarning} from "./alertsSlice"
+import {setDanger, setSuccess, setWarning} from "./alertsSlice"
 import {login} from "./userSlice"
 
 const BACKEND_URL = `${window.location.protocol}//${window.location.hostname}:8080`
@@ -97,29 +97,6 @@ export const doUpdateUser = ({oldPassword, newPassword, avatarBase64, dispatch})
                     break
                 case 404:
                     dispatch(setDanger(`Errore nel cambio della password`))
-                    break
-                default:
-                    dispatch(setDanger("Errore generico"))
-            }
-        })
-        .catch(error => {
-            console.error(error)
-        })
-}
-
-export const doFetchAvatar = (setAvatarBase64, dispatch) => {
-    fetch(USER_URL, {
-        method: "GET",
-        headers: AUTH_HEADERS(),
-        mode: "cors",
-    })
-        .then(response => {
-            switch (response.status) {
-                case 200:
-                    dispatch(delWarning())
-                    response.json().then(data => {
-                        setAvatarBase64(data.avatarBase64)
-                    })
                     break
                 default:
                     dispatch(setDanger("Errore generico"))

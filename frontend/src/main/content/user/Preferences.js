@@ -1,9 +1,9 @@
-import React, {Fragment, useEffect, useState} from 'react'
+import React, {Fragment, useState} from 'react'
 import {Button, Col, Form, Row} from "react-bootstrap"
 import {useDispatch} from "react-redux"
 import {setWarning} from "../../../app/alertsSlice"
 import UploadAvatar from "./UploadAvatar"
-import {doUpdateUser, doFetchAvatar} from "../../../app/restOperations"
+import {doUpdateUser} from "../../../app/restOperations"
 
 const Preferences = () => {
 
@@ -13,10 +13,6 @@ const Preferences = () => {
     const [password, setPassword] = useState("")
     const [passwordConfirm, setPasswordConfirm] = useState("")
     const [avatarBase64, setAvatarBase64] = useState(null)
-
-    useEffect(() => {
-        doFetchAvatar(setAvatarBase64, dispatch)
-    }, [dispatch])
 
     return (
         <Fragment>
