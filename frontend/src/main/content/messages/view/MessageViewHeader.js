@@ -8,7 +8,7 @@ const MessageViewHeader = ({message}) => {
             <Col>
                 {message.subject}
             </Col>
-            <Col className={"text-right"}>
+            <Col className={"col-auto"}>
                 <NavLink to={`/thread/${message.threadId}`}>Thread #{message.threadId}</NavLink>
             </Col>
         </Row>

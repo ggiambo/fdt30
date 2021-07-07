@@ -18,7 +18,7 @@ const MessageViewFooter = ({message}) => {
                 &nbsp;
                 {formatDateTime(message.created)}
             </Col>
-            <Col className={"text-right"}>
+            <Col className={"col-auto"}>
                 <NavLink to={`/reply/${message.id}`}>Rispondi</NavLink>
             </Col>
         </Row>

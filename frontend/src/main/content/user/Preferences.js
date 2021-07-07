@@ -83,10 +83,12 @@ const Preferences = () => {
                     </Form.Group>
                 </Col>
             </Row>
-            <Row>
-                <Button onClick={() => doChangePassword(oldPassword, password, passwordConfirm, dispatch)}>
-                    Cambia password
-                </Button>
+            <Row className={"mt-2"}>
+                <Col>
+                    <Button onClick={() => doChangePassword(oldPassword, password, passwordConfirm, dispatch)}>
+                        Cambia password
+                    </Button>
+                </Col>
             </Row>
             <Row className={"mt-2"}>
                 <Col>
@@ -95,10 +97,12 @@ const Preferences = () => {
                     </Form.Group>
                 </Col>
             </Row>
-            <Row>
-                <Button onClick={() => doChangeAvatar(avatarBase64, dispatch)}>
-                    Cambia Avatar
-                </Button>
+            <Row className={"mt-2"}>
+                <Col>
+                    <Button onClick={() => doChangeAvatar(avatarBase64, dispatch)}>
+                        Cambia Avatar
+                    </Button>
+                </Col>
             </Row>
         </Fragment>
     )
