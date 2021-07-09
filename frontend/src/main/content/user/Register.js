@@ -86,9 +86,12 @@ const Register = () => {
                     </Form.Group>
                 </Col>
             </Row>
-            <Row>
-                <Button
-                    onClick={() => doRegister(name, password, passwordConfirm, avatarBase64, dispatch)}>Crea</Button>
+            <Row className={"mt-2"}>
+                <Col>
+                    <Button onClick={() => doRegister(name, password, passwordConfirm, avatarBase64, dispatch)}>
+                        Crea
+                    </Button>
+                </Col>
             </Row>
         </Fragment>
     )

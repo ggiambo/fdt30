@@ -61,13 +61,12 @@ const Login = () => {
                     </Form.Group>
                 </Col>
             </Row>
-            <Row>
-                <Button
-                    variant="primary"
-                    onClick={() => doLogin({username: username, password: password})}
-                >
-                    Login
-                </Button>
+            <Row className={"mt-2"}>
+                <Col>
+                    <Button variant="primary" onClick={() => doLogin({username: username, password: password})}>
+                        Login
+                    </Button>
+                </Col>
             </Row>
         </Fragment>
     )
