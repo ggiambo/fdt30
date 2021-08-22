@@ -1,7 +1,6 @@
 package net.rcfmedia.fdt30.auth
 
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
-import org.springframework.beans.factory.annotation.Value
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.context.SecurityContextHolder
@@ -17,11 +16,7 @@ import javax.servlet.http.HttpServletResponse
 class LoginAuthenticationFilter(
     authenticationManager: FdTAuthenticationManager,
     private val tokenUtils: TokenUtils
-) :
-    UsernamePasswordAuthenticationFilter(authenticationManager) {
-
-    @Value("\${jwt.secret:}")
-    lateinit var jwtSecret: String
+) : UsernamePasswordAuthenticationFilter(authenticationManager) {
 
     @PostConstruct
     fun postConstruct() {

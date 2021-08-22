@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-class ThreadsController(private val messageRepository: MessageRepository) {
+class ThreadController(private val messageRepository: MessageRepository) {
 
     @GetMapping("/threads")
     fun getMessages(): ResponseEntity<Messages> {

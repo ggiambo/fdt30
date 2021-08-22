@@ -2,7 +2,7 @@ import React, {Fragment} from 'react'
 import {Col, Row, Spinner} from "react-bootstrap"
 import MessageView from "./view/MessageView"
 import {useDispatch} from "react-redux"
-import {useParams} from "react-router-dom"
+import {useHistory, useParams} from "react-router-dom"
 import MessagesNavigator from "./messages/MessagesNavigator"
 import {useGetThreadsByPageQuery} from "../../../app/api"
 import {setDanger} from "../../../app/alertsSlice"
@@ -15,6 +15,11 @@ const Threads = () => {
     const dispatch = useDispatch()
     if (error) {
         dispatch(setDanger(`Impossibile leggere i messaggi del thread - ${error.message}`))
+    }
+
+    const history = useHistory()
+    const gotoPage = (pageNr) => {
+        history.push(`/threads/${pageNr}`)
     }
 
     if (isLoading) {
@@ -36,7 +41,7 @@ const Threads = () => {
                 </Row>
                 <Row className={"mb-3"}>
                     <Col>
-                        <MessagesNavigator actualPageNr={pageNr}/>
+                        <MessagesNavigator actualPageNr={pageNr} totalPages={data.totalPages} gotoPage={gotoPage}/>
                     </Col>
                 </Row>
             </Fragment>
