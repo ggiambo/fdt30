@@ -1,7 +1,7 @@
-import React from 'react'
-import {Alert, Col} from "react-bootstrap"
+import React, {Fragment} from 'react'
+import {Alert} from '@mui/material'
 import {useDispatch, useSelector} from "react-redux"
-import {delDanger, delSuccess, delWarning} from "../app/alertsSlice"
+import {delError, delSuccess, delWarning} from "../app/alertsSlice"
 
 const Alerts = () => {
 
@@ -9,20 +9,20 @@ const Alerts = () => {
 
     const success = useSelector(state => state.alerts.success)
     const warning = useSelector(state => state.alerts.warning)
-    const danger = useSelector(state => state.alerts.danger)
+    const error = useSelector(state => state.alerts.error)
 
     return (
-        <Col>
+        <Fragment>
             {success &&
-            <Alert variant={"success"} onClose={() => dispatch(delSuccess())} dismissible>{success}</Alert>
+            <Alert severity={"success"} onClose={() => dispatch(delSuccess())} dismissible>{success}</Alert>
             }
             {warning &&
-            <Alert variant={"warning"} onClose={() => dispatch(delWarning())} dismissible>{warning}</Alert>
+            <Alert severity={"warning"} onClose={() => dispatch(delWarning())} dismissible>{warning}</Alert>
             }
-            {danger &&
-            <Alert variant={"danger"} onClose={() => dispatch(delDanger())} dismissible>{danger}</Alert>
+            {error &&
+            <Alert severity={"error"} onClose={() => dispatch(delError())} dismissible>{error}</Alert>
             }
-        </Col>
+        </Fragment>
     )
 }
 

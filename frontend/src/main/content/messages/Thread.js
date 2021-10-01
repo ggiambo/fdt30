@@ -4,7 +4,7 @@ import {useDispatch} from "react-redux"
 import {Col, Row, Spinner} from "react-bootstrap"
 import MessageView from "./view/MessageView"
 import {useGetMessagesByThreadIdQuery} from "../../../app/api"
-import {setDanger} from "../../../app/alertsSlice"
+import {setError} from "../../../app/alertsSlice"
 
 const Thread = () => {
 
@@ -12,7 +12,7 @@ const Thread = () => {
     const {data, error, isLoading, isSuccess} = useGetMessagesByThreadIdQuery(threadId)
     const dispatch = useDispatch()
     if (error) {
-        dispatch(setDanger(`Impossibile leggere i messaggi del thread - ${error.message}`))
+        dispatch(setError(`Impossibile leggere i messaggi del thread - ${error.message}`))
     }
 
     if (isLoading) {

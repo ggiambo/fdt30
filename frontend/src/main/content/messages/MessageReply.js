@@ -3,7 +3,7 @@ import {useDispatch} from "react-redux"
 import {useParams} from "react-router-dom"
 import MessageEdit from "./MessageEdit"
 import {useGetMessageByIdQuery} from "../../../app/api"
-import {setDanger} from "../../../app/alertsSlice"
+import {setError} from "../../../app/alertsSlice"
 import {Spinner} from "react-bootstrap"
 
 const MessageReply = () => {
@@ -13,7 +13,7 @@ const MessageReply = () => {
 
     const dispatch = useDispatch()
     if (error) {
-        dispatch(setDanger(`Impossibile leggere i messaggi - ${error.message}`))
+        dispatch(setError(`Impossibile leggere i messaggi - ${error.message}`))
     }
 
     if (isLoading) {

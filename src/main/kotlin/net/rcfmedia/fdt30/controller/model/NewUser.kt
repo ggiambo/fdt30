@@ -12,5 +12,5 @@ class NewUser(
     @field:Size(min = 6, max = 20)
     val password: String,
 
-    val avatarBase64: String,
+    val avatarBase64: String?,
 )

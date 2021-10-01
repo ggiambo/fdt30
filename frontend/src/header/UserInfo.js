@@ -1,24 +1,25 @@
 import React from 'react'
 import {NavLink} from "react-router-dom"
-import styles from "./UserInfo.module.scss"
-import { PersonFill } from 'react-bootstrap-icons'
+import {AccountCircle} from "@mui/icons-material";
 import {useSelector} from "react-redux"
-import {Col, OverlayTrigger, Tooltip} from "react-bootstrap"
+import {IconButton} from "@mui/material";
 
 const UserInfo = () => {
 
     const username = useSelector(state => state.user.name)
 
     return (
-        <Col>
-            <OverlayTrigger placement={"bottom"} overlay={<Tooltip id={"preferenze"}>Preferenze</Tooltip>}>
-                <NavLink to={"/preferences"} className={styles.userLink} activeClassName={styles.userLink}>
-                    <PersonFill/>
-                    &nbsp;
-                    {username}
-                </NavLink>
-            </OverlayTrigger>
-        </Col>
+        <NavLink to={"/preferences"}>
+            <IconButton
+                size="large"
+                aria-label="account of current user"
+                aria-controls="menu-appbar"
+                aria-haspopup="true"
+                color="inherit"
+            >
+                <AccountCircle/>
+            </IconButton>
+        </NavLink>
     )
 }
 

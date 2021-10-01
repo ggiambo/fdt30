@@ -1,7 +1,8 @@
 import React, {Fragment, useState} from 'react'
-import {Button, Col, Form, Row} from "react-bootstrap"
+import {Col, Form, Row} from "react-bootstrap"
+import {Button} from "@mui/material"
 import {useDispatch} from "react-redux"
-import {setDanger, setSuccess, setWarning} from "../../../app/alertsSlice"
+import {setError, setSuccess, setWarning} from "../../../app/alertsSlice"
 import UploadAvatar from "./UploadAvatar"
 import {useRegisterUserMutation} from "../../../app/api"
 import {login} from "../../../app/userSlice";
@@ -44,7 +45,7 @@ const Register = () => {
             dispatch(setWarning("Nome utente o password errati"))
             break
         default:
-            dispatch(setDanger("Errore generico"))
+            dispatch(setError("Errore generico"))
     }
 
     return (
@@ -88,7 +89,9 @@ const Register = () => {
             </Row>
             <Row className={"mt-2"}>
                 <Col>
-                    <Button onClick={() => doRegister(name, password, passwordConfirm, avatarBase64, dispatch)}>
+                    <Button variant="contained"
+                            onClick={() => doRegister(name, password, passwordConfirm, avatarBase64, dispatch)}
+                    >
                         Crea
                     </Button>
                 </Col>

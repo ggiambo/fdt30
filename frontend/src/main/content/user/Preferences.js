@@ -1,7 +1,8 @@
 import React, {Fragment, useState} from 'react'
-import {Button, Col, Form, Row} from "react-bootstrap"
+import {Col, Form, Row} from "react-bootstrap"
+import {Button} from "@mui/material"
 import {useDispatch} from "react-redux"
-import {setDanger, setSuccess, setWarning} from "../../../app/alertsSlice"
+import {setError, setSuccess, setWarning} from "../../../app/alertsSlice"
 import UploadAvatar from "./UploadAvatar"
 import {useUpdateUserMutation} from "../../../app/api";
 
@@ -40,13 +41,13 @@ const Preferences = () => {
         case undefined:
             break
         case 403:
-            dispatch(setDanger(`Utente sconosciuto`))
+            dispatch(setError(`Utente sconosciuto`))
             break
         case 404:
-            dispatch(setDanger(`Errore nel cambio della password`))
+            dispatch(setError(`Errore nel cambio della password`))
             break
         default:
-            dispatch(setDanger("Errore generico"))
+            dispatch(setError("Errore generico"))
     }
 
     return (
@@ -85,7 +86,9 @@ const Preferences = () => {
             </Row>
             <Row className={"mt-2"}>
                 <Col>
-                    <Button onClick={() => doChangePassword(oldPassword, password, passwordConfirm, dispatch)}>
+                    <Button variant="contained"
+                            onClick={() => doChangePassword(oldPassword, password, passwordConfirm, dispatch)}
+                    >
                         Cambia password
                     </Button>
                 </Col>
@@ -99,7 +102,7 @@ const Preferences = () => {
             </Row>
             <Row className={"mt-2"}>
                 <Col>
-                    <Button onClick={() => doChangeAvatar(avatarBase64, dispatch)}>
+                    <Button variant="contained" onClick={() => doChangeAvatar(avatarBase64, dispatch)}>
                         Cambia Avatar
                     </Button>
                 </Col>

@@ -4,7 +4,7 @@ import Messages from "./Messages"
 import {useGetMessagesByPageAndUserQuery} from "../../../../app/api"
 import {Spinner} from "react-bootstrap"
 import {useDispatch} from "react-redux"
-import {setDanger} from "../../../../app/alertsSlice"
+import {setError} from "../../../../app/alertsSlice"
 
 const MessagesByPageAndUser = () => {
 
@@ -18,7 +18,7 @@ const MessagesByPageAndUser = () => {
 
     const dispatch = useDispatch()
     if (error) {
-        dispatch(setDanger(`Impossibile leggere i messaggi - ${error.message}`))
+        dispatch(setError(`Impossibile leggere i messaggi - ${error.message}`))
     }
 
     if (isLoading) {

@@ -1,5 +1,6 @@
 import React, {Fragment, useRef, useState} from 'react'
-import {Button, Col, Form, Row, Tab, Tabs} from "react-bootstrap"
+import {Col, Form, Row, Tab, Tabs} from "react-bootstrap"
+import {Button} from "@mui/material"
 import styles from './MessageEdit.module.scss'
 import {delWarning, setSuccess, setWarning} from "../../../app/alertsSlice"
 import {useDispatch} from "react-redux"
@@ -91,7 +92,7 @@ const MessageEdit = ({title, subject: sourceSubject, markDown: sourceMarkdown, p
             <Row>&nbsp;</Row>
             <Row>
                 <Col>
-                    <Button
+                    <Button variant="contained"
                         onClick={() => save()}>Save</Button>
                 </Col>
             </Row>

@@ -1,9 +1,10 @@
 import React, {Fragment, useState} from "react"
-import {Button, Col, Form, Row} from "react-bootstrap"
+import {Col, Form, Row} from "react-bootstrap"
+import {Button} from "@mui/material"
 import {useDispatch} from "react-redux"
 import {useHistory} from "react-router-dom"
 import {useLoginMutation} from '../../../app/api.js'
-import {setDanger, setSuccess, setWarning} from "../../../app/alertsSlice";
+import {setError, setSuccess, setWarning} from "../../../app/alertsSlice";
 import {login} from "../../../app/userSlice";
 
 const Login = () => {
@@ -31,7 +32,7 @@ const Login = () => {
             dispatch(setWarning("Nome utente o password errati"))
             break
         default:
-            dispatch(setDanger("Errore sconosciuto"))
+            dispatch(setError("Errore sconosciuto"))
     }
 
     return (
@@ -63,7 +64,7 @@ const Login = () => {
             </Row>
             <Row className={"mt-2"}>
                 <Col>
-                    <Button variant="primary" onClick={() => doLogin({username: username, password: password})}>
+                    <Button variant="contained" onClick={() => doLogin({username: username, password: password})}>
                         Login
                     </Button>
                 </Col>

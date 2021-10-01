@@ -1,10 +1,10 @@
 import React, {useCallback, useState} from 'react'
 import {useDropzone} from 'react-dropzone'
-import {delDanger, setDanger} from "../../../app/alertsSlice"
+import {delError, setError} from "../../../app/alertsSlice"
 import {useDispatch} from "react-redux"
 import styles from './UploadAvatar.module.scss'
 import {Container, Image, Row} from "react-bootstrap"
-import {XCircle} from "react-bootstrap-icons"
+import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 
 const UploadAvatar = ({avatar, setAvatar}) => {
 
@@ -13,7 +13,7 @@ const UploadAvatar = ({avatar, setAvatar}) => {
 
     const onDrop = useCallback(acceptedFiles => {
         setStyleActive("")
-        dispatch(delDanger())
+        dispatch(delError())
         acceptedFiles.forEach(file => handleDrop(file, setAvatar, dispatch))
     }, [dispatch])
 
@@ -44,7 +44,7 @@ const showAvatar = (avatar, setAvatar) => {
                            className={styles.avatarImage}
                            alt={"Avatar"}
                     />
-                    <XCircle
+                    <HighlightOffIcon
                         onClick={(e) => {
                             e.stopPropagation()
                             setAvatar(null)
@@ -60,7 +60,7 @@ const showAvatar = (avatar, setAvatar) => {
 const handleDrop = (file, setAvatar, dispatch) => {
     file.arrayBuffer().then(buffer => {
         if (buffer.byteLength > 102400) {
-            dispatch(setDanger(`Immagine troppo grande: ${Math.ceil(buffer.byteLength / 1024)}K.`))
+            dispatch(setError(`Immagine troppo grande: ${Math.ceil(buffer.byteLength / 1024)}K.`))
             setAvatar(null)
             return
         }

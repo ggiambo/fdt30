@@ -5,7 +5,7 @@ import {formatDateTime} from "../../../app/utils"
 import styles from "./UploadAvatar.module.scss"
 import {BASE_URL, useGetUserInfoQuery} from "../../../app/api"
 import {useDispatch} from "react-redux"
-import {setDanger} from "../../../app/alertsSlice"
+import {setError} from "../../../app/alertsSlice"
 
 const Info = () => {
 
@@ -14,7 +14,7 @@ const Info = () => {
 
     const dispatch = useDispatch()
     if (error) {
-        dispatch(setDanger(`Impossibile leggere i messaggi - ${error.message}`))
+        dispatch(setError(`Impossibile leggere i messaggi - ${error.message}`))
     }
 
     if (isLoading) {

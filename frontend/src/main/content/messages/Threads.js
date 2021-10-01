@@ -5,7 +5,7 @@ import {useDispatch} from "react-redux"
 import {useHistory, useParams} from "react-router-dom"
 import MessagesNavigator from "./messages/MessagesNavigator"
 import {useGetThreadsByPageQuery} from "../../../app/api"
-import {setDanger} from "../../../app/alertsSlice"
+import {setError} from "../../../app/alertsSlice"
 
 const Threads = () => {
 
@@ -14,7 +14,7 @@ const Threads = () => {
 
     const dispatch = useDispatch()
     if (error) {
-        dispatch(setDanger(`Impossibile leggere i messaggi del thread - ${error.message}`))
+        dispatch(setError(`Impossibile leggere i messaggi del thread - ${error.message}`))
     }
 
     const history = useHistory()
