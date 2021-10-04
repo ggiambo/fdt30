@@ -1,25 +1,29 @@
-import React from 'react'
-import {Container, Row} from "react-bootstrap"
+import {Fragment, React} from 'react'
 import '../App.scss'
-import {useSelector} from "react-redux"
+import {useDispatch, useSelector} from "react-redux"
 import Alerts from "./Alerts"
 import {AppBar, IconButton, Toolbar, Typography} from "@mui/material";
 import MenuIcon from '@mui/icons-material/Menu';
 import {AccountCircle} from "@mui/icons-material";
 import {Link} from "react-router-dom";
+import {setOpen} from "../app/sidebarSlice";
 
 const Header = () => {
 
     const isLogged = useSelector(state => state.user.logged)
+    const isSidebarOpen = useSelector(state => state.sidebar.open)
+    const dispatch = useDispatch()
 
     return (
-        <Container className={"mb-2 mt-2"}>
-            <AppBar position="static">
+        <Fragment>
+            <AppBar position="sticky">
                 <Toolbar variant="dense">
-                    <IconButton edge="start" color="inherit" aria-label="menu" sx={{mr: 2}}>
-                        <MenuIcon/>
+                    {!isSidebarOpen &&
+                    <IconButton color="inherit">
+                        <MenuIcon onClick={() => dispatch(setOpen(true))}/>
                     </IconButton>
-                    <Typography variant="h5" color="inherit" component="div" sx={{flexGrow: 1}}>
+                    }
+                    <Typography variant="h5"  sx={{flexGrow: 1}}>
                         Forum dei Troll 3.0
                     </Typography>
                     {isLogged &&
@@ -29,10 +33,8 @@ const Header = () => {
                     }
                 </Toolbar>
             </AppBar>
-            <Row>
-                <Alerts/>
-            </Row>
-        </Container>
+            <Alerts/>
+        </Fragment>
     )
 }
 
