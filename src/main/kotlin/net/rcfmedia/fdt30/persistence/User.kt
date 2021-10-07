@@ -1,4 +1,4 @@
-package net.rcfmedia.fdt30.peristence
+package net.rcfmedia.fdt30.persistence
 
 import com.fasterxml.jackson.annotation.JsonIgnore
 import java.time.LocalDateTime

@@ -1,8 +1,8 @@
 package net.rcfmedia.fdt30.controller
 
 import net.rcfmedia.fdt30.controller.model.Messages
-import net.rcfmedia.fdt30.peristence.Message
-import net.rcfmedia.fdt30.peristence.MessageRepository
+import net.rcfmedia.fdt30.persistence.Message
+import net.rcfmedia.fdt30.persistence.MessageRepository
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
 import org.springframework.data.domain.Sort

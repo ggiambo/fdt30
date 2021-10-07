@@ -1,6 +1,6 @@
 package net.rcfmedia.fdt30.auth
 
-import net.rcfmedia.fdt30.peristence.UserRepository
+import net.rcfmedia.fdt30.persistence.UserRepository
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.BadCredentialsException
 import org.springframework.security.core.Authentication

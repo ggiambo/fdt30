@@ -4,9 +4,9 @@ import net.rcfmedia.fdt30.auth.LoggedUserInfo
 import net.rcfmedia.fdt30.auth.TokenUtils
 import net.rcfmedia.fdt30.controller.model.NewUser
 import net.rcfmedia.fdt30.controller.model.UpdateUser
-import net.rcfmedia.fdt30.peristence.User
-import net.rcfmedia.fdt30.peristence.UserRepository
-import net.rcfmedia.fdt30.peristence.UserRepository.Companion.PAGE_SIZE
+import net.rcfmedia.fdt30.persistence.User
+import net.rcfmedia.fdt30.persistence.UserRepository
+import net.rcfmedia.fdt30.persistence.UserRepository.Companion.PAGE_SIZE
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.data.domain.PageRequest

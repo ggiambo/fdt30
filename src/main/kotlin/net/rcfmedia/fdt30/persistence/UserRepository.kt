@@ -1,4 +1,4 @@
-package net.rcfmedia.fdt30.peristence
+package net.rcfmedia.fdt30.persistence
 
 import net.rcfmedia.fdt30.configuration.Configuration
 import org.springframework.cache.annotation.CacheEvict

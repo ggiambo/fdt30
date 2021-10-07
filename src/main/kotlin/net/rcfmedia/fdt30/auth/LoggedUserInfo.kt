@@ -1,7 +1,7 @@
 package net.rcfmedia.fdt30.auth
 
-import net.rcfmedia.fdt30.peristence.User
-import net.rcfmedia.fdt30.peristence.UserRepository
+import net.rcfmedia.fdt30.persistence.User
+import net.rcfmedia.fdt30.persistence.UserRepository
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.stereotype.Service
 
